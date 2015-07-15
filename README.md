@@ -37,7 +37,7 @@ A view for the above `cosmoz-page-route` would look like the following:
 	<div>{{ boundValue }}</div>
 </template>
 <script type="text/javascript">
-	TemplateView('start', {
+	Cosmoz.TemplateView['start'] = {
 		properties: {
         	boundValue: {
             	type: String,
@@ -47,11 +47,11 @@ A view for the above `cosmoz-page-route` would look like the following:
         ready: function () {
         	console.log('template loaded!');
         }
-	});
+	};
 </script>
 ```
 
-`TemplateView` is a global function that will link the template with ID `start` to this Polymer object named `start`.
+`Cosmoz.TemplateView` is an object that will link the template with ID `start` to this Polymer object named `start`.
 
 The object itself will be mixed in like any other custom element / template.
 
