@@ -1,0 +1,24 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../neon-animation/neon-animated-pages.html">
+<link rel="import" href="../neon-animation/animations/fade-in-animation.html">
+<link rel="import" href="../neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="cosmoz-page-route.html">
+
+<dom-module id="cosmoz-page-router">
+	<template>
+		<neon-animated-pages
+				id="routes"
+				class="fit"
+				attr-for-selected="path"
+				on-neon-animation-finish="_onNeonAnimationFinish">
+			<content></content>
+		</neon-animated-pages>
+	</template>
+
+	<script type="text/javascript" src="cosmoz-template-view.js"></script>
+	<script type="text/javascript" src="cosmoz-page-router-behavior-utilities.js"></script>
+	<script type="text/javascript" src="cosmoz-page-router.js"></script>
+</dom-module>
+
