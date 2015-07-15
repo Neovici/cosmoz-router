@@ -6,6 +6,17 @@ It support ad-hoc routing so no routes need to be defined - any accessed route w
 
 It supports named views/templates so templates and the corresponding JavaScript code can be bundled/vulcanized.
 
+## Credits
+
+cosmoz-page-router is based on Erik Ringsmuth's app-router component (https://github.com/erikringsmuth/app-router), licensed under the MIT License.
+
+Major differences with app-router are:
+- requires Polymer 1.0, whereas app-router works with Polymer, X-Tag, and natively.
+- supports only Polymer 1.0 `dom-bind` template views, whereas app-router supports custom elements, inline templates, ...
+- support for _adhoc routing_, i.e. creating a route dynamically when a path is requested
+
+If you need a more complete routing solution, you should give app-router a try.
+
 ## Usage
 
 ### Install
@@ -33,21 +44,21 @@ A view for the above `cosmoz-page-route` would look like the following:
 
 ```html
 <template id="start" is="dom-bind">
-	<h2>Welcome to the start page</h2>
-	<div>{{ boundValue }}</div>
+    <h2>Welcome to the start page</h2>
+    <div>{{ boundValue }}</div>
 </template>
 <script type="text/javascript">
-	Cosmoz.TemplateView['start'] = {
-		properties: {
-        	boundValue: {
-            	type: String,
+    Cosmoz.TemplateView['start'] = {
+        properties: {
+            boundValue: {
+                type: String,
                 value: 'bound'
             }
         },
         ready: function () {
-        	console.log('template loaded!');
+            console.log('template loaded!');
         }
-	};
+    };
 </script>
 ```
 
