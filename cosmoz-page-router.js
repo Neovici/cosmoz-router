@@ -24,6 +24,10 @@
 				type: String,
 				value: 'auto'
 			},
+			manualInit: {
+				type: Boolean,
+				value: false
+			},
 			noAdHoc: {
 				type: Boolean,
 				value: false
@@ -43,6 +47,7 @@
 		},
 		_currentRoute: null,
 		_importedUris: null,
+		_initialized: false,
 		_previousRoute: null,
 		_previousUrl: null,
 		_routesInError: null,
@@ -65,19 +70,24 @@
 			}).defaultPrevented;
 		},
 
+
 		initialize: function () {
-			if (this.isInitialized) {
+			if (this._initialized) {
 				return;
 			}
 
 			var boundStateChangeHandler = this._stateChange.bind(this);
 			window.addEventListener('popstate', boundStateChangeHandler);
 			boundStateChangeHandler();
+			this._initialized = true;
 		},
 
 		ready: function () {
 			this._importedUris = {};
 			this._routesInError = {};
+			if (!this.manualInit) {
+				this.async(this.initialize);
+			}
 		},
 
 		go: function (path, options) {
@@ -145,6 +155,7 @@
 			}
 			this._previousUrl = url;
 
+
 			// fire a state-change event on the app-router and return early if the user called event.preventDefault()
 			if (!this._fireEvent('state-change', eventDetail)) {
 				return;
@@ -188,17 +199,25 @@
 		_addRouteForCurrentPathAndActivate: function (importUri, templateId) {
 			var
 				url = this.parseUrl(window.location.href, this.mode),
-				routeElement = document.createElement("cosmoz-page-route"),
-				route;
+				route = this.addRoute({
+					import: importUri,
+					path: url.path,
+					persist: this.persist,
+					templateId: templateId
+				});
 
-			routeElement.setAttribute('path', url.path);
-			if (this.persist) {
-				routeElement.setAttribute('persist', '');
-			}
-			routeElement.setAttribute('template-id', templateId);
-			routeElement.setAttribute('import', importUri);
-			route = Polymer.dom(this.$.routes).appendChild(routeElement);
 			this._activateRoute(route, url);
+		},
+
+		addRoute: function (route) {
+			var element = document.createElement("cosmoz-page-route");
+			element.setAttribute('path', route.path);
+			if (route.persist) {
+				element.setAttribute('persist', '');
+			}
+			element.setAttribute('template-id', route.templateId);
+			element.setAttribute('import', route.import);
+			return Polymer.dom(this.$.routes).appendChild(element);
 		},
 
 		_activateRoute: function (route, url) {
