@@ -217,7 +217,7 @@
 			}
 			element.setAttribute('template-id', route.templateId);
 			element.setAttribute('import', route.import);
-			return Polymer.dom(this.$.routes).appendChild(element);
+			return Polymer.dom(this).appendChild(element);
 		},
 
 		_activateRoute: function (route, url) {
