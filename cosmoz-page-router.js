@@ -184,7 +184,6 @@
 				return;
 			}
 
-			this._fireEvent('route-loading', eventDetail);
 			this._addAdHocRoute(url.path);
 		},
 
@@ -271,7 +270,7 @@
 					};
 
 					importLink.notFound = true;
-					this._routesInError[importUri] = importErrorEvent;
+					router._routesInError[importUri] = importErrorEvent;
 					router._fireEvent('import-error', importErrorEvent);
 				};
 
@@ -289,6 +288,9 @@
 				importLink.loaded = false;
 				document.head.appendChild(importLink);
 				this._importedUris[importUri] = importLink;
+
+				this._fireEvent('route-loading', eventDetail);
+
 			} else {
 				// previously imported. this is an async operation and may not be complete yet.
 				importLink = this._importedUris[importUri];
@@ -297,6 +299,8 @@
 				} else if (!importLink.loaded) {
 					importLink.addEventListener('load', importLoadedCallback);
 					importLink.addEventListener('error', importErrorCallback);
+
+					this._fireEvent('route-loading', eventDetail);
 				} else {
 					this._activateImport(route, url, eventDetail, importLink);
 				}
