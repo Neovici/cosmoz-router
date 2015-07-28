@@ -5,8 +5,29 @@
 (function () {
 	"use strict";
 
+	// Try to detect importNode bug https://github.com/Polymer/polymer/issues/2157
+
+	var hasImportNodeBug = false,
+		testImportLink,
+		testTemplate,
+		clonedTemplate,
+		currentScript,
+		currentDocument;
+
+	currentScript = document._currentScript || document.currentScript;
+	currentDocument = currentScript.ownerDocument;
+	testImportLink = currentDocument.querySelector('link[rel="import"][href="detect-import-node-bug.html"]');
+	testTemplate = testImportLink.import.querySelector('template');
+	clonedTemplate = document.importNode(testTemplate, true);
+	if (!clonedTemplate.content || clonedTemplate.content.childNodes.length === 0) {
+		hasImportNodeBug = true;
+	}
+
+
 	// HACK: this is to keep jslint quiet
 	var polymer = Polymer;
+
+
 
 	polymer({
 		is: 'cosmoz-page-router',
@@ -321,9 +342,40 @@
 			}
 		},
 
+		_instantiateTemplate: function (template) {
+			if (hasImportNodeBug) {
+				return this._fixedImportNode(template);
+			}
+			return document.importNode(template, true);
+		},
+
+		_fixedImportNode: function (node, doc) {
+			var clone;
+			doc = doc || document;
+			clone = doc.importNode(node, false);
+
+			for (var child = node.firstChild; child; child = child.nextSibling) {
+				clone.appendChild(this._fixedImportNode(child));
+			}
+
+			if (node.nodeName === 'TEMPLATE') {
+				// FIX IE bug
+				if (!clone.content) {
+					clone.content = doc.createDocumentFragment();
+				}
+				var cloneContent = clone.content;
+				for (var child = node.content.firstChild; child; child = child.nextSibling) {
+					// FIX: use template's "inert" ownerDocument for cloning template content
+					cloneContent.appendChild(this._fixedImportNode(child, node.ownerDocument));
+				}
+			}
+
+			return clone;
+		},
+
 		_activateTemplate: function (route, url, eventDetail, template) {
 			var
-				templateInstance = document.importNode(template, true),
+				templateInstance = this._instantiateTemplate(template),
 				templateId = route.templateId,
 				templateViewPrototype,
 				model;
