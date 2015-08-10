@@ -350,26 +350,8 @@
 		},
 
 		_fixedImportNode: function (node, doc) {
-			var clone;
-			doc = doc || document;
-			clone = doc.importNode(node, false);
-
-			for (var child = node.firstChild; child; child = child.nextSibling) {
-				clone.appendChild(this._fixedImportNode(child));
-			}
-
-			if (node.nodeName === 'TEMPLATE') {
-				// FIX IE bug
-				if (!clone.content) {
-					clone.content = doc.createDocumentFragment();
-				}
-				var cloneContent = clone.content;
-				for (var child = node.content.firstChild; child; child = child.nextSibling) {
-					// FIX: use template's "inert" ownerDocument for cloning template content
-					cloneContent.appendChild(this._fixedImportNode(child, node.ownerDocument));
-				}
-			}
-
+			var clone = document.importNode(node, false);
+			clone.innerHTML = node.innerHTML;
 			return clone;
 		},
 
