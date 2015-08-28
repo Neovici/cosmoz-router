@@ -7,7 +7,8 @@
 
 	// Try to detect importNode bug https://github.com/Polymer/polymer/issues/2157
 
-	var hasImportNodeBug = false,
+	var
+		hasImportNodeBug = false,
 		testImportLink,
 		testTemplate,
 		clonedTemplate,
@@ -23,13 +24,7 @@
 		hasImportNodeBug = true;
 	}
 
-
-	// HACK: this is to keep jslint quiet
-	var polymer = Polymer;
-
-
-
-	polymer({
+	Polymer({
 		is: 'cosmoz-page-router',
 
 		behaviors: [
@@ -37,22 +32,27 @@
 		],
 
 		properties: {
+			/* Ad-hoc routing template file name suffix */
 			fileSuffix: {
 				type: String,
 				value: '.html'
 			},
+			/* `hash` , `hashbang` , `pushstate` or `auto` */
 			mode: {
 				type: String,
 				value: 'auto'
 			},
+			/* Don't run `initialize` on `ready` */
 			manualInit: {
 				type: Boolean,
 				value: false
 			},
+			/* Don't create ad-hoc routes but instead fire a `not-found` event */
 			noAdHoc: {
 				type: Boolean,
 				value: false
 			},
+			/* Don't empty `cosmoz-page-route` element when navigating from a route, persisting it. */
 			persist: {
 				type: Boolean,
 				value: false
@@ -61,6 +61,7 @@
 				type: String,
 				value: 'auto'
 			},
+			/* Anything to prefix ad-hoc routes with, be it a `views` folder or a different domain */
 			urlPrefix: {
 				type: String,
 				value: ''
@@ -82,6 +83,7 @@
 
 		/**
 		* Utility function that fires an event from a polymer element and return false if preventDefault has been called on the event.
+		* @return {Boolean} `true` = continue, `false` = prevent further actions
 		*/
 		_fireEvent: function (type, detail, node, bubbles) {
 			return !this.fire(type, detail, {
@@ -91,7 +93,9 @@
 			}).defaultPrevented;
 		},
 
-
+		/**
+		 * Adds event listener to `popstate` event
+		 */
 		initialize: function () {
 			if (this._initialized) {
 				return;
@@ -229,6 +233,10 @@
 			this._activateRoute(route, url);
 		},
 
+		/**
+		 * Add a `cosmoz-page-route` element
+		 * @param {Object} route { persist: Boolean, templateId: 'Route template-id', import: 'Route import', path: 'Route path' }
+		 */
 		addRoute: function (route) {
 			var element = document.createElement("cosmoz-page-route");
 			element.setAttribute('path', route.path);
@@ -481,4 +489,54 @@
 			event.stopPropagation();
 		}
 	});
+/**
+	 * Fires when the URL changes and cosmoz-page-router is about to do work. If a listener calls `event.preventDefault()` on this, the routing action is cancelled.
+	 *
+	 * Useful to subscribe to if re-routing / redirects are going to be made.
+	 * @event state-change
+	 * @param {{ path: url.path }} detail
+	 */
+
+	/**
+	 * Fires when ad-hoc routing initiates, to allow the host application / component to display a loading message, if necessary.
+	 *
+	 * @event route-loading
+	 * @param {{
+			path: url.path,
+			route: route,
+			oldRoute: this._activeRoute
+		}} detail
+	 */
+
+	/**
+	 * If the HTML import fails (404 file not found or similar). A good place to show an error message to the user.
+	 *
+	 * @event import-error
+	 * @param {{
+			route: route,
+			errorEvent: event
+		}} detail
+	 */
+
+	/**
+	 * Fires if the HTML import succeeded but no template with the correct ID could be located in the import.
+	 *
+	 * @event template-not-found
+	 * @param {{
+			path: url.path,
+			route: route,
+			oldRoute: this._activeRoute
+		}} detail
+	 */
+
+	/**
+	 * Fires if the HTML import succeeded but no template with the correct ID could be located in the import.
+	 *
+	 * @event template-not-found
+	 * @param {{
+			path: url.path,
+			route: route,
+			oldRoute: this._activeRoute
+		}} detail
+	 */
 }());

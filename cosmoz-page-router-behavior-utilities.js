@@ -1,6 +1,6 @@
 // @license Copyright (C) 2015 Erik Ringsmuth - MIT license
 // @license Copyright (C) 2015 Neovici AB - Apache 2 License
-/*global document, window, URL */
+/*global Cosmoz, document, window, URL */
 (function () {
 	"use strict";
 
@@ -51,7 +51,8 @@
 	};
 
 	window.Cosmoz = window.Cosmoz || {};
-	window.Cosmoz.PageRouterUtilitiesBehavior = {
+	/** @polymerBehavior */
+	Cosmoz.PageRouterUtilitiesBehavior = {
 
 		// @license MIT
 		// @copyright Erik Ringsmuth 2015

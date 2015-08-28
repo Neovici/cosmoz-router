@@ -2,10 +2,8 @@
 /*global Polymer, page, document */
 (function () {
 	"use strict";
-	// HACK: this is to keep jslint quiet
-	var polymer = Polymer;
 
-	polymer({
+	Polymer({
 		is: 'cosmoz-page-route',
 		properties: {
 			active: Boolean,
@@ -47,4 +45,28 @@
 			Polymer.NeonAnimatableBehavior
 		]
 	});
+
+	/**
+	 * Fired when the template node has been imported and mixed in with its template object.
+	 * Could be used to inject common template behaviors or properties.
+	 *
+	 * @event template-created
+	 * @param {{
+			path: url.path,
+			route: route,
+			oldRoute: this._activeRoute
+		}} detail
+	 */
+
+
+	/**
+	 * Fired when model with `params` is injected into the template instance.
+	 *
+	 * @event template-ready
+	 * @param {{
+			path: url.path,
+			route: route,
+			oldRoute: this._activeRoute
+		}} detail
+	 */
 }());
