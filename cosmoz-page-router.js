@@ -336,12 +336,27 @@
 			}
 		},
 
+		_hasCustomElement: function (elementName) {
+			return Polymer.telemetry.registrations.some(function (element) {
+				return element.is === elementName;
+			});
+		},
+
 		_activateImport: function (route, url, eventDetail, importLink) {
-			var template;
 			route.importLink = importLink;
 			// make sure the user didn't navigate to a different route while it loaded
 			if (route === this._loadingRoute) {
-				template = importLink.import.getElementById(route.templateId);
+
+				var template = importLink.import.getElementById(route.templateId);
+
+				if (template.tagName === 'DOM-MODULE') {
+					if (this._hasCustomElement(route.templateId)) {
+						this._activateCustomElement(route, url, eventDetail);
+						return;
+					}
+					this._fireEvent('element-not-found', eventDetail);
+					return;
+				}
 				if (!template) {
 					this._fireEvent('template-not-found', eventDetail);
 					return;
@@ -361,6 +376,29 @@
 			var clone = document.importNode(node, false);
 			clone.innerHTML = node.innerHTML;
 			return clone;
+		},
+
+		_activateCustomElement: function (route, url, eventDetail) {
+			var
+				element = document.createElement(route.templateId),
+				model,
+				router = this;
+
+			eventDetail.templateInstance = element;
+			route.templateInstance = element;
+
+			this._fireEvent('template-created', eventDetail, route, true);
+
+			model = this._createModel(route, url, eventDetail);
+
+			this._setObjectProperties(eventDetail.templateInstance, model);
+
+			this._fireEvent('template-ready', eventDetail, route, true);
+
+			Polymer.dom(this._loadingRoute).appendChild(element);
+
+			// FIXME: Change route after element ready()
+			router._changeRoute();
 		},
 
 		_activateTemplate: function (route, url, eventDetail, template) {
