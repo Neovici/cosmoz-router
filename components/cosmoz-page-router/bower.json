@@ -1,0 +1,30 @@
+{
+  "name": "cosmoz-page-router",
+  "main": "cosmoz-page-router.html",
+  "version": "0.1.4",
+  "homepage": "https://github.com/Neovici/cosmoz-page-router",
+  "authors": [
+    "Neovici Development"
+  ],
+  "description": "Polymer dom-bind based template view routing",
+  "keywords": [
+    "web-components",
+    "polymer",
+    "router",
+    "cosmoz"
+  ],
+  "license": "Apache 2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-flex-layout": "polymerelements/iron-flex-layout#~1.0.2",
+    "neon-animation": "polymerelements/neon-animation#~1.0.6"
+  }
+}
