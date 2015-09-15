@@ -1,0 +1,67 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<title>cosmoz-page-router Demo</title>
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<link rel="import" href="../cosmoz-page-router.html">
+	</head>
+	<body unresolved>
+
+<h1>cz-page-router test</h1>
+
+
+	<ul>
+		<li><a href="#!/view1">/view1</a>
+		<li><a href="#!/view2">/view2</a>
+		<li><a href="#!/view3">/view3</a>
+		<li><a href="#!/scroll-view">/scroll-view</a>
+		<li><a href="#!/scroll-view#top">/scroll-view#top</a>
+		<li><a href="#!/scroll-view#middle">/scroll-view#middle</a>
+		<li><a href="#!/scroll-view#bottom">/scroll-view#bottom</a>
+	</ul>
+
+	<div style="position: relative">
+	<cosmoz-page-router id="appRouter" manual-init>
+		<cosmoz-page-route path="/view1" import="views/view1.html" template-id="tests-view1"></cosmoz-page-route>
+		<cosmoz-page-route path="/view2" import="views/view2.html" template-id="tests-view2"></cosmoz-page-route>
+		<cosmoz-page-route path="/view3" import="views/view3.html" template-id="tests-view3"></cosmoz-page-route>
+		<cosmoz-page-route path="/scroll-view" import="views/scroll-view.html" template-id="scroll-view"></cosmoz-page-route>
+	</cosmoz-page-router>
+	</div>
+
+			<script>
+/*globals window, document,cz,Polymer */
+(function () {
+	"use strict";
+
+	window.addEventListener('WebComponentsReady', function () {
+		var pageRouter = document.querySelector('cosmoz-page-router');
+
+		pageRouter.addEventListener('template-created', function (event) {
+			console.log('test-cz-page-router template-created');
+		});
+		pageRouter.addEventListener('template-ready', function (event) {
+			console.log('test-cz-page-router template-ready');
+		});
+		pageRouter.addEventListener('template-activate', function (event) {
+			console.log('test-cz-page-router template-activate');
+		});
+
+		pageRouter.initialize();
+	});
+}());
+</script>
+
+	</body>
+</html>
