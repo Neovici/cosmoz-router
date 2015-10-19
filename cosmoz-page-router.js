@@ -193,13 +193,13 @@
 			}
 
 			// find the first matching route
-			route = this.$.routes.firstElementChild;
+			route = Polymer.dom(this).firstElementChild;
 			while (route) {
 				if (route.tagName === 'COSMOZ-PAGE-ROUTE' && this.testRoute(route.path, url.path)) {
 					this._activateRoute(route, url);
 					return;
 				}
-				route = route.nextSibling;
+				route = Polymer.dom(route).nextSibling;
 			}
 
 			eventDetail.url = url;
