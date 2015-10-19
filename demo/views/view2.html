@@ -1,4 +1,4 @@
-<template id="tests-view2" is="dom-bind">
+<template id="view2" is="dom-bind">
 	<h2>Welcome to the test view 2</h2>
 	<div>
 	count = <span>{{ count }}</span>.
@@ -17,9 +17,7 @@
 (function () {
 	"use strict";
 
-	var templateView = Cosmoz.TemplateView;
-
-	templateView['tests-view2'] = {
+	Cosmoz.TemplateView['view2'] = {
 		listeners: {
 			'template-activate': '_onTemplateActivate'
 		},

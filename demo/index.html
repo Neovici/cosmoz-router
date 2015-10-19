@@ -22,9 +22,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 	<ul>
+		<li><a href="#!/">/Home</a>
 		<li><a href="#!/view1">/view1</a>
 		<li><a href="#!/view2">/view2</a>
-		<li><a href="#!/view3">/view3</a>
+		<li><a href="#!/view3">/view3 (ad-hoc)</a>
 		<li><a href="#!/scroll-view">/scroll-view</a>
 		<li><a href="#!/scroll-view#top">/scroll-view#top</a>
 		<li><a href="#!/scroll-view#middle">/scroll-view#middle</a>
@@ -32,10 +33,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	</ul>
 
 	<div style="position: relative">
-	<cosmoz-page-router id="appRouter" manual-init>
-		<cosmoz-page-route path="/view1" import="views/view1.html" template-id="tests-view1"></cosmoz-page-route>
-		<cosmoz-page-route path="/view2" import="views/view2.html" template-id="tests-view2"></cosmoz-page-route>
-		<cosmoz-page-route path="/view3" import="views/view3.html" template-id="tests-view3"></cosmoz-page-route>
+	<cosmoz-page-router id="appRouter" manual-init mode="hash" url-prefix="views">
+		<cosmoz-page-route path="/" import="views/home.html" template-id="home"></cosmoz-page-route>
+		<cosmoz-page-route path="/view1" import="views/view1.html" template-id="view1"></cosmoz-page-route>
+		<cosmoz-page-route path="/view2" import="views/view2.html" template-id="view2"></cosmoz-page-route>
+		<!-- <cosmoz-page-route path="/view3" import="views/view3.html" template-id="view3"></cosmoz-page-route> -->
 		<cosmoz-page-route path="/scroll-view" import="views/scroll-view.html" template-id="scroll-view"></cosmoz-page-route>
 	</cosmoz-page-router>
 	</div>
