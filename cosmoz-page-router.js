@@ -15,14 +15,14 @@
 		currentScript,
 		currentDocument;
 
-	currentScript = document._currentScript || document.currentScript;
-	currentDocument = currentScript.ownerDocument;
-	testImportLink = currentDocument.querySelector('link[rel="import"][href="detect-import-node-bug.html"]');
-	testTemplate = testImportLink.import.querySelector('template');
-	clonedTemplate = document.importNode(testTemplate, true);
-	if (!clonedTemplate.content || clonedTemplate.content.childNodes.length === 0) {
-		hasImportNodeBug = true;
-	}
+	// currentScript = document._currentScript || document.currentScript;
+	// currentDocument = currentScript.ownerDocument;
+	// testImportLink = currentDocument.querySelector('link[rel="import"][href="detect-import-node-bug.html"]');
+	// testTemplate = testImportLink.import.querySelector('template');
+	// clonedTemplate = document.importNode(testTemplate, true);
+	// if (!clonedTemplate.content || clonedTemplate.content.childNodes.length === 0) {
+	// 	hasImportNodeBug = true;
+	// }
 
 	Polymer({
 		is: 'cosmoz-page-router',
@@ -395,10 +395,12 @@
 
 			this._fireEvent('template-ready', eventDetail, route, true);
 
-			Polymer.dom(this._loadingRoute).appendChild(element);
+			Polymer.dom(this._loadingRoute.root).appendChild(element);
 
 			// FIXME: Change route after element ready()
 			router._changeRoute();
+
+			this._fireEvent('template-activate', eventDetail, route, true);
 		},
 
 		_activateTemplate: function (route, url, eventDetail, template) {
@@ -480,6 +482,7 @@
 					nodeToRemove = node;
 					node = Polymer.dom(node).nextSibling;
 					Polymer.dom(route.root).removeChild(nodeToRemove);
+
 				}
 			}
 		},
