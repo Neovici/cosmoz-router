@@ -24,6 +24,8 @@
 	// 	hasImportNodeBug = true;
 	// }
 
+	// Leave a blank comment before Polymer declaration so that iron-component-page uses the doc from the .html file
+	//
 	Polymer({
 		is: 'cosmoz-page-router',
 
