@@ -23,7 +23,6 @@
 							timing: {
 								duration: 150
 							}
-
 						}
 					};
 				}
@@ -42,6 +41,7 @@
 			templateInstance: Object
 		},
 		behaviors: [
+			Polymer.IronResizableBehavior,
 			Polymer.NeonAnimatableBehavior
 		]
 	});
