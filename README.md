@@ -1,5 +1,7 @@
 # cosmoz-page-router
 
+[![Build Status](https://travis-ci.org/Neovici/cosmoz-page-router.svg?branch=master)](https://travis-ci.org/Neovici/cosmoz-page-router)
+
 cosmoz-page-router is a Polymer component to handle client side URL routing and view loading / management.
 
 It support ad-hoc routing so no routes need to be defined - any accessed route will try to be loaded.

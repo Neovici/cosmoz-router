@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+	<title>cosmoz-page-router basic test</title>
+	<script type="text/javascript">
+	var logStore = [],
+		errorStore = [],
+		warnStore = [],
+		oldLogFunc = console.log,
+		oldErrorFunc = console.error,
+		oldWarnFunc = console.warn;
+
+	console.log = function (logMessage) {
+		logStore.push(logMessage);
+		oldLogFunc.apply(console, arguments);
+	};
+
+	console.error = function (errorMessage) {
+		errorStore.push(errorMessage);
+		oldErrorFunc.apply(console, arguments);
+	};
+
+	console.warn = function (warnMessage) {
+		warnStore.push(warnMessage);
+		oldWarnFunc.apply(console, arguments);
+	};
+
+	</script>
+	<script src="../../web-component-tester/browser.js"></script>
+	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+	<link rel="import" href="../cosmoz-page-router.html">
+</head>
+<body>
+	<test-fixture id="cosmoz-page-router-fixture">
+		<template>
+			<cosmoz-page-router></cosmoz-page-router>
+		</template>
+	</test-fixture>
+
+	<script>
+	/*global WCT, suite, fixture, setup, test, Polymer, assert, logStore, errorStore */
+	(function () {
+		'use strict';
+
+		suite('<cosmoz-page-router>', function () {
+			var myElement;
+
+			setup(function () {
+				myElement = fixture('cosmoz-page-router-fixture');
+			});
+
+			test('No console logs should exist', function () {
+				assert.equal(logStore.length, 0, 'Log messages: ' + logStore.join(' | '));
+			});
+
+			test('No console warn should exist', function () {
+				assert.equal(warnStore.length, 0, 'Warn messages: ' + warnStore.join(' | '));
+			});
+
+			test('No console errors should exist', function () {
+				assert.equal(errorStore.length, 0, 'Error messages: ' + errorStore.join(' | '));
+			});
+		});
+	}());
+
+	</script>
+</body>
+</html>
