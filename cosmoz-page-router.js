@@ -240,7 +240,9 @@
 		 * @param {Object} route { persist: Boolean, templateId: 'Route template-id', import: 'Route import', path: 'Route path' }
 		 */
 		addRoute: function (route) {
-			var element = document.createElement("cosmoz-page-route");
+			var 
+				element = document.createElement("cosmoz-page-route"),
+				newRoute;
 			element.setAttribute('path', route.path);
 			if (route.persist) {
 				element.setAttribute('persist', '');
@@ -252,7 +254,11 @@
 				route: element
 			}, this, true);
 
-			return Polymer.dom(this).appendChild(element);
+			newRoute = Polymer.dom(this).appendChild(element);
+
+			Polymer.dom().flush();
+			
+			return newRoute;			
 		},
 
 		_activateRoute: function (route, url) {
