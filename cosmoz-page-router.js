@@ -358,6 +358,11 @@
 
 				var template = importLink.import.getElementById(route.templateId);
 
+				if (!template) {
+					this._fireEvent('template-not-found', eventDetail);
+					return;
+				}
+
 				if (template.tagName === 'DOM-MODULE') {
 					if (this._hasCustomElement(route.templateId)) {
 						this._activateCustomElement(route, url, eventDetail);
@@ -366,10 +371,7 @@
 					this._fireEvent('element-not-found', eventDetail);
 					return;
 				}
-				if (!template) {
-					this._fireEvent('template-not-found', eventDetail);
-					return;
-				}
+
 				this._activateTemplate(route, url, eventDetail, template);
 			}
 		},
