@@ -18,8 +18,7 @@ Make sure the `<cosmoz-page-router>` element takes up all the space the views wi
       </cosmoz-page-route>
     </cosmoz-page-router>
 
-#### Views
-
+#### View
     <template id="start" is="dom-bind">
       <h2>Welcome to the start page</h2>
       <div>{{ boundValue }}</div>
@@ -72,6 +71,9 @@ Will otherwise be fired when activated for persisted views.
 @demo demo/index.html
 -->
 
+<script type="text/javascript" src="cosmoz-page-router-behavior-utilities.js"></script>
+<script type="text/javascript" src="cosmoz-template-view.js"></script>
+
 <dom-module id="cosmoz-page-router">
 	<template>
     <style>
@@ -86,9 +88,5 @@ Will otherwise be fired when activated for persisted views.
 			<content></content>
 		</neon-animated-pages>
 	</template>
-
+  <script type="text/javascript" src="cosmoz-page-router.js"></script>
 </dom-module>
-
-<script type="text/javascript" src="cosmoz-page-router-behavior-utilities.js"></script>
-<script type="text/javascript" src="cosmoz-template-view.js"></script>
-<script type="text/javascript" src="cosmoz-page-router.js"></script>

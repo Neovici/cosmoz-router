@@ -8,21 +8,17 @@
 	// Try to detect importNode bug https://github.com/Polymer/polymer/issues/2157
 
 	var
-		hasImportNodeBug = false,
-		testImportLink,
-		testTemplate,
-		clonedTemplate,
-		currentScript,
-		currentDocument;
+		hasImportNodeBug = false;
 
-	// currentScript = document._currentScript || document.currentScript;
-	// currentDocument = currentScript.ownerDocument;
-	// testImportLink = currentDocument.querySelector('link[rel="import"][href="detect-import-node-bug.html"]');
-	// testTemplate = testImportLink.import.querySelector('template');
-	// clonedTemplate = document.importNode(testTemplate, true);
-	// if (!clonedTemplate.content || clonedTemplate.content.childNodes.length === 0) {
-	// 	hasImportNodeBug = true;
-	// }
+	/*	currentScript = document._currentScript || document.currentScript,
+		currentDocument = currentScript.ownerDocument,
+		testImportLink = currentDocument.querySelector('link[rel="import"][href="detect-import-node-bug.html"]'),
+		testTemplate = testImportLink.import.querySelector('template'),
+		clonedTemplate = document.importNode(testTemplate, true);
+
+	if (!clonedTemplate.content || clonedTemplate.content.childNodes.length === 0) {
+		hasImportNodeBug = true;
+	} */
 
 	// Leave a blank comment before Polymer declaration so that iron-component-page uses the doc from the .html file
 	//
@@ -240,7 +236,7 @@
 		 * @param {Object} route { persist: Boolean, templateId: 'Route template-id', import: 'Route import', path: 'Route path' }
 		 */
 		addRoute: function (route) {
-			var 
+			var
 				element = document.createElement("cosmoz-page-route"),
 				newRoute;
 			element.setAttribute('path', route.path);
@@ -257,8 +253,8 @@
 			newRoute = Polymer.dom(this).appendChild(element);
 
 			Polymer.dom().flush();
-			
-			return newRoute;			
+
+			return newRoute;
 		},
 
 		_activateRoute: function (route, url) {

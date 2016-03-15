@@ -1,5 +1,5 @@
 // @license Copyright (C) 2015 Neovici AB - Apache 2 License
-/*global Polymer, page, document */
+/*global Polymer */
 (function () {
 	"use strict";
 
