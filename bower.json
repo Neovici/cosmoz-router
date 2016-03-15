@@ -1,6 +1,9 @@
 {
   "name": "cosmoz-page-router",
-  "main": "cosmoz-page-router.html",
+  "main": [
+    "cosmoz-page-route.html",
+    "cosmoz-page-router.html"
+  ],
   "version": "0.1.4",
   "homepage": "https://github.com/Neovici/cosmoz-page-router",
   "authors": [
