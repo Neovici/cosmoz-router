@@ -1,0 +1,223 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-location/iron-location.html">
+<link rel="import" href="../iron-location/iron-query-params.html">
+
+<dom-module id="cosmoz-page-location">
+    <template>
+        <iron-location 
+            path="{{appPath}}"
+            query="{{_urlQueryString}}"
+            hash="{{_urlHash}}">
+        </iron-location>
+        <iron-query-params
+            params-string="{{_urlQueryString}}"
+            params-object="{{appQueryParams}}">
+        </iron-query-params>
+        <iron-query-params 
+            params-string="{{routeQueryString}}"
+            params-object="{{routeQueryParams}}">
+        </iron-query-params>
+        <iron-query-params 
+            params-string="{{routeHash}}"
+            params-object="{{routeHashParams}}">
+        </iron-query-params>
+
+        <iron-query-params 
+            params-string="{{_tempParamsString}}"
+            params-object="{{_tempParamsObject}}"></iron-query-params>
+    </template>
+    <script>
+        (function () {
+            Polymer({
+                is: 'cosmoz-page-location',
+                properties: {
+                    /**
+                     *
+                     */ 
+                    appPath: {
+                        type: String,
+                        notify: true
+                    },
+
+                    /**
+                     * 
+                     */
+                    appQueryParams: {
+                        type: Object,
+                        notify: true
+                    },
+
+                    /**
+                     */
+                    routePath: {
+                        type: String,
+                        notify: true
+                    },
+
+                    /**
+                     */
+                    routeQueryString: {
+                        type: String
+                    },
+
+                    /**
+                     * 
+                     */
+                    routeQueryParams: {
+                        type: Object,
+                        notify: true
+                    },
+
+                    /**
+                     */
+                    routeHash: {
+                        type: String,
+                        notify: true
+                    },
+
+                    routeHashParams: {
+                        type: Object,
+                        notify: true
+                    },
+
+                    _urlQueryString: {
+                        type: String
+                    },
+
+                    _urlHash: {
+                        type: String
+                    }
+                },
+
+                observers: [
+                    '_computeRoutePathAndParams(_urlHash)',
+                    '_updateHash(routePath, routeQueryString, routeHash)'
+                ],
+
+                attached: function () {
+                    this._attached = true;
+                },
+
+                getRouteUrl: function (routeParams, routeHashParams) {
+
+                    var prefix = this._hashBang ? '!#' : '#';
+
+                    return prefix + this._getRoute(routeParams, routeHashParams);
+                },
+
+                getAppUrl: function (appParams, routeParams, routeHashParams) {
+                    var 
+                        route = this._getRoute(routeParams, routeHashParams),
+                        queryString;
+
+                    this._tempParamsObject = this._objectAssign({}, this.appQueryParams, appParams);
+                    queryString = this._tempParamsString;
+
+                    return this._getUrl(this.appPath, queryString, route);
+
+                },
+
+                _getRoute: function (routeParams, routeHashParams) {
+                    var queryString, hash;
+
+                    this._tempParamsObject = this._objectAssign({}, this.routeQueryParams, routeParams);
+                    queryString = this._tempParamsString;
+                    this._tempParamsObject = this._objectAssign({}, this.routeHashParams, routeHashParams);
+                    hash = this._tempParamsString;
+                    return this._getUrl(this.routePath, queryString, hash);
+                },
+
+                /**
+                 * https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Polyfill
+                 */
+                _objectAssign: function (target, sources) {
+                    var to = Object(target);
+
+                    for (var index = 1; index < arguments.length; index++) {
+                        var nextSource = arguments[index];
+
+                        if (nextSource != null) { // Skip over if undefined or null
+                            for (var nextKey in nextSource) {
+                            // Avoid bugs when hasOwnProperty is shadowed
+                                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                                    to[nextKey] = nextSource[nextKey];
+                                }
+                            }
+                        }
+                    }
+                    return to;
+                },
+
+                _computeRoutePathAndParams: function (pathAndQuery) {
+                    var 
+                        hashIndex,
+                        searchIndex,
+                        routePath,
+                        routeQueryString,
+                        routeHash;
+
+                    if (this._dontComputeRoute) {
+                        return;
+                    }
+
+                    if (pathAndQuery.substring(0, 2) === '!/') {
+                        this._hashBang = true;
+                        pathAndQuery = pathAndQuery.substring(1);
+                    } 
+
+                    hashIndex = pathAndQuery.indexOf('#'); 
+
+				    if (hashIndex !== -1) {
+                        routePath = pathAndQuery.substring(0, hashIndex);
+                        routeHash = pathAndQuery.substring(hashIndex + 1);
+                    } else {
+                        routePath = pathAndQuery;
+                        routeHash = '';
+                    }
+
+                    searchIndex = routePath.indexOf('?');
+                    if (searchIndex !== -1) {
+                        routeQueryString = routePath.substring(searchIndex + 1);
+                        routePath = routePath.substring(0, searchIndex);
+                    }
+
+                    this._dontUpdateUrl = true;
+                    this.routePath = routePath;
+                    this.routeQueryString = routeQueryString;
+                    this.routeHash = routeHash;
+                    this._dontUpdateUrl = false;
+                },
+
+                _updateHash: function (routePath, routeQueryString, routeHash) {
+                    if (this._dontUpdateUrl || !this._attached) {
+                        return;
+                    }
+
+                    var newHash = this._getUrl(routePath, routeQueryString, routeHash);
+                    
+                    if (this._hashBang) {
+                        newHash = '!' + newHash;
+                    }
+
+                    this._dontComputeRoute = true;
+                    this._urlHash = newHash;      
+                    this._dontComputeRoute = false;              
+                },
+
+                _getUrl: function (path, queryString, hash) {
+                    var url = path;
+                    if (queryString !== '') {
+                        url = url + '?' + queryString;
+                    } 
+
+                    if (hash !== '') {
+                        url = url + '#' + hash;
+                    }
+
+                    return url;
+
+                }
+            })
+        })();
+    </script>
+</dom-module> 

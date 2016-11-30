@@ -1,0 +1,131 @@
+<!doctype html>
+
+<html>
+<head>
+    <title>cosmoz-page-location</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../polymer/polymer.html">
+    <link rel="import" href="../cosmoz-page-location.html">
+
+</head>
+<body>
+    <cosmoz-page-location-demo></cosmoz-page-location-demo>
+    <dom-module id="cosmoz-page-location-demo">
+        <template>
+            <cosmoz-page-location id="pageLocation"
+                app-path="{{appPath}}" 
+                app-query-params="{{appQueryParams}}"
+                route-path="{{routePath}}"
+                route-query-params="{{routeQueryParams}}"
+                route-hash-params="{{routeHashParams}}">
+            </cosmoz-page-location>
+            <h3>cosmoz-page-location demo</h3>
+            <p>
+                Change values below and observe result in URL bar
+            </p>
+            <p>
+                <label>Change route path</label>
+                <input value="{{routePath::input}}">
+            </p>
+            <p>
+                <label>Change route query param</label>
+                <input value="{{routeParam::input}}">
+            </p>
+
+            <p>
+                <label>Change route hash param</label>
+                <input value="{{routeHashParam::input}}">
+            </p>
+
+            <p>
+                Route URL with different 
+                <label>param value</label>
+                <input value="{{newRouteParam::input}}">
+                <label>and different hash param value</label>
+                <input value="{{newHashParam::input}}">
+                <a href$="{{routeUrl}}">{{routeUrl}}</a>
+            </p>
+
+            <p>
+                <label>Complete URL with app params</label>
+                <input value="{{appParam::input}}">
+                <a href$="{{fullUrl}}">{{fullUrl}}</a>
+            </p>
+        </template>
+        <script>
+            window.addEventListener('WebComponentsReady', function() {
+                Polymer({
+                is: 'cosmoz-page-location-demo',
+                    properties: {
+                        appPath: {
+                            type: String
+                        },
+                        appQueryParams: {
+                            type: Object
+                        },
+                        routePath: {
+                            type: String
+                        },
+
+                        routeQueryParams: {
+                            type: Object
+                        },
+
+                        routeHashParams: {
+                            type: Object
+                        },
+
+                        routeParam: {
+                            type: String,
+                            observer: '_routeParamChanged'
+                        },
+
+                        routeHashParam: {
+                            type: String,
+                            observer: '_routeHashParamChanged'
+                        },
+
+                        newRouteParam: {
+                            type: String,
+                            value: undefined
+                        },
+                        newHashParam: {
+                            type: String,
+                            value: undefined
+                        },
+                        routeUrl: {
+                            type: String,
+                            computed: '_computeNewUrl(newRouteParam, newHashParam)'
+                        },
+                        appParam: {
+                            type: String,
+                            value: ''
+                        },
+                        fullUrl: {
+                            type: String,
+                            computed: '_computeFullUrl(appParam)'
+                        }
+                    },
+
+                    _routeParamChanged: function (e) {
+                        this.set(['routeQueryParams', 'routeparam'], this.routeParam);
+                    },
+                    
+                    _routeHashParamChanged: function (e) {
+                        this.set(['routeHashParams', 'hashparam'], this.routeHashParam);
+                    },
+                    _computeNewUrl: function (newRouteParam, newHashParam) {
+                        return this.$.pageLocation.getRouteUrl( {routeparam: newRouteParam }, { hashparam: newHashParam});
+                    },
+                    _computeFullUrl: function (appParam) {
+                        return this.$.pageLocation.getAppUrl({param: appParam});
+                    } 
+
+                }); 
+            });
+        </script>
+    </dom-module>
+</body>
+
+
