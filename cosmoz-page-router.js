@@ -172,7 +172,7 @@
 					url.path === this._previousUrl.path &&
 					url.search === this._previousUrl.search &&
 					url.isHashPath === this._previousUrl.isHashPath) {
-				this._scrollToHash(url.hash);
+				// this._scrollToHash(url.hash);
 				this._previousUrl = url;
 				return;
 			}
