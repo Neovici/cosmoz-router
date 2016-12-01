@@ -4,7 +4,7 @@
 
 <dom-module id="cosmoz-page-location">
     <template>
-        <iron-location 
+        <iron-location url-space-regex="^$"
             path="{{appPath}}"
             query="{{_urlQueryString}}"
             hash="{{_urlHash}}">
@@ -100,7 +100,7 @@
 
                 getRouteUrl: function (routeParams, routeHashParams) {
 
-                    var prefix = this._hashBang ? '!#' : '#';
+                    var prefix = this._hashBang ? '#!' : '#';
 
                     return prefix + this._getRoute(routeParams, routeHashParams);
                 },
