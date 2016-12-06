@@ -111,6 +111,28 @@
 			if (!this.manualInit) {
 				this.async(this.initialize);
 			}
+
+			this.listen(this, 'cosmoz-route-hash-params-changed', '_onRouteHashParamsChanged');
+		},
+
+		_onRouteHashParamsChanged: function (e) {
+			var 
+				currentRoute = this.$.routes.selectedItem,
+				route,
+				i,
+				eventPath = Polymer.dom(e).path;
+
+			for (i = 0 ; i < eventPath.length; i++) {
+				var element = eventPath[i];
+				if (element.tagName === 'COSMOZ-PAGE-ROUTE') {
+					route = element;
+					break;
+				}	
+			}
+			if (route && route === currentRoute) {
+				window.history.replaceState({}, '', e.detail.newRoute);
+			}
+
 		},
 
 		go: function (path, options) {

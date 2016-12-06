@@ -149,59 +149,81 @@
                 },
 
                 _computeRoutePathAndParams: function (pathAndQuery) {
-                    var 
-                        hashIndex,
-                        searchIndex,
-                        routePath,
-                        routeQueryString,
-                        routeHash;
+                    var parsed;
 
                     if (this._dontComputeRoute) {
                         return;
                     }
 
+                    parsed = this._parse(pathAndQuery);     
+                    
+                    this._hashBang = parsed.hashBang;
+
+                    this._dontUpdateUrl = true;
+                    this.routePath = parsed.path;
+                    this.routeQueryString = parsed.queryString;
+                    this.routeHash = parsed.hash;
+                    this._dontUpdateUrl = false;
+                },
+
+                _parse: function (pathAndQuery) {
+                    var hashBang, hashIndex, path, queryString, hash, searchIndex;
+
                     if (pathAndQuery.substring(0, 2) === '!/') {
-                        this._hashBang = true;
+                        hashBang = true;
                         pathAndQuery = pathAndQuery.substring(1);
                     } 
 
                     hashIndex = pathAndQuery.indexOf('#'); 
 
 				    if (hashIndex !== -1) {
-                        routePath = pathAndQuery.substring(0, hashIndex);
-                        routeHash = pathAndQuery.substring(hashIndex + 1);
+                        path = pathAndQuery.substring(0, hashIndex);
+                        hash = pathAndQuery.substring(hashIndex + 1);
                     } else {
-                        routePath = pathAndQuery;
-                        routeHash = '';
+                        path = pathAndQuery;
+                        hash = '';
                     }
 
-                    searchIndex = routePath.indexOf('?');
+                    searchIndex = path.indexOf('?');
                     if (searchIndex !== -1) {
-                        routeQueryString = routePath.substring(searchIndex + 1);
-                        routePath = routePath.substring(0, searchIndex);
+                        queryString = path.substring(searchIndex + 1);
+                        path = path.substring(0, searchIndex);
+                    } else {
+                        queryString = '';
                     }
 
-                    this._dontUpdateUrl = true;
-                    this.routePath = routePath;
-                    this.routeQueryString = routeQueryString;
-                    this.routeHash = routeHash;
-                    this._dontUpdateUrl = false;
+                    return {
+                        path: path,
+                        queryString: queryString,
+                        hash: hash,
+                        hashBang: hashBang
+                    };
                 },
 
                 _updateHash: function (routePath, routeQueryString, routeHash) {
+                    var currentRoute, newHash;
+
                     if (this._dontUpdateUrl || !this._attached) {
                         return;
                     }
-
-                    var newHash = this._getUrl(routePath, routeQueryString, routeHash);
                     
+                    newHash = this._getUrl(routePath, routeQueryString, routeHash);
                     if (this._hashBang) {
                         newHash = '!' + newHash;
                     }
 
-                    this._dontComputeRoute = true;
-                    this._urlHash = newHash;      
-                    this._dontComputeRoute = false;              
+                    currentRoute = this._parse(this._urlHash);
+
+                    if (currentRoute.path === routePath && currentRoute.queryString === routeQueryString) {
+                        // We must only replace hash-params without adding an entry in history
+                        // However, we should not do that if this cosmoz-page-location element
+                        // is not in the active route, so fire an event and let the enclosing cosmoz-page-router decide what to do.
+                        this.fire('cosmoz-route-hash-params-changed', { newRoute: '#' + newHash });
+                    } else {
+                        this._dontComputeRoute = true;
+                        this._urlHash = newHash;      
+                        this._dontComputeRoute = false;
+                    }              
                 },
 
                 _getUrl: function (path, queryString, hash) {
