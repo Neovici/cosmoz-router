@@ -428,6 +428,13 @@
 
 			this._fireEvent('template-ready', eventDetail, route, true);
 
+			if (this._previousRoute && this._previousRoute.classList.contains('neon-animating')) {
+				// When switching fast between routes, previous animation
+				// will be cancelled and neon-animation-finished event won't be raised.
+				// So we need to do the cleanup that is suposed to be done.
+				this._deactivateRoute(this._previousRoute); 
+			}
+
 			Polymer.dom(this._loadingRoute.root).appendChild(element);
 
 			// FIXME: Change route after element ready()
@@ -553,7 +560,6 @@
 		},
 
 		_onNeonAnimationFinish: function (event) {
-			console.log('_onNeonAnimationFinish');
 			if (this._previousRoute && !this._previousRoute.active) {
 				this._deactivateRoute(this._previousRoute);
 			}
