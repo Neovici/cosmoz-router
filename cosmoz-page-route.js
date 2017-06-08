@@ -27,23 +27,54 @@
 					};
 				}
 			},
-			import: String,
+
+			import: {
+				type: String,
+			},
+
 			imported: {
 				type: Boolean,
 				value: false
 			},
-			path: String,
+
+			path: {
+				type: String,
+			},
+
 			persist: {
 				type: Boolean,
 				value: false
 			},
-			templateId: String,
-			templateInstance: Object
+
+			templateId: {
+				type: String,
+			},
+
+			templateInstance: {
+				type: Object
+			}
 		},
+
 		behaviors: [
 			Polymer.IronResizableBehavior,
 			Polymer.NeonAnimatableBehavior
-		]
+		],
+
+		deactivate: function () {
+			var node,
+				nodeToRemove;
+			if (!this.persist) {
+				// remove the route content
+				node = Polymer.dom(this.root).firstChild;
+				while (node) {
+					nodeToRemove = node;
+					node = Polymer.dom(node).nextSibling;
+					Polymer.dom(this.root).removeChild(nodeToRemove);
+
+				}
+				this.templateInstance = null;
+			}
+		}
 	});
 
 	/**

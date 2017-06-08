@@ -1,0 +1,13 @@
+# EditorConfig helps developers define and maintain consistent
+# coding styles between different editors and IDEs
+# editorconfig.org
+
+root = true
+
+[*]
+indent_style = tab
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.json]
+indent_style = space

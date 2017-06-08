@@ -3,7 +3,7 @@
 /*global Cosmoz, Polymer, document, window */
 
 (function () {
-	"use strict";
+	'use strict';
 
 	// Try to detect importNode bug https://github.com/Polymer/polymer/issues/2157
 
@@ -71,6 +71,7 @@
 		_previousRoute: null,
 		_previousUrl: null,
 		_routesInError: null,
+		_importLinksListeners: null,
 
 		listeners: {
 			'neon-animation-finish': '_onNeonAnimationFinish',
@@ -108,6 +109,7 @@
 		ready: function () {
 			this._importedUris = {};
 			this._routesInError = {};
+			this._importLinksListeners = {};
 			if (!this.manualInit) {
 				this.async(this.initialize);
 			}
@@ -116,7 +118,7 @@
 		},
 
 		_onRouteHashParamsChanged: function (e) {
-			var 
+			var
 				currentRoute = this.$.routes.selectedItem,
 				route,
 				i,
@@ -127,7 +129,7 @@
 				if (element.tagName === 'COSMOZ-PAGE-ROUTE') {
 					route = element;
 					break;
-				}	
+				}
 			}
 			if (route && route === currentRoute) {
 				window.history.replaceState({}, '', e.detail.newRoute);
@@ -188,7 +190,7 @@
 				errorEvent,
 				route;
 
-		    // don't load a new route if only the hash fragment changed
+			// don't load a new route if only the hash fragment changed
 			if (this._previousUrl &&
 					url.hash !== this._previousUrl.hash &&
 					url.path === this._previousUrl.path &&
@@ -313,6 +315,15 @@
 			this._fireEvent('template-activate', eventDetail, route.templateInstance, true);
 		},
 
+		_removeImportLinkListeners: function (importLink) {
+			var listeners = this._importLinksListeners[importLink];
+			if (listeners) {
+				importLink.removeEventListener('load', listeners.load);
+				importLink.removeEventListener('error', listeners.error);
+				this._importLinksListeners[importLink] = null;
+			}
+		},
+
 		_importAndActivate: function (route, url, eventDetail) {
 			var
 				router = this,
@@ -320,6 +331,7 @@
 				importUri = route.import,
 				importLoadedCallback = function (e) {
 					importLink.loaded = true;
+					router._removeImportLinkListeners(importLink);
 					route.imported = true;
 					router._activateImport(route, url, eventDetail, importLink);
 				},
@@ -330,6 +342,7 @@
 					};
 
 					importLink.notFound = true;
+					router._removeImportLinkListeners(importLink);
 					router._routesInError[importUri] = importErrorEvent;
 					router._fireEvent('import-error', importErrorEvent);
 				};
@@ -346,6 +359,11 @@
 				importLink.addEventListener('load', importLoadedCallback);
 				importLink.addEventListener('error', importErrorCallback);
 				importLink.loaded = false;
+				this._importLinksListeners[importLink] = {
+					load: importLoadedCallback,
+					error: importErrorCallback
+				};
+
 				document.head.appendChild(importLink);
 				this._importedUris[importUri] = importLink;
 
@@ -432,7 +450,7 @@
 				// When switching fast between routes, previous animation
 				// will be cancelled and neon-animation-finished event won't be raised.
 				// So we need to do the cleanup that is suposed to be done.
-				this._deactivateRoute(this._previousRoute); 
+				this._deactivateRoute(this._previousRoute);
 			}
 
 			Polymer.dom(this._loadingRoute.root).appendChild(element);
@@ -514,17 +532,7 @@
 
 		// Remove the route's content
 		_deactivateRoute: function (route) {
-			var node, nodeToRemove;
-			if (route && !route.persist) {
-				// remove the route content
-				node = Polymer.dom(route.root).firstChild;
-				while (node) {
-					nodeToRemove = node;
-					node = Polymer.dom(node).nextSibling;
-					Polymer.dom(route.root).removeChild(nodeToRemove);
-
-				}
-			}
+			route.deactivate();
 		},
 
 		_createModel: function (route, url, eventDetail) {

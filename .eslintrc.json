@@ -1,0 +1,72 @@
+{
+    "env": {
+        "browser": true
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "accessor-pairs": 1,
+        "brace-style": 2,
+        "camelcase": 2,
+        "eqeqeq": 2,
+        "guard-for-in": 2,
+        "indent": [
+            2,
+            "tab"
+        ],
+        "no-console": 0,
+        "no-else-return": 2,
+        "no-empty": 2,
+        "no-empty-function": 2,
+        "no-eval": 2,
+        "no-extra-bind": 2,
+        "no-extra-parens": 2,
+        "no-invalid-this": 2,
+        "no-labels": 2,
+        "no-lone-blocks": 2,
+        "no-lonely-if": 2,
+        "no-loop-func": 2,
+        "no-new": 2,
+        "no-param-reassign": 2,
+        "no-self-compare": 2,
+        "no-trailing-spaces": 2,
+        "no-unused-expressions": 2,
+        "no-unused-vars": 1,
+        "no-use-before-define": 2,
+        "no-useless-call": 2,
+        "no-useless-concat": 2,
+        "one-var": 2,
+        "one-var-declaration-per-line": [
+            2,
+            "always"
+        ],
+        "quotes": [
+            2,
+            "single"
+        ],
+        "radix": 2,
+        "semi": [
+            2,
+            "always"
+        ],
+        // "sort-keys": 2,
+        "space-before-function-paren": [
+            2,
+            {
+                "anonymous": "always",
+                "named": "never"
+            }
+        ],
+        "space-in-parens": 2,
+        "valid-jsdoc": 1
+    },
+    "plugins": [
+        "html"
+    ],
+    "globals": {
+        "Cosmoz": false,
+        "CustomElements": false,
+        "HTMLImports": false,
+        "Polymer": false,
+        "WeakMap": false
+    }
+}
