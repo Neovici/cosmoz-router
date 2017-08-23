@@ -1,0 +1,26 @@
+---
+engines:
+  eslint:
+    enabled: true
+    checks:
+      complexity:
+        enabled: false
+    config:
+      sanitize_batch: false
+      extensions:
+       - .js
+       - .html
+
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - javascript
+
+  fixme:
+    enabled: true
+
+ratings:
+  paths:
+  - "**.js"
+  - "**.html"

@@ -3,243 +3,262 @@
 <link rel="import" href="../iron-location/iron-query-params.html">
 
 <dom-module id="cosmoz-page-location">
-    <template>
-        <iron-location url-space-regex="^$"
-            path="{{appPath}}"
-            query="{{_urlQueryString}}"
-            hash="{{_urlHash}}">
-        </iron-location>
-        <iron-query-params
-            params-string="{{_urlQueryString}}"
-            params-object="{{appQueryParams}}">
-        </iron-query-params>
-        <iron-query-params 
-            params-string="{{routeQueryString}}"
-            params-object="{{routeQueryParams}}">
-        </iron-query-params>
-        <iron-query-params 
-            params-string="{{routeHash}}"
-            params-object="{{routeHashParams}}">
-        </iron-query-params>
+	<template>
+		<iron-location url-space-regex="^$"
+			path="{{appPath}}"
+			query="{{_urlQueryString}}"
+			hash="{{_urlHash}}">
+		</iron-location>
+		<iron-query-params
+			params-string="{{_urlQueryString}}"
+			params-object="{{appQueryParams}}">
+		</iron-query-params>
+		<iron-query-params
+			params-string="{{routeQueryString}}"
+			params-object="{{routeQueryParams}}">
+		</iron-query-params>
+		<iron-query-params
+			params-string="{{routeHash}}"
+			params-object="{{routeHashParams}}">
+		</iron-query-params>
 
-        <iron-query-params 
-            params-string="{{_tempParamsString}}"
-            params-object="{{_tempParamsObject}}"></iron-query-params>
-    </template>
-    <script>
-        (function () {
-            Polymer({
-                is: 'cosmoz-page-location',
-                properties: {
-                    /**
-                     *
-                     */ 
-                    appPath: {
-                        type: String,
-                        notify: true
-                    },
+		<iron-query-params
+			params-string="{{_tempParamsString}}"
+			params-object="{{_tempParamsObject}}"></iron-query-params>
+	</template>
+	<script>
+		(function () {
+			'use strict';
 
-                    /**
-                     * 
-                     */
-                    appQueryParams: {
-                        type: Object,
-                        notify: true
-                    },
+			Polymer({
+				is: 'cosmoz-page-location',
+				properties: {
+					/**
+					 *
+					 */
+					appPath: {
+						type: String,
+						notify: true
+					},
 
-                    /**
-                     */
-                    routePath: {
-                        type: String,
-                        notify: true
-                    },
+					/**
+					 *
+					 */
+					appQueryParams: {
+						type: Object,
+						notify: true
+					},
 
-                    /**
-                     */
-                    routeQueryString: {
-                        type: String
-                    },
+					/**
+					 */
+					routePath: {
+						type: String,
+						notify: true
+					},
 
-                    /**
-                     * 
-                     */
-                    routeQueryParams: {
-                        type: Object,
-                        notify: true
-                    },
+					/**
+					 */
+					routeQueryString: {
+						type: String
+					},
 
-                    /**
-                     */
-                    routeHash: {
-                        type: String,
-                        notify: true
-                    },
+					/**
+					 *
+					 */
+					routeQueryParams: {
+						type: Object,
+						notify: true
+					},
 
-                    routeHashParams: {
-                        type: Object,
-                        notify: true
-                    },
+					/**
+					 */
+					routeHash: {
+						type: String,
+						notify: true
+					},
 
-                    _urlQueryString: {
-                        type: String
-                    },
+					routeHashParams: {
+						type: Object,
+						notify: true
+					},
 
-                    _urlHash: {
-                        type: String
-                    }
-                },
+					_urlQueryString: {
+						type: String
+					},
 
-                observers: [
-                    '_computeRoutePathAndParams(_urlHash)',
-                    '_updateHash(routePath, routeQueryString, routeHash)'
-                ],
+					_urlHash: {
+						type: String
+					},
 
-                attached: function () {
-                    this._attached = true;
-                },
+					_tempParamsObject: {
+						type: Object
+					},
 
-                getRouteUrl: function (routeParams, routeHashParams) {
+					_tempParamsString: {
+						type: String
+					}
+				},
 
-                    var prefix = this._hashBang ? '#!' : '#';
+				observers: [
+					'_computeRoutePathAndParams(_urlHash)',
+					'_updateHash(routePath, routeQueryString, routeHash)'
+				],
 
-                    return prefix + this._getRoute(routeParams, routeHashParams);
-                },
+				attached: function () {
+					this._attached = true;
+				},
 
-                getAppUrl: function (appParams, routeParams, routeHashParams) {
-                    var 
-                        route = this._getRoute(routeParams, routeHashParams),
-                        queryString;
+				getRouteUrl: function (routeParams, routeHashParams) {
+					var prefix = this._hashBang ? '#!' : '#';
 
-                    this._tempParamsObject = this._objectAssign({}, this.appQueryParams, appParams);
-                    queryString = this._tempParamsString;
+					return prefix + this._getRoute(routeParams, routeHashParams);
+				},
 
-                    return this._getUrl(this.appPath, queryString, route);
+				getAppUrl: function (appParams, routeParams, routeHashParams) {
+					var route = this._getRoute(routeParams, routeHashParams),
+						queryString;
 
-                },
+					this._tempParamsObject = this._objectAssign({}, this.appQueryParams, appParams);
+					queryString = this._tempParamsString;
 
-                _getRoute: function (routeParams, routeHashParams) {
-                    var queryString, hash;
+					return this._getUrl(this.appPath, queryString, route);
 
-                    this._tempParamsObject = this._objectAssign({}, this.routeQueryParams, routeParams);
-                    queryString = this._tempParamsString;
-                    this._tempParamsObject = this._objectAssign({}, this.routeHashParams, routeHashParams);
-                    hash = this._tempParamsString;
-                    return this._getUrl(this.routePath, queryString, hash);
-                },
+				},
 
-                /**
-                 * https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Polyfill
-                 */
-                _objectAssign: function (target, sources) {
-                    var to = Object(target);
+				_getRoute: function (routeParams, routeHashParams) {
+					var queryString,
+						hash;
 
-                    for (var index = 1; index < arguments.length; index++) {
-                        var nextSource = arguments[index];
+					this._tempParamsObject = this._objectAssign({}, this.routeQueryParams, routeParams);
+					queryString = this._tempParamsString;
+					this._tempParamsObject = this._objectAssign({}, this.routeHashParams, routeHashParams);
+					hash = this._tempParamsString;
+					return this._getUrl(this.routePath, queryString, hash);
+				},
 
-                        if (nextSource != null) { // Skip over if undefined or null
-                            for (var nextKey in nextSource) {
-                            // Avoid bugs when hasOwnProperty is shadowed
-                                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
-                                    to[nextKey] = nextSource[nextKey];
-                                }
-                            }
-                        }
-                    }
-                    return to;
-                },
+				/**
+				 * https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Polyfill
+				**/
+				_objectAssign: function (target, sources) {
+					var to = Object(target),
+						index,
+						nextSource,
+						nextKey;
 
-                _computeRoutePathAndParams: function (pathAndQuery) {
-                    var parsed;
+					for (index = 1; index < arguments.length; index++) {
+						nextSource = arguments[index];
 
-                    if (this._dontComputeRoute) {
-                        return;
-                    }
+						if (nextSource !== null) { // Skip over if undefined or null
+							for (nextKey in nextSource) {
+							// Avoid bugs when hasOwnProperty is shadowed
+								if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+									to[nextKey] = nextSource[nextKey];
+								}
+							}
+						}
+					}
+					return to;
+				},
 
-                    parsed = this._parse(pathAndQuery);     
-                    
-                    this._hashBang = parsed.hashBang;
+				_computeRoutePathAndParams: function (pathAndQuery) {
+					var parsed;
 
-                    this._dontUpdateUrl = true;
-                    this.routePath = parsed.path;
-                    this.routeQueryString = parsed.queryString;
-                    this.routeHash = parsed.hash;
-                    this._dontUpdateUrl = false;
-                },
+					if (this._dontComputeRoute) {
+						return;
+					}
 
-                _parse: function (pathAndQuery) {
-                    var hashBang, hashIndex, path, queryString, hash, searchIndex;
+					parsed = this._parse(pathAndQuery);
 
-                    if (pathAndQuery.substring(0, 2) === '!/') {
-                        hashBang = true;
-                        pathAndQuery = pathAndQuery.substring(1);
-                    } 
+					this._hashBang = parsed.hashBang;
 
-                    hashIndex = pathAndQuery.indexOf('#'); 
+					this._dontUpdateUrl = true;
+					this.routePath = parsed.path;
+					this.routeQueryString = parsed.queryString;
+					this.routeHash = parsed.hash;
+					this._dontUpdateUrl = false;
+				},
 
-				    if (hashIndex !== -1) {
-                        path = pathAndQuery.substring(0, hashIndex);
-                        hash = pathAndQuery.substring(hashIndex + 1);
-                    } else {
-                        path = pathAndQuery;
-                        hash = '';
-                    }
+				_parse: function (pathAndQuery) {
+					var hashBang,
+						hashIndex,
+						path,
+						queryString,
+						hash,
+						searchIndex,
+						pathQuery = pathAndQuery;
 
-                    searchIndex = path.indexOf('?');
-                    if (searchIndex !== -1) {
-                        queryString = path.substring(searchIndex + 1);
-                        path = path.substring(0, searchIndex);
-                    } else {
-                        queryString = '';
-                    }
+					if (pathQuery.substring(0, 2) === '!/') {
+						hashBang = true;
+						pathQuery = pathQuery.substring(1);
+					}
 
-                    return {
-                        path: path,
-                        queryString: queryString,
-                        hash: hash,
-                        hashBang: hashBang
-                    };
-                },
+					hashIndex = pathQuery.indexOf('#');
 
-                _updateHash: function (routePath, routeQueryString, routeHash) {
-                    var currentRoute, newHash;
+					if (hashIndex !== -1) {
+						path = pathQuery.substring(0, hashIndex);
+						hash = pathQuery.substring(hashIndex + 1);
+					} else {
+						path = pathQuery;
+						hash = '';
+					}
 
-                    if (this._dontUpdateUrl || !this._attached) {
-                        return;
-                    }
-                    
-                    newHash = this._getUrl(routePath, routeQueryString, routeHash);
-                    if (this._hashBang) {
-                        newHash = '!' + newHash;
-                    }
+					searchIndex = path.indexOf('?');
+					if (searchIndex !== -1) {
+						queryString = path.substring(searchIndex + 1);
+						path = path.substring(0, searchIndex);
+					} else {
+						queryString = '';
+					}
 
-                    currentRoute = this._parse(this._urlHash);
+					return {
+						path: path,
+						queryString: queryString,
+						hash: hash,
+						hashBang: hashBang
+					};
+				},
 
-                    if (currentRoute.path === routePath && currentRoute.queryString === routeQueryString) {
-                        // We must only replace hash-params without adding an entry in history
-                        // However, we should not do that if this cosmoz-page-location element
-                        // is not in the active route, so fire an event and let the enclosing cosmoz-page-router decide what to do.
-                        this.fire('cosmoz-route-hash-params-changed', { newRoute: '#' + newHash });
-                    } else {
-                        this._dontComputeRoute = true;
-                        this._urlHash = newHash;      
-                        this._dontComputeRoute = false;
-                    }              
-                },
+				_updateHash: function (routePath, routeQueryString, routeHash) {
+					var currentRoute,
+						newHash;
 
-                _getUrl: function (path, queryString, hash) {
-                    var url = path;
-                    if (queryString !== '') {
-                        url = url + '?' + queryString;
-                    } 
+					if (this._dontUpdateUrl || !this._attached) {
+						return;
+					}
 
-                    if (hash !== '') {
-                        url = url + '#' + hash;
-                    }
+					newHash = this._getUrl(routePath, routeQueryString, routeHash);
+					if (this._hashBang) {
+						newHash = '!' + newHash;
+					}
 
-                    return url;
+					currentRoute = this._parse(this._urlHash);
 
-                }
-            })
-        })();
-    </script>
-</dom-module> 
+					if (currentRoute.path === routePath && currentRoute.queryString === routeQueryString) {
+						// We must only replace hash-params without adding an entry in history
+						// However, we should not do that if this cosmoz-page-location element
+						// is not in the active route, so fire an event and let the enclosing cosmoz-page-router decide what to do.
+						this.fire('cosmoz-route-hash-params-changed', { newRoute: '#' + newHash });
+					} else {
+						this._dontComputeRoute = true;
+						this._urlHash = newHash;
+						this._dontComputeRoute = false;
+					}
+				},
+
+				_getUrl: function (path, queryString, hash) {
+					var url = path;
+					if (queryString !== '') {
+						url = url + '?' + queryString;
+					}
+
+					if (hash !== '') {
+						url = url + '#' + hash;
+					}
+
+					return url;
+
+				}
+			});
+		})();
+	</script>
+</dom-module>

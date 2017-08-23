@@ -18,52 +18,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	</head>
 	<body unresolved>
 
-<h1>cz-page-router test</h1>
+		<h1>cz-page-router test</h1>
+		<ul>
+			<li><a href="#!/">/Home</a>
+			<li><a href="#!/view1">/view1</a>
+			<li><a href="#!/view2">/view2</a>
+			<li><a href="#!/view3">/view3 (ad-hoc)</a>
+			<li><a href="#!/scroll-view">/scroll-view</a>
+			<li><a href="#!/scroll-view#top">/scroll-view#top</a>
+			<li><a href="#!/scroll-view#middle">/scroll-view#middle</a>
+			<li><a href="#!/scroll-view#bottom">/scroll-view#bottom</a>
+		</ul>
 
+		<div style="position: relative">
+			<cosmoz-page-router id="appRouter" manual-init mode="hash" url-prefix="views">
+				<cosmoz-page-route path="/" import="views/home.html" template-id="home"></cosmoz-page-route>
+				<cosmoz-page-route path="/view1" import="views/view1.html" template-id="view1"></cosmoz-page-route>
+				<cosmoz-page-route path="/view2" import="views/view2.html" template-id="view2"></cosmoz-page-route>
+				<!-- <cosmoz-page-route path="/view3" import="views/view3.html" template-id="view3"></cosmoz-page-route> -->
+				<cosmoz-page-route path="/scroll-view" import="views/scroll-view.html" template-id="scroll-view"></cosmoz-page-route>
+			</cosmoz-page-router>
+		</div>
 
-	<ul>
-		<li><a href="#!/">/Home</a>
-		<li><a href="#!/view1">/view1</a>
-		<li><a href="#!/view2">/view2</a>
-		<li><a href="#!/view3">/view3 (ad-hoc)</a>
-		<li><a href="#!/scroll-view">/scroll-view</a>
-		<li><a href="#!/scroll-view#top">/scroll-view#top</a>
-		<li><a href="#!/scroll-view#middle">/scroll-view#middle</a>
-		<li><a href="#!/scroll-view#bottom">/scroll-view#bottom</a>
-	</ul>
+		<script>
+			(function () {
+				'use strict';
 
-	<div style="position: relative">
-	<cosmoz-page-router id="appRouter" manual-init mode="hash" url-prefix="views">
-		<cosmoz-page-route path="/" import="views/home.html" template-id="home"></cosmoz-page-route>
-		<cosmoz-page-route path="/view1" import="views/view1.html" template-id="view1"></cosmoz-page-route>
-		<cosmoz-page-route path="/view2" import="views/view2.html" template-id="view2"></cosmoz-page-route>
-		<!-- <cosmoz-page-route path="/view3" import="views/view3.html" template-id="view3"></cosmoz-page-route> -->
-		<cosmoz-page-route path="/scroll-view" import="views/scroll-view.html" template-id="scroll-view"></cosmoz-page-route>
-	</cosmoz-page-router>
-	</div>
+				window.addEventListener('WebComponentsReady', function () {
+					var pageRouter = document.querySelector('cosmoz-page-router');
 
-			<script>
-/*globals window, document,cz,Polymer */
-(function () {
-	"use strict";
+					pageRouter.addEventListener('template-created', function (event) {
+						console.log('test-cz-page-router template-created');
+					});
+					pageRouter.addEventListener('template-ready', function (event) {
+						console.log('test-cz-page-router template-ready');
+					});
+					pageRouter.addEventListener('template-activate', function (event) {
+						console.log('test-cz-page-router template-activate');
+					});
 
-	window.addEventListener('WebComponentsReady', function () {
-		var pageRouter = document.querySelector('cosmoz-page-router');
-
-		pageRouter.addEventListener('template-created', function (event) {
-			console.log('test-cz-page-router template-created');
-		});
-		pageRouter.addEventListener('template-ready', function (event) {
-			console.log('test-cz-page-router template-ready');
-		});
-		pageRouter.addEventListener('template-activate', function (event) {
-			console.log('test-cz-page-router template-activate');
-		});
-
-		pageRouter.initialize();
-	});
-}());
-</script>
+					pageRouter.initialize();
+				});
+			}());
+		</script>
 
 	</body>
 </html>

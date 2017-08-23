@@ -7,8 +7,7 @@
 
 	// Try to detect importNode bug https://github.com/Polymer/polymer/issues/2157
 
-	var
-		hasImportNodeBug = false;
+	var hasImportNodeBug = false;
 
 	/*	currentScript = document._currentScript || document.currentScript,
 		currentDocument = currentScript.ownerDocument,
@@ -122,10 +121,11 @@
 				currentRoute = this.$.routes.selectedItem,
 				route,
 				i,
+				element,
 				eventPath = Polymer.dom(e).path;
 
 			for (i = 0 ; i < eventPath.length; i++) {
-				var element = eventPath[i];
+				element = eventPath[i];
 				if (element.tagName === 'COSMOZ-PAGE-ROUTE') {
 					route = element;
 					break;
@@ -138,18 +138,20 @@
 		},
 
 		go: function (path, options) {
+			var _path = path;
+
 			if (this.mode !== 'pushstate') {
 				// mode == auto, hash or hashbang
 				if (this.mode === 'hashbang') {
-					path = '#!' + path;
+					_path = '#!' + _path;
 				} else {
-					path = '#' + path;
+					_path = '#' + _path;
 				}
 			}
 			if (options && options.replace === true) {
-				window.history.replaceState(null, null, path);
+				window.history.replaceState(null, null, _path);
 			} else {
-				window.history.pushState(null, null, path);
+				window.history.pushState(null, null, _path);
 			}
 
 			// dispatch a popstate event
@@ -261,7 +263,7 @@
 		 */
 		addRoute: function (route) {
 			var
-				element = document.createElement("cosmoz-page-route"),
+				element = document.createElement('cosmoz-page-route'),
 				newRoute;
 			element.setAttribute('path', route.path);
 			if (route.persist) {
@@ -299,7 +301,7 @@
 			this._loadingRoute = route;
 
 			// if we're on the same route then update the model but don't replace the page content
-			if (route === this._activeRoute || (route.imported && route.persist)) {
+			if (route === this._activeRoute || route.imported && route.persist) {
 				this._updateModelAndActivate(route, url, eventDetail);
 			} else if (route.import) {
 				// import custom element or template
@@ -507,27 +509,29 @@
 		},
 
 		_changeRoute: function (oldRoute, newRoute) {
+			var oRoute = oldRoute,
+				nRoute = newRoute;
 
-			if (oldRoute === undefined) {
-				oldRoute = this._activeRoute;
+			if (oRoute === undefined) {
+				oRoute = this._activeRoute;
 			}
 
-			if (newRoute === undefined) {
-				newRoute = this._loadingRoute;
+			if (nRoute === undefined) {
+				nRoute = this._loadingRoute;
 			}
 
 			// update references to the activeRoute, previousRoute, and loadingRoute
-			this._previousRoute = oldRoute;
-			this._activeRoute = newRoute;
+			this._previousRoute = oRoute;
+			this._activeRoute = nRoute;
 			this._loadingRoute = null;
 
-			if (oldRoute) {
-				oldRoute.active = false;
+			if (oRoute) {
+				oRoute.active = false;
 			}
 
-			newRoute.active = true;
+			nRoute.active = true;
 
-			this.$.routes.selected = newRoute.path;
+			this.$.routes.selected = nRoute.path;
 		},
 
 		// Remove the route's content

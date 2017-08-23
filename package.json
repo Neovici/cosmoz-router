@@ -1,0 +1,35 @@
+{
+	"name": "cosmoz-page-router",
+	"version": "1.0.0",
+	"description": "[![Build Status](https://travis-ci.org/Neovici/cosmoz-page-router.svg?branch=master)](https://travis-ci.org/Neovici/cosmoz-page-router)",
+	"main": "cosmoz-page-router.html",
+	"directories": {
+		"test": "test"
+	},
+	"devDependencies": {
+		"eslint": "^3.9.1",
+		"eslint-plugin-html": "^3.1.1",
+		"eslint-plugin-mocha": "^4.11.0",
+		"polymer-cli": "^1.4.1"
+	},
+	"scripts": {
+		"start": "polymer serve -o",
+		"postinstall": "polymer install",
+		"lint": "eslint --cache --ext .js,.html . && polymer lint cosmoz-*.html",
+		"test": "polymer test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/neovici/cosmoz-page-router.git"
+	},
+	"keywords": [
+		"polymer",
+		"web-components"
+	],
+	"author": "",
+	"license": "Apache-2.0",
+	"bugs": {
+		"url": "https://github.com/neovici/cosmoz-page-router/issues"
+	},
+	"homepage": "https://github.com/neovici/cosmoz-page-router#readme"
+}

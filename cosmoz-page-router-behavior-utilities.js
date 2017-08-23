@@ -2,7 +2,7 @@
 // @license Copyright (C) 2015 Neovici AB - Apache 2 License
 /*global Cosmoz, document, window, URL */
 (function () {
-	"use strict";
+	'use strict';
 
 	// segmentsMatch(routeSegments, routeIndex, urlSegments, urlIndex, pathVariables)
 	// recursively test the route segments against the url segments in place (without creating copies of the arrays
@@ -141,25 +141,27 @@
 		// Example urlPath = '/user/123/bio'
 		testRoute: function (routePath, urlPath) {
 			// try to fail or succeed as quickly as possible for the most common cases
+			var rPath = routePath;
 
 			// if the urlPath is an exact match or '*' then the route is a match
-			if (routePath === urlPath || routePath === '*') {
+			if (rPath === urlPath || rPath === '*') {
 				return true;
 			}
 
 			// relative routes a/b/c are the same as routes that start with a globstar /**/a/b/c
-			if (routePath.charAt(0) !== '/') {
-				routePath = '/**/' + routePath;
+			if (rPath.charAt(0) !== '/') {
+				rPath = '/**/' + rPath;
 			}
 
 			// recursively test if the segments match (start at 1 because 0 is always an empty string)
-			return segmentsMatch(routePath.split('/'), 1, urlPath.split('/'), 1);
+			return segmentsMatch(rPath.split('/'), 1, urlPath.split('/'), 1);
 		},
 
 		// routeArguments(routePath, urlPath, search, isRegExp) - Gets the path variables and query parameter values from the URL
 		routeArguments: function (routePath, urlPath, search, isRegExp, typecast) {
 			var
 				args = {},
+				rPath = routePath,
 				queryParameters,
 				queryParameter,
 				queryParameterParts,
@@ -169,15 +171,15 @@
 			// regular expressions can't have path variables
 			if (!isRegExp) {
 			// relative routes a/b/c are the same as routes that start with a globstar /**/a/b/c
-				if (routePath.charAt(0) !== '/') {
-					routePath = '/**/' + routePath;
+				if (rPath.charAt(0) !== '/') {
+					rPath = '/**/' + rPath;
 				}
 
 				// get path variables
 				// urlPath '/customer/123'
 				// routePath '/customer/:id'
 				// parses id = '123'
-				segmentsMatch(routePath.split('/'), 1, urlPath.split('/'), 1, args);
+				segmentsMatch(rPath.split('/'), 1, urlPath.split('/'), 1, args);
 			}
 
 			queryParameters = search.substring(1).split('&');
