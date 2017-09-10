@@ -278,7 +278,7 @@
 
 			newRoute = Polymer.dom(this).appendChild(element);
 
-			Polymer.dom().flush();
+			Polymer.dom(this).flush();
 
 			return newRoute;
 		},
