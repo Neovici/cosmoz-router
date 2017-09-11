@@ -1,0 +1,3419 @@
+{
+  "schema_version": "1.0.0",
+  "elements": [
+    {
+      "description": "",
+      "summary": "",
+      "path": "cosmoz-page-location.html",
+      "properties": [
+        {
+          "name": "appPath",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 38,
+              "column": 5
+            },
+            "end": {
+              "line": 41,
+              "column": 6
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "appQueryParams",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 46,
+              "column": 5
+            },
+            "end": {
+              "line": 49,
+              "column": 6
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "routePath",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 53,
+              "column": 5
+            },
+            "end": {
+              "line": 56,
+              "column": 6
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "routeQueryString",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 60,
+              "column": 5
+            },
+            "end": {
+              "line": 62,
+              "column": 6
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "routeQueryParams",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 67,
+              "column": 5
+            },
+            "end": {
+              "line": 70,
+              "column": 6
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "routeHash",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 74,
+              "column": 5
+            },
+            "end": {
+              "line": 77,
+              "column": 6
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "routeHashParams",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 79,
+              "column": 5
+            },
+            "end": {
+              "line": 82,
+              "column": 6
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "_urlQueryString",
+          "type": "string",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 84,
+              "column": 5
+            },
+            "end": {
+              "line": 86,
+              "column": 6
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "_urlHash",
+          "type": "string",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 88,
+              "column": 5
+            },
+            "end": {
+              "line": 90,
+              "column": 6
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "_tempParamsObject",
+          "type": "Object",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 92,
+              "column": 5
+            },
+            "end": {
+              "line": 94,
+              "column": 6
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "_tempParamsString",
+          "type": "string",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 96,
+              "column": 5
+            },
+            "end": {
+              "line": 98,
+              "column": 6
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "attached",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 106,
+              "column": 4
+            },
+            "end": {
+              "line": 108,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "getRouteUrl",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 110,
+              "column": 4
+            },
+            "end": {
+              "line": 114,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "routeParams"
+            },
+            {
+              "name": "routeHashParams"
+            }
+          ]
+        },
+        {
+          "name": "getAppUrl",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 116,
+              "column": 4
+            },
+            "end": {
+              "line": 125,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "appParams"
+            },
+            {
+              "name": "routeParams"
+            },
+            {
+              "name": "routeHashParams"
+            }
+          ]
+        },
+        {
+          "name": "_getRoute",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 127,
+              "column": 4
+            },
+            "end": {
+              "line": 136,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "routeParams"
+            },
+            {
+              "name": "routeHashParams"
+            }
+          ]
+        },
+        {
+          "name": "_objectAssign",
+          "description": "https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Polyfill",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 141,
+              "column": 4
+            },
+            "end": {
+              "line": 160,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "target"
+            },
+            {
+              "name": "sources"
+            }
+          ]
+        },
+        {
+          "name": "_computeRoutePathAndParams",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 162,
+              "column": 4
+            },
+            "end": {
+              "line": 178,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "pathAndQuery"
+            }
+          ]
+        },
+        {
+          "name": "_parse",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 180,
+              "column": 4
+            },
+            "end": {
+              "line": 218,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "pathAndQuery"
+            }
+          ]
+        },
+        {
+          "name": "_updateHash",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 220,
+              "column": 4
+            },
+            "end": {
+              "line": 245,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "routePath"
+            },
+            {
+              "name": "routeQueryString"
+            },
+            {
+              "name": "routeHash"
+            }
+          ]
+        },
+        {
+          "name": "_getUrl",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 247,
+              "column": 4
+            },
+            "end": {
+              "line": 259,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "path"
+            },
+            {
+              "name": "queryString"
+            },
+            {
+              "name": "hash"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 32,
+          "column": 11
+        },
+        "end": {
+          "line": 260,
+          "column": 4
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "attributes": [
+        {
+          "name": "app-path",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 38,
+              "column": 5
+            },
+            "end": {
+              "line": 41,
+              "column": 6
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "app-query-params",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 46,
+              "column": 5
+            },
+            "end": {
+              "line": 49,
+              "column": 6
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "route-path",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 53,
+              "column": 5
+            },
+            "end": {
+              "line": 56,
+              "column": 6
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "route-query-string",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 60,
+              "column": 5
+            },
+            "end": {
+              "line": 62,
+              "column": 6
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "route-query-params",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 67,
+              "column": 5
+            },
+            "end": {
+              "line": 70,
+              "column": 6
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "route-hash",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 74,
+              "column": 5
+            },
+            "end": {
+              "line": 77,
+              "column": 6
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "route-hash-params",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 79,
+              "column": 5
+            },
+            "end": {
+              "line": 82,
+              "column": 6
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        }
+      ],
+      "events": [
+        {
+          "type": "CustomEvent",
+          "name": "app-path-changed",
+          "description": "Fired when the `appPath` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "app-query-params-changed",
+          "description": "Fired when the `appQueryParams` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "route-path-changed",
+          "description": "Fired when the `routePath` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "route-query-params-changed",
+          "description": "Fired when the `routeQueryParams` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "route-hash-changed",
+          "description": "Fired when the `routeHash` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "route-hash-params-changed",
+          "description": "Fired when the `routeHashParams` property changes.",
+          "metadata": {}
+        }
+      ],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [],
+      "tagname": "cosmoz-page-location"
+    },
+    {
+      "description": "",
+      "summary": "",
+      "path": "demo/cosmoz-page-location.html",
+      "properties": [
+        {
+          "name": "appPath",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 60,
+              "column": 6
+            },
+            "end": {
+              "line": 62,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "appQueryParams",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 63,
+              "column": 6
+            },
+            "end": {
+              "line": 65,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "routePath",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 66,
+              "column": 6
+            },
+            "end": {
+              "line": 68,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "routeQueryParams",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 70,
+              "column": 6
+            },
+            "end": {
+              "line": 72,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "routeHashParams",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 74,
+              "column": 6
+            },
+            "end": {
+              "line": 76,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "routeParam",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 78,
+              "column": 6
+            },
+            "end": {
+              "line": 81,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_routeParamChanged\""
+            }
+          }
+        },
+        {
+          "name": "routeHashParam",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 83,
+              "column": 6
+            },
+            "end": {
+              "line": 86,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_routeHashParamChanged\""
+            }
+          }
+        },
+        {
+          "name": "newRouteParam",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 88,
+              "column": 6
+            },
+            "end": {
+              "line": 91,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "newHashParam",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 92,
+              "column": 6
+            },
+            "end": {
+              "line": 95,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "routeUrl",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 96,
+              "column": 6
+            },
+            "end": {
+              "line": 99,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": true
+            }
+          }
+        },
+        {
+          "name": "appParam",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 100,
+              "column": 6
+            },
+            "end": {
+              "line": 103,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"\""
+        },
+        {
+          "name": "fullUrl",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 104,
+              "column": 6
+            },
+            "end": {
+              "line": 107,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": true
+            }
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "_routeParamChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 110,
+              "column": 5
+            },
+            "end": {
+              "line": 112,
+              "column": 6
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "e"
+            }
+          ]
+        },
+        {
+          "name": "_routeHashParamChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 114,
+              "column": 5
+            },
+            "end": {
+              "line": 116,
+              "column": 6
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "e"
+            }
+          ]
+        },
+        {
+          "name": "_computeNewUrl",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 117,
+              "column": 5
+            },
+            "end": {
+              "line": 119,
+              "column": 6
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "newRouteParam"
+            },
+            {
+              "name": "newHashParam"
+            }
+          ]
+        },
+        {
+          "name": "_computeFullUrl",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 120,
+              "column": 5
+            },
+            "end": {
+              "line": 122,
+              "column": 6
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "appParam"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 57,
+          "column": 12
+        },
+        "end": {
+          "line": 124,
+          "column": 5
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "attributes": [
+        {
+          "name": "app-path",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 60,
+              "column": 6
+            },
+            "end": {
+              "line": 62,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "app-query-params",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 63,
+              "column": 6
+            },
+            "end": {
+              "line": 65,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "route-path",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 66,
+              "column": 6
+            },
+            "end": {
+              "line": 68,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "route-query-params",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 70,
+              "column": 6
+            },
+            "end": {
+              "line": 72,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "route-hash-params",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 74,
+              "column": 6
+            },
+            "end": {
+              "line": 76,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "route-param",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 78,
+              "column": 6
+            },
+            "end": {
+              "line": 81,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "route-hash-param",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 83,
+              "column": 6
+            },
+            "end": {
+              "line": 86,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "new-route-param",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 88,
+              "column": 6
+            },
+            "end": {
+              "line": 91,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "new-hash-param",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 92,
+              "column": 6
+            },
+            "end": {
+              "line": 95,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "route-url",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 96,
+              "column": 6
+            },
+            "end": {
+              "line": 99,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "app-param",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 100,
+              "column": 6
+            },
+            "end": {
+              "line": 103,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "full-url",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 104,
+              "column": 6
+            },
+            "end": {
+              "line": 107,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        }
+      ],
+      "events": [],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [],
+      "tagname": "cosmoz-page-location-demo"
+    },
+    {
+      "description": "",
+      "summary": "",
+      "path": "cosmoz-page-route.js",
+      "properties": [
+        {
+          "name": "_parentResizable",
+          "type": "Object",
+          "description": "The closest ancestor element that implements `IronResizableBehavior`.",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 36,
+              "column": 6
+            },
+            "end": {
+              "line": 39,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_parentResizableChanged\""
+            }
+          },
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "_notifyingDescendant",
+          "type": "boolean",
+          "description": "True if this element is currently notifying its descendant elements of\nresize.",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 45,
+              "column": 6
+            },
+            "end": {
+              "line": 48,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false",
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "animationConfig",
+          "type": "?",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "line": 27,
+              "column": 4
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "entryAnimation",
+          "type": "string",
+          "description": "Convenience property for setting an 'entry' animation. Do not set `animationConfig.entry`\nmanually if using this. The animated node is set to `this` if using this property.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/neon-animation/neon-animatable-behavior.html",
+            "start": {
+              "line": 34,
+              "column": 6
+            },
+            "end": {
+              "line": 37,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_entryAnimationChanged\""
+            }
+          },
+          "inheritedFrom": "Polymer.NeonAnimatableBehavior"
+        },
+        {
+          "name": "exitAnimation",
+          "type": "string",
+          "description": "Convenience property for setting an 'exit' animation. Do not set `animationConfig.exit`\nmanually if using this. The animated node is set to `this` if using this property.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/neon-animation/neon-animatable-behavior.html",
+            "start": {
+              "line": 43,
+              "column": 6
+            },
+            "end": {
+              "line": 46,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_exitAnimationChanged\""
+            }
+          },
+          "inheritedFrom": "Polymer.NeonAnimatableBehavior"
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 7,
+              "column": 3
+            },
+            "end": {
+              "line": 7,
+              "column": 18
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "import",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 29,
+              "column": 3
+            },
+            "end": {
+              "line": 31,
+              "column": 4
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "imported",
+          "type": "boolean",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 33,
+              "column": 3
+            },
+            "end": {
+              "line": 36,
+              "column": 4
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 38,
+              "column": 3
+            },
+            "end": {
+              "line": 40,
+              "column": 4
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "persist",
+          "type": "boolean",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 42,
+              "column": 3
+            },
+            "end": {
+              "line": 45,
+              "column": 4
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "templateId",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 47,
+              "column": 3
+            },
+            "end": {
+              "line": 49,
+              "column": 4
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "templateInstance",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 51,
+              "column": 3
+            },
+            "end": {
+              "line": 53,
+              "column": 4
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "created",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 55,
+              "column": 4
+            },
+            "end": {
+              "line": 60,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "attached",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 62,
+              "column": 4
+            },
+            "end": {
+              "line": 64,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "detached",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 66,
+              "column": 4
+            },
+            "end": {
+              "line": 74,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "notifyResize",
+          "description": "Can be called to manually notify a resizable and its descendant\nresizables of a resize change.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 80,
+              "column": 4
+            },
+            "end": {
+              "line": 92,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "assignParentResizable",
+          "description": "Used to assign the closest resizable ancestor to this resizable\nif the ancestor detects a request for notifications.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 98,
+              "column": 4
+            },
+            "end": {
+              "line": 100,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "parentResizable"
+            }
+          ],
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "stopResizeNotificationsFor",
+          "description": "Used to remove a resizable descendant from the list of descendants\nthat should be notified of a resize change.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 106,
+              "column": 4
+            },
+            "end": {
+              "line": 113,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "target"
+            }
+          ],
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "resizerShouldNotify",
+          "description": "This method can be overridden to filter nested elements that should or\nshould not be notified by the current element. Return true if an element\nshould be notified, or false if it should not be notified.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 124,
+              "column": 4
+            },
+            "end": {
+              "line": 124,
+              "column": 59
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "element",
+              "type": "HTMLElement",
+              "description": "A candidate descendant element that\nimplements `IronResizableBehavior`."
+            }
+          ],
+          "return": {
+            "type": "boolean",
+            "desc": "True if the `element` should be notified of resize."
+          },
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "_onDescendantIronResize",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 126,
+              "column": 4
+            },
+            "end": {
+              "line": 138,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "event"
+            }
+          ],
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "_fireResize",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 140,
+              "column": 4
+            },
+            "end": {
+              "line": 145,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "_onIronRequestResizeNotifications",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 147,
+              "column": 4
+            },
+            "end": {
+              "line": 162,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "event"
+            }
+          ],
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "_parentResizableChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 164,
+              "column": 4
+            },
+            "end": {
+              "line": 168,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "parentResizable"
+            }
+          ],
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "_notifyDescendant",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 170,
+              "column": 4
+            },
+            "end": {
+              "line": 181,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "descendant"
+            }
+          ],
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "_requestResizeNotifications",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 183,
+              "column": 4
+            },
+            "end": {
+              "line": 211,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "_entryAnimationChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/neon-animation/neon-animatable-behavior.html",
+            "start": {
+              "line": 50,
+              "column": 4
+            },
+            "end": {
+              "line": 56,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.NeonAnimatableBehavior"
+        },
+        {
+          "name": "_exitAnimationChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/neon-animation/neon-animatable-behavior.html",
+            "start": {
+              "line": 58,
+              "column": 4
+            },
+            "end": {
+              "line": 64,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.NeonAnimatableBehavior"
+        },
+        {
+          "name": "_copyProperties",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/neon-animation/neon-animatable-behavior.html",
+            "start": {
+              "line": 66,
+              "column": 4
+            },
+            "end": {
+              "line": 71,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "config1"
+            },
+            {
+              "name": "config2"
+            }
+          ],
+          "inheritedFrom": "Polymer.NeonAnimatableBehavior"
+        },
+        {
+          "name": "_cloneConfig",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/neon-animation/neon-animatable-behavior.html",
+            "start": {
+              "line": 73,
+              "column": 4
+            },
+            "end": {
+              "line": 79,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "config"
+            }
+          ],
+          "inheritedFrom": "Polymer.NeonAnimatableBehavior"
+        },
+        {
+          "name": "_getAnimationConfigRecursive",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/neon-animation/neon-animatable-behavior.html",
+            "start": {
+              "line": 81,
+              "column": 4
+            },
+            "end": {
+              "line": 128,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "type"
+            },
+            {
+              "name": "map"
+            },
+            {
+              "name": "allConfigs"
+            }
+          ],
+          "inheritedFrom": "Polymer.NeonAnimatableBehavior"
+        },
+        {
+          "name": "getAnimationConfig",
+          "description": "An element implementing `Polymer.NeonAnimationRunnerBehavior` calls this method to configure\nan animation with an optional type. Elements implementing `Polymer.NeonAnimatableBehavior`\nshould define the property `animationConfig`, which is either a configuration object\nor a map of animation type to array of configuration objects.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/neon-animation/neon-animatable-behavior.html",
+            "start": {
+              "line": 136,
+              "column": 4
+            },
+            "end": {
+              "line": 145,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "type"
+            }
+          ],
+          "inheritedFrom": "Polymer.NeonAnimatableBehavior"
+        },
+        {
+          "name": "deactivate",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 61,
+              "column": 2
+            },
+            "end": {
+              "line": 75,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        }
+      ],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 4,
+          "column": 9
+        },
+        "end": {
+          "line": 76,
+          "column": 2
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "attributes": [
+        {
+          "name": "animation-config",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "line": 27,
+              "column": 4
+            }
+          },
+          "metadata": {}
+        },
+        {
+          "name": "entry-animation",
+          "description": "Convenience property for setting an 'entry' animation. Do not set `animationConfig.entry`\nmanually if using this. The animated node is set to `this` if using this property.",
+          "sourceRange": {
+            "file": "bower_components/neon-animation/neon-animatable-behavior.html",
+            "start": {
+              "line": 34,
+              "column": 6
+            },
+            "end": {
+              "line": 37,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string",
+          "inheritedFrom": "Polymer.NeonAnimatableBehavior"
+        },
+        {
+          "name": "exit-animation",
+          "description": "Convenience property for setting an 'exit' animation. Do not set `animationConfig.exit`\nmanually if using this. The animated node is set to `this` if using this property.",
+          "sourceRange": {
+            "file": "bower_components/neon-animation/neon-animatable-behavior.html",
+            "start": {
+              "line": 43,
+              "column": 6
+            },
+            "end": {
+              "line": 46,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string",
+          "inheritedFrom": "Polymer.NeonAnimatableBehavior"
+        },
+        {
+          "name": "active",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 7,
+              "column": 3
+            },
+            "end": {
+              "line": 7,
+              "column": 18
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "import",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 29,
+              "column": 3
+            },
+            "end": {
+              "line": 31,
+              "column": 4
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "imported",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 33,
+              "column": 3
+            },
+            "end": {
+              "line": 36,
+              "column": 4
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "path",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 38,
+              "column": 3
+            },
+            "end": {
+              "line": 40,
+              "column": 4
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "persist",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 42,
+              "column": 3
+            },
+            "end": {
+              "line": 45,
+              "column": 4
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "template-id",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 47,
+              "column": 3
+            },
+            "end": {
+              "line": 49,
+              "column": 4
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "template-instance",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 51,
+              "column": 3
+            },
+            "end": {
+              "line": 53,
+              "column": 4
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        }
+      ],
+      "events": [
+        {
+          "type": "CustomEvent",
+          "name": "template-created",
+          "description": "template-created",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "template-ready",
+          "description": "template-ready",
+          "metadata": {}
+        }
+      ],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [
+        {
+          "description": "",
+          "name": "",
+          "range": {
+            "file": "cosmoz-page-route.html",
+            "start": {
+              "line": 16,
+              "column": 1
+            },
+            "end": {
+              "line": 16,
+              "column": 14
+            }
+          }
+        }
+      ],
+      "tagname": "cosmoz-page-route"
+    },
+    {
+      "description": "",
+      "summary": "",
+      "path": "cosmoz-page-router.js",
+      "properties": [
+        {
+          "name": "fileSuffix",
+          "type": "string",
+          "description": "Ad-hoc routing template file name suffix",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 32,
+              "column": 3
+            },
+            "end": {
+              "line": 35,
+              "column": 4
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\".html\""
+        },
+        {
+          "name": "mode",
+          "type": "string",
+          "description": "`hash` , `hashbang` , `pushstate` or `auto`",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 37,
+              "column": 3
+            },
+            "end": {
+              "line": 40,
+              "column": 4
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"auto\""
+        },
+        {
+          "name": "manualInit",
+          "type": "boolean",
+          "description": "Don't run `initialize` on `ready`",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 42,
+              "column": 3
+            },
+            "end": {
+              "line": 45,
+              "column": 4
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "noAdHoc",
+          "type": "boolean",
+          "description": "Don't create ad-hoc routes but instead fire a `not-found` event",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 47,
+              "column": 3
+            },
+            "end": {
+              "line": 50,
+              "column": 4
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "persist",
+          "type": "boolean",
+          "description": "Don't empty `cosmoz-page-route` element when navigating from a route, persisting it.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 52,
+              "column": 3
+            },
+            "end": {
+              "line": 55,
+              "column": 4
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "typecast",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 56,
+              "column": 3
+            },
+            "end": {
+              "line": 59,
+              "column": 4
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"auto\""
+        },
+        {
+          "name": "urlPrefix",
+          "type": "string",
+          "description": "Anything to prefix ad-hoc routes with, be it a `views` folder or a different domain",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 61,
+              "column": 3
+            },
+            "end": {
+              "line": 64,
+              "column": 4
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"\""
+        },
+        {
+          "name": "_currentRoute",
+          "type": "object",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 66,
+              "column": 2
+            },
+            "end": {
+              "line": 66,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "_importedUris",
+          "type": "object",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 67,
+              "column": 2
+            },
+            "end": {
+              "line": 67,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "_initialized",
+          "type": "boolean",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 68,
+              "column": 2
+            },
+            "end": {
+              "line": 68,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "_previousRoute",
+          "type": "object",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 69,
+              "column": 2
+            },
+            "end": {
+              "line": 69,
+              "column": 22
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "_previousUrl",
+          "type": "object",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 70,
+              "column": 2
+            },
+            "end": {
+              "line": 70,
+              "column": 20
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "_routesInError",
+          "type": "object",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 71,
+              "column": 2
+            },
+            "end": {
+              "line": 71,
+              "column": 22
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "_importLinksListeners",
+          "type": "object",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 72,
+              "column": 2
+            },
+            "end": {
+              "line": 72,
+              "column": 29
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "parseUrl",
+          "description": "Note: The location must be a fully qualified URL with a protocol like 'http(s)://'",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "cosmoz-page-router-behavior-utilities.js",
+            "start": {
+              "line": 71,
+              "column": 2
+            },
+            "end": {
+              "line": 135,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "location"
+            },
+            {
+              "name": "mode"
+            }
+          ],
+          "inheritedFrom": "Cosmoz.PageRouterUtilitiesBehavior"
+        },
+        {
+          "name": "testRoute",
+          "description": "Example urlPath = '/user/123/bio'",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "cosmoz-page-router-behavior-utilities.js",
+            "start": {
+              "line": 141,
+              "column": 2
+            },
+            "end": {
+              "line": 157,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "routePath"
+            },
+            {
+              "name": "urlPath"
+            }
+          ],
+          "inheritedFrom": "Cosmoz.PageRouterUtilitiesBehavior"
+        },
+        {
+          "name": "routeArguments",
+          "description": "routeArguments(routePath, urlPath, search, isRegExp) - Gets the path variables and query parameter values from the URL",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "cosmoz-page-router-behavior-utilities.js",
+            "start": {
+              "line": 160,
+              "column": 2
+            },
+            "end": {
+              "line": 205,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "routePath"
+            },
+            {
+              "name": "urlPath"
+            },
+            {
+              "name": "search"
+            },
+            {
+              "name": "isRegExp"
+            },
+            {
+              "name": "typecast"
+            }
+          ],
+          "inheritedFrom": "Cosmoz.PageRouterUtilitiesBehavior"
+        },
+        {
+          "name": "typecast",
+          "description": "typecast(value) - Typecast the string value to an unescaped string, number, or boolean",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "cosmoz-page-router-behavior-utilities.js",
+            "start": {
+              "line": 208,
+              "column": 2
+            },
+            "end": {
+              "line": 224,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "value"
+            }
+          ],
+          "inheritedFrom": "Cosmoz.PageRouterUtilitiesBehavior"
+        },
+        {
+          "name": "_fireEvent",
+          "description": "Utility function that fires an event from a polymer element and return false if preventDefault has been called on the event.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 85,
+              "column": 2
+            },
+            "end": {
+              "line": 91,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "type"
+            },
+            {
+              "name": "detail"
+            },
+            {
+              "name": "node"
+            },
+            {
+              "name": "bubbles"
+            }
+          ],
+          "return": {
+            "type": "Boolean",
+            "desc": "`true` = continue, `false` = prevent further actions"
+          }
+        },
+        {
+          "name": "initialize",
+          "description": "Adds event listener to `popstate` event",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 96,
+              "column": 2
+            },
+            "end": {
+              "line": 105,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "ready",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 107,
+              "column": 2
+            },
+            "end": {
+              "line": 116,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_onRouteHashParamsChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 118,
+              "column": 2
+            },
+            "end": {
+              "line": 137,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "e"
+            }
+          ]
+        },
+        {
+          "name": "go",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 139,
+              "column": 2
+            },
+            "end": {
+              "line": 163,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "path"
+            },
+            {
+              "name": "options"
+            }
+          ]
+        },
+        {
+          "name": "_scrollToHash",
+          "description": "scroll to the element with id=\"hash\" or name=\"hash\"",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 166,
+              "column": 2
+            },
+            "end": {
+              "line": 182,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "hash"
+            }
+          ]
+        },
+        {
+          "name": "_stateChange",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 184,
+              "column": 2
+            },
+            "end": {
+              "line": 236,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_addAdHocRoute",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 238,
+              "column": 2
+            },
+            "end": {
+              "line": 244,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "path"
+            }
+          ]
+        },
+        {
+          "name": "_addRouteForCurrentPathAndActivate",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 246,
+              "column": 2
+            },
+            "end": {
+              "line": 257,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "importUri"
+            },
+            {
+              "name": "templateId"
+            }
+          ]
+        },
+        {
+          "name": "addRoute",
+          "description": "Add a `cosmoz-page-route` element",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 263,
+              "column": 2
+            },
+            "end": {
+              "line": 283,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "route",
+              "type": "Object",
+              "description": "{ persist: Boolean, templateId: 'Route template-id', import: 'Route import', path: 'Route path' }"
+            }
+          ]
+        },
+        {
+          "name": "_activateRoute",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 285,
+              "column": 2
+            },
+            "end": {
+              "line": 309,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "route"
+            },
+            {
+              "name": "url"
+            }
+          ]
+        },
+        {
+          "name": "_updateModelAndActivate",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 311,
+              "column": 2
+            },
+            "end": {
+              "line": 317,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "route"
+            },
+            {
+              "name": "url"
+            },
+            {
+              "name": "eventDetail"
+            }
+          ]
+        },
+        {
+          "name": "_removeImportLinkListeners",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 319,
+              "column": 2
+            },
+            "end": {
+              "line": 326,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "importLink"
+            }
+          ]
+        },
+        {
+          "name": "_importAndActivate",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 328,
+              "column": 2
+            },
+            "end": {
+              "line": 387,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "route"
+            },
+            {
+              "name": "url"
+            },
+            {
+              "name": "eventDetail"
+            }
+          ]
+        },
+        {
+          "name": "_hasCustomElement",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 389,
+              "column": 2
+            },
+            "end": {
+              "line": 393,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "elementName"
+            }
+          ]
+        },
+        {
+          "name": "_activateImport",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 395,
+              "column": 2
+            },
+            "end": {
+              "line": 418,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "route"
+            },
+            {
+              "name": "url"
+            },
+            {
+              "name": "eventDetail"
+            },
+            {
+              "name": "importLink"
+            }
+          ]
+        },
+        {
+          "name": "_instantiateTemplate",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 420,
+              "column": 2
+            },
+            "end": {
+              "line": 425,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "template"
+            }
+          ]
+        },
+        {
+          "name": "_fixedImportNode",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 427,
+              "column": 2
+            },
+            "end": {
+              "line": 431,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "node"
+            },
+            {
+              "name": "doc"
+            }
+          ]
+        },
+        {
+          "name": "_activateCustomElement",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 433,
+              "column": 2
+            },
+            "end": {
+              "line": 463,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "route"
+            },
+            {
+              "name": "url"
+            },
+            {
+              "name": "eventDetail"
+            }
+          ]
+        },
+        {
+          "name": "_activateTemplate",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 465,
+              "column": 2
+            },
+            "end": {
+              "line": 489,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "route"
+            },
+            {
+              "name": "url"
+            },
+            {
+              "name": "eventDetail"
+            },
+            {
+              "name": "template"
+            }
+          ]
+        },
+        {
+          "name": "_activateTemplateInstance",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 491,
+              "column": 2
+            },
+            "end": {
+              "line": 508,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "route"
+            },
+            {
+              "name": "url"
+            },
+            {
+              "name": "eventDetail"
+            }
+          ]
+        },
+        {
+          "name": "_changeRoute",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 510,
+              "column": 2
+            },
+            "end": {
+              "line": 534,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "oldRoute"
+            },
+            {
+              "name": "newRoute"
+            }
+          ]
+        },
+        {
+          "name": "_deactivateRoute",
+          "description": "Remove the route's content",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 537,
+              "column": 2
+            },
+            "end": {
+              "line": 539,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "route"
+            }
+          ]
+        },
+        {
+          "name": "_createModel",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 541,
+              "column": 2
+            },
+            "end": {
+              "line": 562,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "route"
+            },
+            {
+              "name": "url"
+            },
+            {
+              "name": "eventDetail"
+            }
+          ]
+        },
+        {
+          "name": "_setObjectProperties",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 564,
+              "column": 2
+            },
+            "end": {
+              "line": 571,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "object"
+            },
+            {
+              "name": "model"
+            }
+          ]
+        },
+        {
+          "name": "_onNeonAnimationFinish",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 573,
+              "column": 2
+            },
+            "end": {
+              "line": 577,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "event"
+            }
+          ]
+        },
+        {
+          "name": "_stopEventPropagation",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 579,
+              "column": 2
+            },
+            "end": {
+              "line": 581,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "event"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 23,
+          "column": 9
+        },
+        "end": {
+          "line": 582,
+          "column": 2
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "attributes": [
+        {
+          "name": "file-suffix",
+          "description": "Ad-hoc routing template file name suffix",
+          "sourceRange": {
+            "start": {
+              "line": 32,
+              "column": 3
+            },
+            "end": {
+              "line": 35,
+              "column": 4
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "mode",
+          "description": "`hash` , `hashbang` , `pushstate` or `auto`",
+          "sourceRange": {
+            "start": {
+              "line": 37,
+              "column": 3
+            },
+            "end": {
+              "line": 40,
+              "column": 4
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "manual-init",
+          "description": "Don't run `initialize` on `ready`",
+          "sourceRange": {
+            "start": {
+              "line": 42,
+              "column": 3
+            },
+            "end": {
+              "line": 45,
+              "column": 4
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "no-ad-hoc",
+          "description": "Don't create ad-hoc routes but instead fire a `not-found` event",
+          "sourceRange": {
+            "start": {
+              "line": 47,
+              "column": 3
+            },
+            "end": {
+              "line": 50,
+              "column": 4
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "persist",
+          "description": "Don't empty `cosmoz-page-route` element when navigating from a route, persisting it.",
+          "sourceRange": {
+            "start": {
+              "line": 52,
+              "column": 3
+            },
+            "end": {
+              "line": 55,
+              "column": 4
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "typecast",
+          "description": "",
+          "sourceRange": {
+            "start": {
+              "line": 56,
+              "column": 3
+            },
+            "end": {
+              "line": 59,
+              "column": 4
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "url-prefix",
+          "description": "Anything to prefix ad-hoc routes with, be it a `views` folder or a different domain",
+          "sourceRange": {
+            "start": {
+              "line": 61,
+              "column": 3
+            },
+            "end": {
+              "line": 64,
+              "column": 4
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        }
+      ],
+      "events": [
+        {
+          "type": "CustomEvent",
+          "name": "import-error",
+          "description": "import-error",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "route-loading",
+          "description": "route-loading",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "state-change",
+          "description": "state-change",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "template-not-found",
+          "description": "template-not-found",
+          "metadata": {}
+        }
+      ],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [
+        {
+          "description": "",
+          "name": "",
+          "range": {
+            "file": "cosmoz-page-router.html",
+            "start": {
+              "line": 87,
+              "column": 3
+            },
+            "end": {
+              "line": 87,
+              "column": 16
+            }
+          }
+        }
+      ],
+      "tagname": "cosmoz-page-router"
+    }
+  ],
+  "metadata": {
+    "polymer": {
+      "behaviors": [
+        {
+          "description": "",
+          "summary": "",
+          "path": "cosmoz-page-router-behavior-utilities.js",
+          "properties": [],
+          "methods": [
+            {
+              "name": "parseUrl",
+              "description": "Note: The location must be a fully qualified URL with a protocol like 'http(s)://'",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 71,
+                  "column": 2
+                },
+                "end": {
+                  "line": 135,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "location"
+                },
+                {
+                  "name": "mode"
+                }
+              ]
+            },
+            {
+              "name": "testRoute",
+              "description": "Example urlPath = '/user/123/bio'",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 141,
+                  "column": 2
+                },
+                "end": {
+                  "line": 157,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "routePath"
+                },
+                {
+                  "name": "urlPath"
+                }
+              ]
+            },
+            {
+              "name": "routeArguments",
+              "description": "routeArguments(routePath, urlPath, search, isRegExp) - Gets the path variables and query parameter values from the URL",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 160,
+                  "column": 2
+                },
+                "end": {
+                  "line": 205,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "routePath"
+                },
+                {
+                  "name": "urlPath"
+                },
+                {
+                  "name": "search"
+                },
+                {
+                  "name": "isRegExp"
+                },
+                {
+                  "name": "typecast"
+                }
+              ]
+            },
+            {
+              "name": "typecast",
+              "description": "typecast(value) - Typecast the string value to an unescaped string, number, or boolean",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 208,
+                  "column": 2
+                },
+                "end": {
+                  "line": 224,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "value"
+                }
+              ]
+            }
+          ],
+          "staticMethods": [],
+          "demos": [],
+          "metadata": {},
+          "sourceRange": {
+            "start": {
+              "line": 54,
+              "column": 1
+            },
+            "end": {
+              "line": 225,
+              "column": 3
+            }
+          },
+          "privacy": "public",
+          "name": "Cosmoz.PageRouterUtilitiesBehavior",
+          "attributes": [],
+          "events": [],
+          "styling": {
+            "cssVariables": [],
+            "selectors": []
+          },
+          "slots": []
+        }
+      ]
+    }
+  }
+}

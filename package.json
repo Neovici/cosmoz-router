@@ -8,13 +8,13 @@
 	},
 	"devDependencies": {
 		"eslint": "^3.9.1",
-		"eslint-plugin-html": "^3.1.1",
+		"eslint-plugin-html": "^3.2.1",
 		"eslint-plugin-mocha": "^4.11.0",
-		"polymer-cli": "^1.4.1"
+		"polymer-cli": "^1.5.4"
 	},
 	"scripts": {
 		"start": "polymer serve -o",
-		"postinstall": "polymer install",
+		"postinstall": "polymer install --variants",
 		"lint": "eslint --cache --ext .js,.html . && polymer lint cosmoz-*.html",
 		"test": "polymer test"
 	},
