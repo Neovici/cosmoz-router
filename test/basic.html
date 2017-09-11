@@ -1,71 +1,40 @@
 <!doctype html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 	<title>cosmoz-page-router basic test</title>
-	<script type="text/javascript">
-	var logStore = [],
-		errorStore = [],
-		warnStore = [],
-		oldLogFunc = console.log,
-		oldErrorFunc = console.error,
-		oldWarnFunc = console.warn;
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-	console.log = function (logMessage) {
-		logStore.push(logMessage);
-		oldLogFunc.apply(console, arguments);
-	};
-
-	console.error = function (errorMessage) {
-		errorStore.push(errorMessage);
-		oldErrorFunc.apply(console, arguments);
-	};
-
-	console.warn = function (warnMessage) {
-		warnStore.push(warnMessage);
-		oldWarnFunc.apply(console, arguments);
-	};
-
-	</script>
-	<script src="../../web-component-tester/browser.js"></script>
 	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+	<script src="../../web-component-tester/browser.js"></script>
+	<script src="../../test-fixture/test-fixture-mocha.js"></script>
 
+	<link rel="import" href="../../test-fixture/test-fixture.html">
+	<link rel="import" href="../../iron-test-helpers/iron-test-helpers.html">
 	<link rel="import" href="../cosmoz-page-router.html">
 </head>
 <body>
-	<test-fixture id="cosmoz-page-router-fixture">
+	<test-fixture id="basic">
 		<template>
 			<cosmoz-page-router></cosmoz-page-router>
 		</template>
 	</test-fixture>
 
 	<script>
-	/*global logStore, errorStore, warnStore */
-	(function () {
-		'use strict';
-
 		suite('<cosmoz-page-router>', function () {
-			var myElement;
+			var router;
 
-			setup(function () {
-				myElement = fixture('cosmoz-page-router-fixture');
+			setup(function (done) {
+				router = fixture('basic');
+				Polymer.Base.async(function (){
+					done();
+				});
 			});
 
-			test('No console logs should exist', function () {
-				assert.equal(logStore.length, 0, 'Log messages: ' + logStore.join(' | '));
-			});
-
-			test('No console warn should exist', function () {
-				assert.equal(warnStore.length, 0, 'Warn messages: ' + warnStore.join(' | '));
-			});
-
-			test('No console errors should exist', function () {
-				assert.equal(errorStore.length, 0, 'Error messages: ' + errorStore.join(' | '));
+			test('instantiates a cosmoz-page-router element', function () {
+				assert.equal(router.is, 'cosmoz-page-router');
 			});
 		});
-	}());
 
 	</script>
-</body>
-</html>
+</body></html>
