@@ -93,6 +93,7 @@
 
 		/**
 		 * Adds event listener to `popstate` event
+		 * @returns {void}
 		 */
 		initialize: function () {
 			if (this._initialized) {
@@ -260,6 +261,7 @@
 		/**
 		 * Add a `cosmoz-page-route` element
 		 * @param {Object} route { persist: Boolean, templateId: 'Route template-id', import: 'Route import', path: 'Route path' }
+		 * @returns {void}
 		 */
 		addRoute: function (route) {
 			var

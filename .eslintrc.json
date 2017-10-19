@@ -1,6 +1,7 @@
 {
 	"env": {
-		"browser": true
+		"browser": true,
+		"es6": true
 	},
 	"extends": "eslint:recommended",
 	"globals": {
@@ -19,6 +20,14 @@
 			"error",
 			"never"
 		],
+		"arrow-parens": [
+			"error",
+			"as-needed"
+		],
+		"arrow-spacing": [
+			"error",
+			{ "before": true, "after": true }
+		],
 		"brace-style": "error",
 		"camelcase": "error",
 		"comma-spacing": [
@@ -35,7 +44,10 @@
 			"error",
 			"all"
 		],
-		"eqeqeq": "error",
+		"eqeqeq": [
+			"error",
+			"smart"
+		],
 		"guard-for-in": "error",
 		"indent": [
 			"error",
@@ -71,7 +83,10 @@
 		"no-self-compare": "error",
 		"no-trailing-spaces": "error",
 		"no-unused-expressions": "error",
-		"no-unused-vars": "warn",
+		"no-unused-vars": [
+			"warn",
+			{"argsIgnorePattern": "^e$|event"}
+		],
 		"no-use-before-define": "error",
 		"no-useless-call": "error",
 		"no-useless-concat": "error",
@@ -86,6 +101,10 @@
 		],
 		"radix": "error",
 		"semi": [
+			"error",
+			"always"
+		],
+		"space-before-blocks": [
 			"error",
 			"always"
 		],
