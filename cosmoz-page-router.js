@@ -266,7 +266,8 @@
 		addRoute: function (route) {
 			var
 				element = document.createElement('cosmoz-page-route'),
-				newRoute;
+				newRoute,
+				dom = Polymer.dom(this);
 			element.setAttribute('path', route.path);
 			if (route.persist) {
 				element.setAttribute('persist', '');
@@ -278,9 +279,11 @@
 				route: element
 			}, this, true);
 
-			newRoute = Polymer.dom(this).appendChild(element);
+			newRoute = dom.appendChild(element);
 
-			Polymer.dom(this).flush();
+			if (dom.flush) {
+				dom.flush();
+			}
 
 			return newRoute;
 		},
