@@ -118,7 +118,7 @@
 					var route = this._getRoute(routeParams, routeHashParams),
 						queryString;
 
-					this._tempParamsObject = this._objectAssign({}, this.appQueryParams, appParams);
+					this._tempParamsObject = Object.assign({}, this.appQueryParams, appParams);
 					queryString = this._tempParamsString;
 
 					return this._getUrl(this.appPath, queryString, route);
@@ -129,35 +129,11 @@
 					var queryString,
 						hash;
 
-					this._tempParamsObject = this._objectAssign({}, this.routeQueryParams, routeParams);
+					this._tempParamsObject = Object.assign({}, this.routeQueryParams, routeParams);
 					queryString = this._tempParamsString;
-					this._tempParamsObject = this._objectAssign({}, this.routeHashParams, routeHashParams);
+					this._tempParamsObject = Object.assign({}, this.routeHashParams, routeHashParams);
 					hash = this._tempParamsString;
 					return this._getUrl(this.routePath, queryString, hash);
-				},
-
-				/**
-				 * https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Polyfill
-				**/
-				_objectAssign: function (target, sources) {
-					var to = Object(target),
-						index,
-						nextSource,
-						nextKey;
-
-					for (index = 1; index < arguments.length; index++) {
-						nextSource = arguments[index];
-
-						if (nextSource !== null) { // Skip over if undefined or null
-							for (nextKey in nextSource) {
-							// Avoid bugs when hasOwnProperty is shadowed
-								if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
-									to[nextKey] = nextSource[nextKey];
-								}
-							}
-						}
-					}
-					return to;
 				},
 
 				_computeRoutePathAndParams: function (pathAndQuery) {
