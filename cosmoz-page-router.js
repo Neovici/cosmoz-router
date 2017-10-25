@@ -81,6 +81,10 @@
 
 		/**
 		* Utility function that fires an event from a polymer element and return false if preventDefault has been called on the event.
+		* @param {String} type The event type
+		* @param {Object} detail The event detail
+		* @param {HTMLElement} node The node that will fire the event
+		* @param {Boolean} bubbles True if event should bubble
 		* @return {Boolean} `true` = continue, `false` = prevent further actions
 		*/
 		_fireEvent: function (type, detail, node, bubbles) {
