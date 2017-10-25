@@ -197,7 +197,7 @@
 			// parse the arguments into unescaped strings, numbers, or booleans
 				for (arg in args) {
 					if (args.hasOwnProperty(arg)) {
-						args[arg] = this.typecast(args[arg]);
+						args[arg] = this._typecast(args[arg]);
 					}
 				}
 			}
@@ -206,7 +206,7 @@
 		},
 
 		// typecast(value) - Typecast the string value to an unescaped string, number, or boolean
-		typecast: function (value) {
+		_typecast: function (value) {
 			// bool
 			if (value === 'true') {
 				return true;
