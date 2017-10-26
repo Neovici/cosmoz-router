@@ -138,6 +138,7 @@
 			}
 			if (route && route === currentRoute) {
 				window.history.replaceState({}, '', e.detail.newRoute);
+				this.fire('hashchange', {}, {node: window});
 			}
 
 		},
