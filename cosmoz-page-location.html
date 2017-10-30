@@ -224,11 +224,11 @@
 				_getUrl: function (path, queryString, hash) {
 					var url = path;
 					if (queryString !== '') {
-						url = url + '?' + queryString;
+						url = url + '?' + queryString.replace(/#/g, '%23');
 					}
 
 					if (hash !== '') {
-						url = url + '#' + hash;
+						url = url + '#' +  window.encodeURI(hash);
 					}
 
 					return url;
