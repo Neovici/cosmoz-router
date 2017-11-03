@@ -200,7 +200,6 @@
 
 			// don't load a new route if only the hash fragment changed
 			if (this._previousUrl &&
-					url.hash !== this._previousUrl.hash &&
 					url.path === this._previousUrl.path &&
 					url.search === this._previousUrl.search &&
 					url.isHashPath === this._previousUrl.isHashPath) {
