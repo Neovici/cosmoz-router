@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+	<title>cosmoz-page-router basic test</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+	<script src="../../web-component-tester/browser.js"></script>
+	<script src="../../test-fixture/test-fixture-mocha.js"></script>
+
+	<link rel="import" href="../../test-fixture/test-fixture.html">
+	<link rel="import" href="../../iron-test-helpers/iron-test-helpers.html">
+	<link rel="import" href="../cosmoz-page-location.html">
+</head>
+<body>
+	<test-fixture id="basic">
+		<template>
+			<cosmoz-page-location></cosmoz-page-location>
+		</template>
+	</test-fixture>
+
+	<script>
+
+		suite('basic', function () {
+			var location;
+			setup(function (done) {
+				location = fixture('basic');
+				Polymer.Base.async(function () {
+					done();
+				});
+			});
+			test('instantiates a cosmoz-page-location element', function () {
+				assert.equal(location.is, 'cosmoz-page-location');
+			});
+		});
+
+		suite('parse', function () {
+			var location,
+				tests = {
+					'path/to/route': {
+						hashBang: false,
+						path: 'path/to/route',
+						hash: {},
+						query: {}
+					},
+					'path/to/route#hashKey=hashValue': {
+						hashBang: false,
+						path: 'path/to/route',
+						hash: {
+							hashKey: 'hashValue'
+						},
+						query: {}
+					},
+					'path/to/route?queryKey=queryValue': {
+						hashBang: false,
+						path: 'path/to/route',
+						hash: {},
+						query: {
+							queryKey: 'queryValue'
+						}
+					},
+					'path/to/route#hashKey=hashValue?queryKey=queryValue': {
+						hashBang: false,
+						path: 'path/to/route',
+						hash: {
+							hashKey: 'hashValue'
+						},
+						query: {
+							queryKey: 'queryValue'
+						}
+					},
+					'!path/to/route': {
+						hashBang: false,
+						path: '!path/to/route',
+						hash: {},
+						query: {}
+					},
+					'!/path/to/route': {
+						hashBang: true,
+						path: '/path/to/route',
+						hash: {},
+						query: {}
+					}
+				};
+
+			setup(function (done) {
+				location = fixture('basic');
+				Polymer.Base.async(function () {
+					done();
+				});
+			});
+
+			Object.keys(tests).forEach(function (key, index) {
+				var result = tests[key];
+				test('parses location #' + index, function (done) {
+					assert.deepEqual(location._parse(key), result);
+					done();
+				});
+			});
+
+			Object.keys(tests).forEach(function (key, index) {
+				var value = tests[key];
+				test('encodes location #' + index, function (done) {
+					assert.equal(location._encode(value), key);
+					done();
+				});
+			});
+
+		});
+
+	</script>
+</body></html>
