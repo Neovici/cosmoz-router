@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+	<title>cosmoz-page-location demo</title>
+
+	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+	<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html" />
+	<link rel="import" href="../../iron-demo-helpers/demo-snippet.html" />
+	<link rel="import" href="../../iron-demo-helpers/url-bar.html" />
+	<link rel="import" href="../cosmoz-page-location.html">
+
+	<custom-style>
+		<style is="custom-style" include="demo-pages-shared-styles">
+			#container {
+				 max-width: 800px;
+			 }
+		</style>
+	</custom-style>
+</head>
+<body unresolved>
+	<div id="container" class="vertical-section-container centered">
+		<h3><code>cosmoz-page-location</code>.</h3>
+		<demo-snippet>
+			<template>
+				<dom-bind id="basic">
+					<template is="dom-bind">
+						<cosmoz-page-location id="location"
+							app-path="{{ appPath }}"
+							app-query="{{ appQuery }}"
+							route-path="{{ routePath }}"
+							route-query="{{ routeQuery }}"
+							route-hash="{{ routeHash }}">
+						</cosmoz-page-location>
+						<url-bar></url-bar>
+
+						<h4>Change values below and observe result in URL bar:</h4>
+						<p>
+							<label>Change <code>routePath</code></label>
+							<input value="{{ routePath::input }}">
+						</p>
+						<p>
+							<label>Change <code>routeQuery.queryParam</code></label>
+							<input value="{{ routeQuery.queryParam::input }}">
+						</p>
+						<p>
+							<label>Change <code>routeHash.hashParam</code></label>
+							<input value="{{ routeHash.hashParam::input }}">
+						</p>
+
+						<h4>Compute route URL from different params:</h4>
+						<p>
+							<label>query param</label>
+							<input value="{{ newRouteQueryParam::input }}">
+						</p>
+						<p>
+							<label>hash param</label>
+							<input value="{{ newRouteHashParam::input }}">
+						</p>
+						<p>
+							<label>Result:</label>
+							<p><a href$="{{ _computeRouteUrl(newRouteQueryParam, newRouteHashParam) }}">{{ _computeRouteUrl(newRouteQueryParam, newRouteHashParam) }}</a></p>
+						</p>
+
+						<h4>Compute full URL form app params:</h4>
+						<p>
+							<label>app param</label>
+							<input value="{{ appParam::input }}">
+							<a href$="{{ _computeAppUrl(appParam) }}">{{ _computeAppUrl(appParam) }}</a>
+						</p>
+					</template>
+				</dom-bind>
+			</template>
+		</demo-snippet>
+	</div>
+	<script type="text/javascript">
+	(function () {
+		window.addEventListener('WebComponentsReady', function () {
+			(function () {
+				var basic = document.getElementById('basic');
+				basic = !basic.set ? basic.firstElementChild : basic;
+				basic._computeRouteUrl = function (hashParam, queryParam) {
+					let route = this.$.location.getRoute();
+					route.hash.hashParam = hashParam;
+					route.query.queryParam = queryParam;
+					return this.$.location.getRouteUrl(route);
+				};
+				basic._computeAppUrl = function (appParam) {
+					return this.$.location.getAppUrl({appParam: appParam});
+				};
+			})();
+
+		});
+	})();
+	</script>
+</body></html>
