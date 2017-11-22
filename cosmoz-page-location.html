@@ -86,6 +86,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					const current = this.get(path),
 						valueKeys = Object.keys(value);
 
+					// In the new object set deleted properties to null
 					Object.keys(current).forEach(key =>  {
 						if (valueKeys.indexOf(key) > -1) {
 							return;
@@ -93,6 +94,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						value[key] = null;
 					});
 
+					//Update changed keys
 					Object.keys(value).forEach(key => {
 						if (current[key] === value[key]) {
 							return;
