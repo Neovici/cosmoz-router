@@ -35,6 +35,7 @@
 							route-query="{{ routeQuery }}"
 							route-hash="{{ routeHash }}">
 						</cosmoz-page-location>
+						<url-bar></url-bar>
 
 						<h4>Change values below and observe result in URL bar:</h4>
 						<p>
@@ -82,7 +83,7 @@
 				var basic = document.getElementById('basic');
 				basic = !basic.set ? basic.firstElementChild : basic;
 				basic._computeRouteUrl = function (hashParam, queryParam) {
-					let route = this.$.location.route;
+					let route = this.$.location.getRoute();
 					route.hash.hashParam = hashParam;
 					route.query.queryParam = queryParam;
 					return this.$.location.getRouteUrl(route);

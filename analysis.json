@@ -13,32 +13,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 30,
+              "line": 24,
               "column": 5
             },
             "end": {
-              "line": 33,
-              "column": 6
-            }
-          },
-          "metadata": {
-            "polymer": {
-              "notify": true
-            }
-          }
-        },
-        {
-          "name": "appQuery",
-          "type": "Object",
-          "description": "",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 35,
-              "column": 5
-            },
-            "end": {
-              "line": 38,
+              "line": 27,
               "column": 6
             }
           },
@@ -55,11 +34,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 40,
+              "line": 29,
               "column": 5
             },
             "end": {
-              "line": 42,
+              "line": 31,
               "column": 6
             }
           },
@@ -74,16 +53,18 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 44,
+              "line": 33,
               "column": 5
             },
             "end": {
-              "line": 46,
+              "line": 36,
               "column": 6
             }
           },
           "metadata": {
-            "polymer": {}
+            "polymer": {
+              "observer": "\"_appHashChanged\""
+            }
           }
         },
         {
@@ -93,11 +74,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 48,
+              "line": 38,
               "column": 5
             },
             "end": {
-              "line": 52,
+              "line": 42,
               "column": 6
             }
           },
@@ -115,7 +96,29 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 54,
+              "line": 44,
+              "column": 5
+            },
+            "end": {
+              "line": 50,
+              "column": 6
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "defaultValue": "{}"
+        },
+        {
+          "name": "routeHash",
+          "type": "Object",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 52,
               "column": 5
             },
             "end": {
@@ -127,28 +130,8 @@
             "polymer": {
               "notify": true
             }
-          }
-        },
-        {
-          "name": "routeHash",
-          "type": "Object",
-          "description": "",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 60,
-              "column": 5
-            },
-            "end": {
-              "line": 64,
-              "column": 6
-            }
           },
-          "metadata": {
-            "polymer": {
-              "notify": true
-            }
-          }
+          "defaultValue": "{}"
         },
         {
           "name": "hashBang",
@@ -157,11 +140,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 66,
+              "line": 60,
               "column": 5
             },
             "end": {
-              "line": 69,
+              "line": 63,
               "column": 6
             }
           },
@@ -172,24 +155,22 @@
           }
         },
         {
-          "name": "route",
-          "type": "Function",
+          "name": "_parseRegexp",
+          "type": "object",
           "description": "",
-          "privacy": "public",
+          "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 127,
+              "line": 65,
               "column": 4
             },
             "end": {
-              "line": 134,
-              "column": 5
+              "line": 65,
+              "column": 59
             }
           },
           "metadata": {
-            "polymer": {
-              "readOnly": false
-            }
+            "polymer": {}
           }
         }
       ],
@@ -200,11 +181,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 78,
+              "line": 72,
               "column": 4
             },
             "end": {
-              "line": 84,
+              "line": 78,
               "column": 5
             }
           },
@@ -221,11 +202,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 86,
+              "line": 80,
               "column": 4
             },
             "end": {
-              "line": 88,
+              "line": 82,
               "column": 5
             }
           },
@@ -242,7 +223,7 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 90,
+              "line": 84,
               "column": 4
             },
             "end": {
@@ -270,7 +251,7 @@
               "column": 4
             },
             "end": {
-              "line": 115,
+              "line": 113,
               "column": 5
             }
           },
@@ -287,11 +268,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 117,
+              "line": 115,
               "column": 4
             },
             "end": {
-              "line": 125,
+              "line": 129,
               "column": 5
             }
           },
@@ -299,16 +280,19 @@
           "params": [
             {
               "name": "route = {}"
+            },
+            {
+              "name": "queryFirst"
             }
           ]
         },
         {
-          "name": "getRouteUrl",
+          "name": "getRoute",
           "description": "",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 136,
+              "line": 131,
               "column": 4
             },
             "end": {
@@ -317,9 +301,26 @@
             }
           },
           "metadata": {},
+          "params": []
+        },
+        {
+          "name": "getRouteUrl",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 140,
+              "column": 4
+            },
+            "end": {
+              "line": 142,
+              "column": 5
+            }
+          },
+          "metadata": {},
           "params": [
             {
-              "name": "route = this.route"
+              "name": "route = this.getRoute()"
             }
           ]
         },
@@ -329,18 +330,21 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 140,
+              "line": 144,
               "column": 4
             },
             "end": {
-              "line": 146,
+              "line": 156,
               "column": 5
             }
           },
           "metadata": {},
           "params": [
             {
-              "name": "route = this.route"
+              "name": "query"
+            },
+            {
+              "name": "route = this.getRoute()"
             }
           ]
         },
@@ -350,11 +354,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 148,
+              "line": 158,
               "column": 4
             },
             "end": {
-              "line": 156,
+              "line": 164,
               "column": 5
             }
           },
@@ -371,11 +375,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 158,
+              "line": 166,
               "column": 4
             },
             "end": {
-              "line": 163,
+              "line": 171,
               "column": 5
             }
           },
@@ -386,18 +390,18 @@
       "staticMethods": [],
       "demos": [
         {
-          "url": "demo/cosmoz-page-location.html",
+          "url": "demo/location.html",
           "description": ""
         }
       ],
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 27,
+          "line": 21,
           "column": 11
         },
         "end": {
-          "line": 164,
+          "line": 172,
           "column": 4
         }
       },
@@ -409,11 +413,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 30,
+              "line": 24,
               "column": 5
             },
             "end": {
-              "line": 33,
+              "line": 27,
               "column": 6
             }
           },
@@ -421,31 +425,15 @@
           "type": "string"
         },
         {
-          "name": "app-query",
-          "description": "",
-          "sourceRange": {
-            "start": {
-              "line": 35,
-              "column": 5
-            },
-            "end": {
-              "line": 38,
-              "column": 6
-            }
-          },
-          "metadata": {},
-          "type": "Object"
-        },
-        {
           "name": "route-path",
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 48,
+              "line": 38,
               "column": 5
             },
             "end": {
-              "line": 52,
+              "line": 42,
               "column": 6
             }
           },
@@ -457,11 +445,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 54,
+              "line": 44,
               "column": 5
             },
             "end": {
-              "line": 58,
+              "line": 50,
               "column": 6
             }
           },
@@ -473,11 +461,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 60,
+              "line": 52,
               "column": 5
             },
             "end": {
-              "line": 64,
+              "line": 58,
               "column": 6
             }
           },
@@ -489,11 +477,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 66,
+              "line": 60,
               "column": 5
             },
             "end": {
-              "line": 69,
+              "line": 63,
               "column": 6
             }
           },
@@ -506,12 +494,6 @@
           "type": "CustomEvent",
           "name": "app-path-changed",
           "description": "Fired when the `appPath` property changes.",
-          "metadata": {}
-        },
-        {
-          "type": "CustomEvent",
-          "name": "app-query-changed",
-          "description": "Fired when the `appQuery` property changes.",
           "metadata": {}
         },
         {

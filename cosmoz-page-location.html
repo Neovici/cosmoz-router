@@ -129,7 +129,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					return path + hashAndQuery.join('');
 				},
 
-				get route() {
+				getRoute() {
 					return {
 						hashBang: this.hashBang,
 						path: this.routePath,
@@ -138,11 +138,11 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					};
 				},
 
-				getRouteUrl(route = this.route) {
+				getRouteUrl(route = this.getRoute()) {
 					return '#' + this._encode(route);
 				},
 
-				getAppUrl(query, route = this.route) {
+				getAppUrl(query, route = this.getRoute()) {
 					let appQuery = this._appQueryString;
 
 					if (query && typeof query === 'object') {
@@ -168,7 +168,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					if (!this.isAttached) {
 						return;
 					}
-					this._appHashString = this._encode(this.route);
+					this._appHashString = this._encode(this.getRoute());
 				}
 			});
 		})();
