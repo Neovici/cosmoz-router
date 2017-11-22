@@ -13,19 +13,11 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 			query="{{ _appQueryString }}"
 			hash="{{ _appHashString }}">
 		</iron-location>
-
-		<iron-query-params id="params"
-		></iron-query-params>
-
+		<iron-query-params id="params"></iron-query-params>
 	</template>
 	<script>
 		(function () {
 			'use strict';
-
-			const defaultObject = function () {
-					return {};
-				},
-				assign = Object.assign;
 
 			Polymer({
 				is: 'cosmoz-page-location',
@@ -40,7 +32,8 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					},
 
 					_appHashString: {
-						type: String
+						type: String,
+						observer: '_appHashChanged'
 					},
 
 					routePath: {
@@ -51,13 +44,17 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 
 					routeQuery: {
 						type: Object,
-						value: defaultObject,
+						value: function () {
+							return {};
+						},
 						notify: true
 					},
 
 					routeHash: {
 						type: Object,
-						value: defaultObject,
+						value: function () {
+							return {};
+						},
 						notify: true
 					},
 
@@ -66,11 +63,11 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						readOnly: true
 					}
 				},
+				_parseRegexp: /(!(?=\/))?([^#?]+)?#?([^?]+)?\??(.+)?$/i,
 
 				observers: [
 					'_routeChanged(routeQuery.*)',
-					'_routeChanged(routeHash.*)',
-					'_appHashChanged(_appHashString)',
+					'_routeChanged(routeHash.*)'
 				],
 
 				_paramsToString(value) {
@@ -86,34 +83,36 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 				},
 
 				_microUpdate(path, value = {}) {
-					const keys = Object.keys,
-						current = this.get(path),
-						currentKeys = keys(current);
-					let valueKeys = keys(value);
+					const current = this.get(path),
+						valueKeys = Object.keys(value);
 
-					currentKeys
-						.filter(key => valueKeys.indexOf(key) < 0)
-						.forEach(key => value[key] = null);
+					Object.keys(current).forEach(key =>  {
+						if (valueKeys.indexOf(key) > -1) {
+							return;
+						}
+						value[key] = null;
+					});
 
-					keys(value)
-						.filter(key => current[key] !== value[key])
-						.forEach(key => this.set([path, key], value[key]));
+					Object.keys(value).forEach(key => {
+						if (current[key] === value[key]) {
+							return;
+						}
+						this.set([path, key], value[key]);
+					});
 				},
 
 				_parse(appHashString) {
-					let regexp = /(!(?=\/))?([^#?]+)?#?([^?]+)?\??(.+)?$/gi,
-						matches = regexp.exec(appHashString);
-					matches = matches && matches.slice(1);
+					const matches = this._parseRegexp.exec(appHashString) || [];
 					return {
-						hashBang: !!matches[0],
-						path: matches[1] || '',
-						hash: this._paramsFromString(matches[2]),
-						query: this._paramsFromString(matches[3]),
+						hashBang: !!matches[1],
+						path: matches[2] || '',
+						hash: this._paramsFromString(matches[3]),
+						query: this._paramsFromString(matches[4]),
 					};
 				},
 
 				_encode(route = {}, queryFirst) {
-					let string = (route.hashBang ? '!' : '') + (route.path || ''),
+					const path = (route.hashBang ? '!' : '') + (route.path || ''),
 						query = this._paramsToString(route.query),
 						hash = this._paramsToString(route.hash),
 						hashAndQuery = [
@@ -125,15 +124,15 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						hashAndQuery.reverse();
 					}
 
-					return string + hashAndQuery.join('');
+					return path + hashAndQuery.join('');
 				},
 
 				get route() {
 					return {
 						hashBang: this.hashBang,
 						path: this.routePath,
-						hash: assign({}, this.routeHash),
-						query: assign({}, this.routeQuery)
+						hash: Object.assign({}, this.routeHash),
+						query: Object.assign({}, this.routeQuery)
 					};
 				},
 
@@ -145,7 +144,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					let appQuery = this._appQueryString;
 
 					if (query && typeof query === 'object') {
-						appQuery = assign({}, this._paramsFromString(appQuery), query);
+						appQuery = Object.assign({}, this._paramsFromString(appQuery), query);
 					}
 
 					return this._encode({
