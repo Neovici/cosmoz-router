@@ -63,7 +63,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						readOnly: true
 					}
 				},
-				_parseRegexp: /(!(?=\/))?([^#?]+)?#?([^?]+)?\??(.+)?$/i,
+				_parseRegexp: /(!(?=\/))?([^#?]+)?\??([^#]+)?#?(.+)?$/i,
 
 				observers: [
 					'_routeChanged(routeQuery.*)',
@@ -108,24 +108,19 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					return {
 						hashBang: !!matches[1],
 						path: matches[2] || '',
-						hash: this._paramsFromString(matches[3]),
-						query: this._paramsFromString(matches[4]),
+						query: this._paramsFromString(matches[3]),
+						hash: this._paramsFromString(matches[4])
 					};
 				},
 
-				_encode(route = {}, queryFirst) {
+				_encode(route = {}) {
 					const path = (route.hashBang ? '!' : '') + (route.path || ''),
 						query = this._paramsToString(route.query),
 						hash = this._paramsToString(route.hash),
 						hashAndQuery = [
-							hash ? '#' + hash.replace(/\?/g, '%3F') : '',
-							query ? '?' + query.replace(/#/g, '%23') : ''
+							query ? '?' + query.replace(/#/g, '%23') : '',
+							hash ? '#' + hash.replace(/\?/g, '%3F') : ''
 						];
-
-					if (queryFirst) {
-						hashAndQuery.reverse();
-					}
-
 					return path + hashAndQuery.join('');
 				},
 
@@ -133,8 +128,8 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					return {
 						hashBang: this.hashBang,
 						path: this.routePath,
+						query: Object.assign({}, this.routeQuery),
 						hash: Object.assign({}, this.routeHash),
-						query: Object.assign({}, this.routeQuery)
 					};
 				},
 
@@ -153,7 +148,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						path: this.appPath,
 						query: appQuery,
 						hash: this._encode(route)
-					}, true);
+					});
 				},
 
 				_appHashChanged(_appHashString) {
