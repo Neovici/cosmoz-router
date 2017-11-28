@@ -58,6 +58,16 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						notify: true
 					},
 
+					dwellTime: {
+						type: Number,
+						value: 2000
+					},
+
+					microDwellTime: {
+						type: Number,
+						value: Infinity
+					},
+
 					hashBang: {
 						type: Boolean,
 						readOnly: true
@@ -159,11 +169,17 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					this._microUpdate('routeQuery', route.query);
 				},
 
-				_routeChanged() {
+				_routeChanged(change) {
 					if (!this.isAttached) {
 						return;
 					}
-					this._appHashString = this._encode(this.getRoute());
+					const hash = this._encode(this.getRoute()),
+						path = change && change.path;
+					if (hash === this._appHashString) {
+						return;
+					}
+					this.$.location.dwellTime = path && path.length ? this.microDwellTime : this.dwellTime ;
+					this._appHashString = hash;
 				}
 			});
 		})();
