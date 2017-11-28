@@ -373,9 +373,10 @@
 		},
 
 		_hasCustomElement: function (elementName) {
+			const customElements = window.customElements;
 			return Polymer.telemetry.registrations.some(function (element) {
 				return element.is === elementName;
-			});
+			}) || customElements && customElements.get(elementName) != null;
 		},
 
 		_activateImport: function (route, url, eventDetail, importLink) {
