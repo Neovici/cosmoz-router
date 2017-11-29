@@ -268,6 +268,28 @@
 			return newRoute;
 		},
 
+		get activeRoute() {
+			return this._activeRoute;
+		},
+
+		removeRoute(route, resetPrevUrl = false) {
+			if (route == null) {
+				return;
+			}
+			this._deactivateRoute(route);
+			Polymer.dom(this).removeChild(route);
+			if (resetPrevUrl) {
+				this._previousUrl = null;
+			}
+		},
+
+		refresh(force = false) {
+			if (force) {
+				this._previousUrl = null;
+			}
+			this._stateChange();
+		},
+
 		_activateRoute: function (route, url) {
 			if (route.redirect) {
 				this.go(route.redirect, {
