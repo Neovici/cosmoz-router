@@ -438,7 +438,7 @@
 			return document.importNode(template, true);
 		},
 
-		_fixedImportNode: function (node, doc) {
+		_fixedImportNode: function (node) {
 			var clone = document.importNode(node, false);
 			clone.innerHTML = node.innerHTML;
 			return clone;
