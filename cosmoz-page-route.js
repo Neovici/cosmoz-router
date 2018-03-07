@@ -64,7 +64,7 @@
 			Polymer.NeonAnimatableBehavior
 		],
 
-		deactivate: function () {
+		deactivate() {
 			var node,
 				nodeToRemove;
 			if (!this.persist) {
