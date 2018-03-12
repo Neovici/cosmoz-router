@@ -51,6 +51,11 @@
 
 			templateInstance: {
 				type: Object
+			},
+
+			hasCustomElement: {
+				type: Boolean,
+				value: false
 			}
 		},
 

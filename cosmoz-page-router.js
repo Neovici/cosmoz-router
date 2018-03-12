@@ -406,6 +406,11 @@
 			// make sure the user didn't navigate to a different route while it loaded
 			if (route === this._loadingRoute) {
 
+				if (route.hasCustomElement && this._hasCustomElement(route.templateId)) {
+					this._activateCustomElement(route, url, eventDetail);
+					return;
+				}
+
 				var template = importLink.import.getElementById(route.templateId);
 
 				if (!template) {
