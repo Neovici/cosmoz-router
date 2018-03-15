@@ -16,24 +16,120 @@
 <body>
 	<test-fixture id="basic">
 		<template>
-			<cosmoz-page-router></cosmoz-page-router>
+			<cosmoz-page-router id="appRouter" manual-init mode="hash" url-prefix="views">
+					<cosmoz-page-route path="/" import="views/home.html" template-id="home"></cosmoz-page-route>
+					<cosmoz-page-route path="/view1" import="views/view1.html" template-id="view1"></cosmoz-page-route>
+			</cosmoz-page-router>
 		</template>
 	</test-fixture>
 
 	<script>
-		suite('<cosmoz-page-router>', function () {
-			var router;
+		/* global sinon chai */
+		sinon.assert.expose(chai.assert, { prefix: '' });
 
-			setup(function (done) {
+		suite('<cosmoz-page-router>', () => {
+			let router,
+				data = { persist: true, templateId: 'Route template-id', import: 'Route import', path: '/view2' };
+
+			setup(done => {
 				router = fixture('basic');
 				Polymer.Base.async(function () {
 					done();
 				});
 			});
 
-			test('instantiates a cosmoz-page-router element', function () {
+			test('instantiates a cosmoz-page-router element', () => {
 				assert.equal(router.is, 'cosmoz-page-router');
 			});
+
+			test('initialize verifies if already initialized', done => {
+				const spy = sinon.spy(router, '_stateChange');
+				router.initialize();
+				assert.calledOnce(spy);
+				router.initialize();
+				assert.calledOnce(spy);
+				done();
+			});
+
+			test('go fires popstate event', done => {
+				var popstate = false;
+				window.addEventListener('popstate', () => {
+					popstate = true;
+				});
+				router.go('/view1');
+				Polymer.Base.async(() => {
+					assert.isTrue(popstate);
+					done();
+				}, 100);
+			});
+
+			test('addRoute returns new route', () => {
+				const route = router.addRoute(data);
+				assert.equal(route.is, 'cosmoz-page-route');
+				assert.equal(route.path, '/view2');
+				assert.equal(route.templateId, 'Route template-id');
+			});
+
+			test('removeRoute handles undefined', () => {
+				const spy = sinon.spy(router, '_deactivateRoute');
+				router.removeRoute();
+				assert.notCalled(spy);
+			});
+
+			test('removeRoute calls _deactivateRoute', () => {
+				const spy = sinon.spy(router, '_deactivateRoute'),
+					route = router.addRoute(data);
+				router.removeRoute(route);
+				assert.calledOnce(spy);
+			});
+
+			test('removeRoute sets previousUrl to null if resetPrevUrl is true', () => {
+				router._previousUrl = 'test';
+				const route = router.addRoute(data);
+				router.removeRoute(route, true);
+				assert.isNull(router._previousUrl);
+			});
+
+			test('refresh calls _stateChange', () => {
+				const spy = sinon.spy(router, '_stateChange');
+				router.refresh();
+				assert.calledOnce(spy);
+			});
+
+			test('refresh with force updates _previousUrl as null', done => {
+				router._previousUrl = 'test';
+				router._stateChange = () => {
+					console.log('stateChange');
+				};
+				router.refresh(true);
+				Polymer.Base.async(() => {
+					assert.isNull(router._previousUrl);
+					done();
+				}, 100);
+			});
+
+			test('activeRoute returns route', done => {
+				const route = router.addRoute(data);
+				router._activeRoute = route;
+				assert.deepEqual(router.activeRoute, route);
+				done();
+			});
+
+			test('_activateRoute calls go function to redirect', () => {
+				const spy = sinon.spy(router, 'go'),
+					route = router.addRoute(data);
+				route.redirect = true;
+				router._activateRoute(route);
+				assert.calledOnce(spy);
+			});
+
+			// test('activate the same route calls _updateModelAndActivate', () => {
+			// 	const spy = sinon.spy(router, '_updateModelAndActivate'),
+			// 		route = router.addRoute(data);
+			// 	router._activeRoute = route;
+			// 	router._activateRoute(route, {path: '/view2'});
+			// 	assert.calledOnce(spy);
+			// });
 		});
 
 	</script>
