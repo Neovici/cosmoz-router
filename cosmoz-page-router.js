@@ -87,7 +87,7 @@
 		* @param {Boolean} bubbles True if event should bubble
 		* @return {Boolean} `true` = continue, `false` = prevent further actions
 		*/
-		_fireEvent: function (type, detail, node, bubbles) {
+		_fireEvent(type, detail, node, bubbles) {
 			return !this.fire(type, detail, {
 				bubbles: !!bubbles,
 				cancelable: true,
@@ -99,7 +99,7 @@
 		 * Adds event listener to `popstate` event
 		 * @returns {void}
 		 */
-		initialize: function () {
+		initialize() {
 			if (this._initialized) {
 				return;
 			}
@@ -110,7 +110,7 @@
 			this._initialized = true;
 		},
 
-		ready: function () {
+		ready() {
 			this._importedUris = {};
 			this._routesInError = {};
 			this._importLinksListeners = {};
@@ -119,7 +119,7 @@
 			}
 		},
 
-		go: function (path, options) {
+		go(path, options) {
 			var _path = path;
 
 			if (this.mode !== 'pushstate') {
@@ -146,7 +146,7 @@
 		},
 
 		// scroll to the element with id="hash" or name="hash"
-		_scrollToHash: function (hash) {
+		_scrollToHash(hash) {
 			if (!hash) {
 				return;
 			}
@@ -164,7 +164,7 @@
 			}, 0);
 		},
 
-		_stateChange: function () {
+		_stateChange() {
 
 			var
 				url = this.parseUrl(window.location.href, this.mode),
@@ -217,7 +217,7 @@
 			this._addAdHocRoute(url.path);
 		},
 
-		_addAdHocRoute: function (path) {
+		_addAdHocRoute(path) {
 			var
 				importUri = this.urlPrefix + path + this.fileSuffix,
 				templateId = path.substring(1).replace(/\//g, '-');
@@ -225,7 +225,7 @@
 			this._addRouteForCurrentPathAndActivate(importUri, templateId);
 		},
 
-		_addRouteForCurrentPathAndActivate: function (importUri, templateId) {
+		_addRouteForCurrentPathAndActivate(importUri, templateId) {
 			var
 				url = this.parseUrl(window.location.href, this.mode),
 				route = this.addRoute({
@@ -243,7 +243,7 @@
 		 * @param {Object} route { persist: Boolean, templateId: 'Route template-id', import: 'Route import', path: 'Route path' }
 		 * @returns {void}
 		 */
-		addRoute: function (route) {
+		addRoute(route) {
 			var
 				element = document.createElement('cosmoz-page-route'),
 				newRoute,
@@ -290,7 +290,7 @@
 			this._stateChange();
 		},
 
-		_activateRoute: function (route, url) {
+		_activateRoute(route, url) {
 			if (route.redirect) {
 				this.go(route.redirect, {
 					replace: true
@@ -316,7 +316,7 @@
 			}
 		},
 
-		_updateModelAndActivate: function (route, url, eventDetail) {
+		_updateModelAndActivate(route, url, eventDetail) {
 			var model = this._createModel(route, url, eventDetail);
 
 			eventDetail.templateInstance = route.templateInstance;
@@ -324,7 +324,7 @@
 			this._fireEvent('template-activate', eventDetail, route.templateInstance, true);
 		},
 
-		_removeImportLinkListeners: function (importLink) {
+		_removeImportLinkListeners(importLink) {
 			var listeners = this._importLinksListeners[importLink];
 			if (listeners) {
 				importLink.removeEventListener('load', listeners.load);
@@ -333,7 +333,7 @@
 			}
 		},
 
-		_importAndActivate: function (route, url, eventDetail) {
+		_importAndActivate(route, url, eventDetail) {
 			var
 				router = this,
 				importLink,
@@ -394,14 +394,14 @@
 			}
 		},
 
-		_hasCustomElement: function (elementName) {
+		_hasCustomElement(elementName) {
 			const customElements = window.customElements;
 			return Polymer.telemetry.registrations.some(function (element) {
 				return element.is === elementName;
 			}) || customElements && customElements.get(elementName) != null;
 		},
 
-		_activateImport: function (route, url, eventDetail, importLink) {
+		_activateImport(route, url, eventDetail, importLink) {
 			route.importLink = importLink;
 			// make sure the user didn't navigate to a different route while it loaded
 			if (route === this._loadingRoute) {
@@ -431,20 +431,20 @@
 			}
 		},
 
-		_instantiateTemplate: function (template) {
+		_instantiateTemplate(template) {
 			if (hasImportNodeBug) {
 				return this._fixedImportNode(template);
 			}
 			return document.importNode(template, true);
 		},
 
-		_fixedImportNode: function (node, doc) {
+		_fixedImportNode(node) {
 			var clone = document.importNode(node, false);
 			clone.innerHTML = node.innerHTML;
 			return clone;
 		},
 
-		_activateCustomElement: function (route, url, eventDetail) {
+		_activateCustomElement(route, url, eventDetail) {
 			var
 				element = document.createElement(route.templateId),
 				model,
@@ -476,7 +476,7 @@
 			this._fireEvent('template-activate', eventDetail, route, true);
 		},
 
-		_activateTemplate: function (route, url, eventDetail, template) {
+		_activateTemplate(route, url, eventDetail, template) {
 			var
 				templateInstance = this._instantiateTemplate(template),
 				templateId = route.templateId,
@@ -502,7 +502,7 @@
 			this._activateTemplateInstance(route, url, eventDetail);
 		},
 
-		_activateTemplateInstance: function (route, url, eventDetail) {
+		_activateTemplateInstance(route, url, eventDetail) {
 			var
 				router = this,
 				templateInstance = eventDetail.templateInstance;
@@ -521,7 +521,7 @@
 			Polymer.dom(this._loadingRoute.root).appendChild(templateInstance);
 		},
 
-		_changeRoute: function (oldRoute, newRoute) {
+		_changeRoute(oldRoute, newRoute) {
 			var oRoute = oldRoute,
 				nRoute = newRoute;
 
@@ -548,11 +548,11 @@
 		},
 
 		// Remove the route's content
-		_deactivateRoute: function (route) {
+		_deactivateRoute(route) {
 			route.deactivate();
 		},
 
-		_createModel: function (route, url, eventDetail) {
+		_createModel(route, url, eventDetail) {
 			var
 				model = {},
 				params = this.routeArguments(
@@ -575,7 +575,7 @@
 			return eventDetail.model;
 		},
 
-		_setObjectProperties: function (object, model) {
+		_setObjectProperties(object, model) {
 			var property;
 			for (property in model) {
 				if (model.hasOwnProperty(property)) {
@@ -584,13 +584,13 @@
 			}
 		},
 
-		_onNeonAnimationFinish: function (event) {
+		_onNeonAnimationFinish(event) {
 			if (this._previousRoute && !this._previousRoute.active) {
 				this._deactivateRoute(this._previousRoute);
 			}
 		},
 
-		_stopEventPropagation: function (event) {
+		_stopEventPropagation(event) {
 			event.stopPropagation();
 		}
 	});

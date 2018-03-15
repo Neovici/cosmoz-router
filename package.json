@@ -10,7 +10,8 @@
 		"eslint": "^4.9.0",
 		"eslint-plugin-html": "^3.2.2",
 		"eslint-plugin-mocha": "^4.11.0",
-		"polymer-cli": "^1.5.7"
+		"polymer-cli": "^1.6.0",
+		"web-component-tester-istanbul": "Neovici/web-component-tester-istanbul"
 	},
 	"scripts": {
 		"start": "polymer serve -o",

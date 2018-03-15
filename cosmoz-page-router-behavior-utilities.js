@@ -69,7 +69,7 @@
 		// }
 		//
 		// Note: The location must be a fully qualified URL with a protocol like 'http(s)://'
-		parseUrl: function (location, mode) {
+		parseUrl(location, mode) {
 			var
 				url = {
 					isHashPath: mode === 'hash'
@@ -139,7 +139,7 @@
 		//
 		// Example routePath: '/user/:userId/**'
 		// Example urlPath = '/user/123/bio'
-		testRoute: function (routePath, urlPath) {
+		testRoute(routePath, urlPath) {
 			// try to fail or succeed as quickly as possible for the most common cases
 			var rPath = routePath;
 
@@ -158,7 +158,7 @@
 		},
 
 		// routeArguments(routePath, urlPath, search, isRegExp) - Gets the path variables and query parameter values from the URL
-		routeArguments: function (routePath, urlPath, search, isRegExp, typecast) {
+		routeArguments(routePath, urlPath, search, isRegExp, typecast) {
 			var
 				args = {},
 				rPath = routePath,
@@ -206,7 +206,7 @@
 		},
 
 		// typecast(value) - Typecast the string value to an unescaped string, number, or boolean
-		_typecast: function (value) {
+		_typecast(value) {
 			// bool
 			if (value === 'true') {
 				return true;
