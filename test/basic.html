@@ -19,6 +19,7 @@
 			<cosmoz-page-router manual-init mode="hash" url-prefix="views">
 					<cosmoz-page-route path="/" import="../demo/views/home.html" template-id="home"></cosmoz-page-route>
 					<cosmoz-page-route path="/view1" import="../demo/views/view1.html" template-id="view1"></cosmoz-page-route>
+					<cosmoz-page-route path="/view2" import="../demo/views/view2.html" template-id="view2"></cosmoz-page-route>
 			</cosmoz-page-router>
 		</template>
 	</test-fixture>
@@ -26,7 +27,7 @@
 		<template>
 			<cosmoz-page-router mode="hashbang" url-prefix="views">
 					<cosmoz-page-route path="/" import="../demo/views/home.html" template-id="test"></cosmoz-page-route>
-					<cosmoz-page-route path="/test1" import="../demo/views/view1.html" template-id="view1"></cosmoz-page-route>
+					<cosmoz-page-route path="/view1" import="../demo/views/view1.html" template-id="view1"></cosmoz-page-route>
 			</cosmoz-page-router>
 		</template>
 	</test-fixture>
@@ -37,11 +38,11 @@
 
 		suite('<cosmoz-page-router>', () => {
 			let router,
-				data = { persist: true, templateId: 'Route template-id', import: 'Route import', path: '/view2' };
+				data = { persist: true, templateId: 'view3', import: '/view3', path: '/view3' };
 
 			setup(done => {
 				router = fixture('basic');
-				Polymer.Base.async(function () {
+				Polymer.Base.async(() => {
 					done();
 				});
 			});
@@ -54,29 +55,15 @@
 				const spy = sinon.spy(router, '_stateChange');
 				router.initialize();
 				assert.calledOnce(spy);
-				router.initialize();
-				assert.calledOnce(spy);
 				spy.restore();
 				done();
-			});
-
-			test('go fires popstate event', done => {
-				var popstate = false;
-				window.addEventListener('popstate', () => {
-					popstate = true;
-				});
-				router.go('/view1');
-				Polymer.Base.async(() => {
-					assert.isTrue(popstate);
-					done();
-				}, 100);
 			});
 
 			test('addRoute returns new route', () => {
 				const route = router.addRoute(data);
 				assert.equal(route.is, 'cosmoz-page-route');
-				assert.equal(route.path, '/view2');
-				assert.equal(route.templateId, 'Route template-id');
+				assert.equal(route.path, '/view3');
+				assert.equal(route.templateId, 'view3');
 			});
 
 			test('removeRoute handles undefined', () => {
@@ -136,18 +123,11 @@
 				spy.restore();
 			});
 
-			// test('activate the same route calls _updateModelAndActivate', () => {
-			// 	const spy = sinon.spy(router, '_updateModelAndActivate'),
-			// 		route = router.addRoute(data);
-			// 	router._activeRoute = route;
-			// 	router._activateRoute(route, {path: '/view2'});
-			// 	assert.calledOnce(spy);
-			// spy.restore();
-			// });
 		});
 
 		suite('<cosmoz-page-router mode="hashbang">', () => {
-			let router;
+			let router,
+				data = { persist: true, templateId: 'view2', import: '/view2', path: '/view2' };
 
 			setup(done => {
 				router = fixture('hashbang');
@@ -160,15 +140,21 @@
 				assert.equal(router.is, 'cosmoz-page-router');
 			});
 
-			test('go function calls window.history.pushState with hashbang mode', done => {
-				const spy = sinon.spy(window.history, 'pushState');
-				router.go('/view1');
-				Polymer.Base.async(() => {
-					assert.calledOnce(spy);
-					assert.isTrue(spy.calledWith(null, null, '#!/view1'));
-					spy.restore();
-					done();
-				}, 100);
+			test('_hasCustomElement returns true for cozmoz-page-router', done => {
+				assert.isTrue(router._hasCustomElement('cosmoz-page-route'));
+				assert.isTrue(router._hasCustomElement('cosmoz-page-router'));
+				done();
+			});
+
+			// test('go function calls window.history.pushState with hashbang mode', done => {
+			// 	const spy = sinon.spy(window.history, 'pushState');
+			// 	router.go('/view1');
+			// 	Polymer.Base.async(() => {
+			// 		assert.calledOnce(spy);
+			// 		assert.isTrue(spy.calledWith(null, null, '#!/view1'));
+			// 		spy.restore();
+			// 		done();
+			// 	}, 100);
 			});
 });
 
