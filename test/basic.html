@@ -127,7 +127,7 @@
 
 		suite('<cosmoz-page-router mode="hashbang">', () => {
 			let router,
-				data = { persist: true, templateId: 'view2', import: '/view2', path: '/view2' };
+				data = { persist: false, templateId: 'view2', import: '/view2', path: '/view2' };
 
 			setup(done => {
 				router = fixture('hashbang');
@@ -146,6 +146,14 @@
 				done();
 			});
 
+			test('addRoute returns new route', () => {
+				const route = router.addRoute(data);
+				assert.equal(route.is, 'cosmoz-page-route');
+				assert.equal(route.path, '/view2');
+				assert.equal(route.templateId, 'view2');
+				route.deactivate();
+			});
+
 			// test('go function calls window.history.pushState with hashbang mode', done => {
 			// 	const spy = sinon.spy(window.history, 'pushState');
 			// 	router.go('/view1');
@@ -155,8 +163,8 @@
 			// 		spy.restore();
 			// 		done();
 			// 	}, 100);
-			});
-});
+			// });
+		});
 
 	</script>
 </body></html>
