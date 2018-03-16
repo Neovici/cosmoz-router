@@ -16,9 +16,17 @@
 <body>
 	<test-fixture id="basic">
 		<template>
-			<cosmoz-page-router id="appRouter" manual-init mode="hash" url-prefix="views">
-					<cosmoz-page-route path="/" import="views/home.html" template-id="home"></cosmoz-page-route>
-					<cosmoz-page-route path="/view1" import="views/view1.html" template-id="view1"></cosmoz-page-route>
+			<cosmoz-page-router manual-init mode="hash" url-prefix="views">
+					<cosmoz-page-route path="/" import="../demo/views/home.html" template-id="home"></cosmoz-page-route>
+					<cosmoz-page-route path="/view1" import="../demo/views/view1.html" template-id="view1"></cosmoz-page-route>
+			</cosmoz-page-router>
+		</template>
+	</test-fixture>
+	<test-fixture id="hashbang">
+		<template>
+			<cosmoz-page-router mode="hashbang" url-prefix="views">
+					<cosmoz-page-route path="/" import="../demo/views/home.html" template-id="test"></cosmoz-page-route>
+					<cosmoz-page-route path="/test1" import="../demo/views/view1.html" template-id="view1"></cosmoz-page-route>
 			</cosmoz-page-router>
 		</template>
 	</test-fixture>
@@ -48,6 +56,7 @@
 				assert.calledOnce(spy);
 				router.initialize();
 				assert.calledOnce(spy);
+				spy.restore();
 				done();
 			});
 
@@ -74,6 +83,7 @@
 				const spy = sinon.spy(router, '_deactivateRoute');
 				router.removeRoute();
 				assert.notCalled(spy);
+				spy.restore();
 			});
 
 			test('removeRoute calls _deactivateRoute', () => {
@@ -81,6 +91,7 @@
 					route = router.addRoute(data);
 				router.removeRoute(route);
 				assert.calledOnce(spy);
+				spy.restore();
 			});
 
 			test('removeRoute sets previousUrl to null if resetPrevUrl is true', () => {
@@ -94,6 +105,7 @@
 				const spy = sinon.spy(router, '_stateChange');
 				router.refresh();
 				assert.calledOnce(spy);
+				spy.restore();
 			});
 
 			test('refresh with force updates _previousUrl as null', done => {
@@ -121,6 +133,7 @@
 				route.redirect = true;
 				router._activateRoute(route);
 				assert.calledOnce(spy);
+				spy.restore();
 			});
 
 			// test('activate the same route calls _updateModelAndActivate', () => {
@@ -129,8 +142,35 @@
 			// 	router._activeRoute = route;
 			// 	router._activateRoute(route, {path: '/view2'});
 			// 	assert.calledOnce(spy);
+			// spy.restore();
 			// });
 		});
+
+		suite('<cosmoz-page-router mode="hashbang">', () => {
+			let router;
+
+			setup(done => {
+				router = fixture('hashbang');
+				Polymer.Base.async(() => {
+					done();
+				});
+			});
+
+			test('instantiates a cosmoz-page-router element', () => {
+				assert.equal(router.is, 'cosmoz-page-router');
+			});
+
+			test('go function calls window.history.pushState with hashbang mode', done => {
+				const spy = sinon.spy(window.history, 'pushState');
+				router.go('/view1');
+				Polymer.Base.async(() => {
+					assert.calledOnce(spy);
+					assert.isTrue(spy.calledWith(null, null, '#!/view1'));
+					spy.restore();
+					done();
+				}, 100);
+			});
+});
 
 	</script>
 </body></html>
