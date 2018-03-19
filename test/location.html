@@ -107,6 +107,25 @@
 				});
 			});
 
+			test('getRouteUrl returns route url', done => {
+				assert.equal(location.getRouteUrl(), '#');
+				assert.equal(location.getRouteUrl({
+					hashBang: false,
+					path: 'path/to/route',
+					hash: {
+						hashKey: 'hashValue'
+					},
+					query: {}
+				}), '#path/to/route#hashKey=hashValue');
+				done();
+			});
+
+			test('getAppUrl returns app url with query', done => {
+				let parts = location.getAppUrl({ queryKey: 'queryValue'}).split('&');
+				assert.equal(parts[parts.length-1], 'queryKey=queryValue');
+				done();
+			});
+
 		});
 
 	</script>
