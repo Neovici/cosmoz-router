@@ -126,6 +126,14 @@
 				done();
 			});
 
+			test('_routeChanged updates _appHashString', done => {
+				location.routeQuery = {
+					queryKey: 'queryValue'
+				};
+				assert.equal(location._appHashString, '?queryKey=queryValue');
+				done();
+			});
+
 		});
 
 	</script>

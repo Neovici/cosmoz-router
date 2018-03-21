@@ -153,17 +153,6 @@
 				assert.equal(route.templateId, 'view2');
 				route.deactivate();
 			});
-
-			// test('go function calls window.history.pushState with hashbang mode', done => {
-			// 	const spy = sinon.spy(window.history, 'pushState');
-			// 	router.go('/view1');
-			// 	Polymer.Base.async(() => {
-			// 		assert.calledOnce(spy);
-			// 		assert.isTrue(spy.calledWith(null, null, '#!/view1'));
-			// 		spy.restore();
-			// 		done();
-			// 	}, 100);
-			// });
 		});
 
 	</script>
