@@ -22,21 +22,21 @@
 
 	<script>
 
-		suite('basic', function () {
-			var location;
-			setup(function (done) {
+		suite('basic', () => {
+			let location;
+			setup(done => {
 				location = fixture('basic');
-				Polymer.Base.async(function () {
+				Polymer.Base.async(() => {
 					done();
 				});
 			});
-			test('instantiates a cosmoz-page-location element', function () {
+			test('instantiates a cosmoz-page-location element', () => {
 				assert.equal(location.is, 'cosmoz-page-location');
 			});
 		});
 
-		suite('parse', function () {
-			var location,
+		suite('parse', () => {
+			let location,
 				tests = {
 					'path/to/route': {
 						hashBang: false,
@@ -84,27 +84,54 @@
 					}
 				};
 
-			setup(function (done) {
+			setup(done => {
 				location = fixture('basic');
 				Polymer.Base.async(function () {
 					done();
 				});
 			});
 
-			Object.keys(tests).forEach(function (key, index) {
+			Object.keys(tests).forEach((key, index) => {
 				var result = tests[key];
-				test('parses location #' + index, function (done) {
+				test('parses location #' + index, done => {
 					assert.deepEqual(location._parse(key), result);
 					done();
 				});
 			});
 
-			Object.keys(tests).forEach(function (key, index) {
-				var value = tests[key];
-				test('encodes location #' + index, function (done) {
+			Object.keys(tests).forEach((key, index) => {
+				const value = tests[key];
+				test('encodes location #' + index, done => {
 					assert.equal(location._encode(value), key);
 					done();
 				});
+			});
+
+			test('getRouteUrl returns route url', done => {
+				assert.equal(location.getRouteUrl(), '#');
+				assert.equal(location.getRouteUrl({
+					hashBang: false,
+					path: 'path/to/route',
+					hash: {
+						hashKey: 'hashValue'
+					},
+					query: {}
+				}), '#path/to/route#hashKey=hashValue');
+				done();
+			});
+
+			test('getAppUrl returns app url with query', done => {
+				const parts = location.getAppUrl({ queryKey: 'queryValue'}).split('&');
+				assert.equal(parts[parts.length - 1], 'queryKey=queryValue');
+				done();
+			});
+
+			test('_routeChanged updates _appHashString', done => {
+				location.routeQuery = {
+					queryKey: 'queryValue'
+				};
+				assert.equal(location._appHashString, '?queryKey=queryValue');
+				done();
 			});
 
 		});
