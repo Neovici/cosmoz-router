@@ -4,7 +4,6 @@
 		"cosmoz-page-route.html",
 		"cosmoz-page-router.html"
 	],
-	"version": "1.0.1",
 	"homepage": "https://github.com/Neovici/cosmoz-page-router",
 	"authors": [
 		"Neovici Development"
