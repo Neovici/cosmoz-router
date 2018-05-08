@@ -263,6 +263,8 @@
 
 			if (dom.flush) {
 				dom.flush();
+			} else if (Polymer.flush) {
+				Polymer.flush();
 			}
 
 			return newRoute;
