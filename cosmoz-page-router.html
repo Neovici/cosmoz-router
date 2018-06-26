@@ -85,7 +85,8 @@ Will otherwise be fired when activated for persisted views.
 				id="routes"
 				attr-for-selected="path"
 				on-neon-animation-finish="_onNeonAnimationFinish">
-			<slot></slot>
+			<!-- TODO: Remove this when neon-animated-pages is fixed or dropped-->
+			<slot class="iron-selected"></slot>
 		</neon-animated-pages>
 	</template>
   <script type="text/javascript" src="cosmoz-page-router.js"></script>
