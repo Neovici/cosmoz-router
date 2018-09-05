@@ -1,0 +1,30 @@
+<link rel="import" href="../../cosmoz-page-location.html">
+<dom-module id="issue-36-view">
+	<template>
+		<cosmoz-page-location route-hash="{{ _routeHash }}"></cosmoz-page-location>
+		<div>Param value:<span>[[ params.param ]]</span>.</div>
+
+	</template>
+	<script type="text/javascript">
+		/*global cz, Cosmoz*/
+		Polymer({
+			is: 'issue-36-view',
+			properties: {
+				params: {
+					type: Object,
+				},
+				_routeHash: {
+					type: Object,
+					value: () => {}
+				}
+			},
+			observers: [
+				'_paramsChanged(params.*)'
+			],
+			_paramsChanged(paramsChange) {
+				console.log(paramsChange);
+				this.set('_routeHash.hashparam', this.params.param);
+			}
+		});
+	</script>
+</dom-module>
