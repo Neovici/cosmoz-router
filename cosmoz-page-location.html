@@ -113,6 +113,39 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					});
 				},
 
+				_batchMicroUpdate(props) {
+					const updatedPaths = {};
+
+					Object.keys(props).forEach(path => {
+						let currentPropValue = this.get(path),
+							newPropValue = props[path],
+							newPropValueKeys = Object.keys(newPropValue);
+
+						if (typeof currentPropValue !== 'object') {
+							if (currentPropValue !== newPropValue) {
+								updatedPaths[path] = newPropValue;
+							}
+							return;
+						}
+
+						// Set deleted properties to null
+						Object.keys(currentPropValue).forEach(subPath => {
+							if (newPropValueKeys.indexOf(subPath) < 0) {
+								updatedPaths[path + '.' + subPath] = null;
+							}
+						});
+						// Update changed properties
+						Object.keys(newPropValue).forEach(subPath => {
+							if (currentPropValue[subPath] === newPropValue[subPath]) {
+								return;
+							}
+							updatedPaths[path + '.' + subPath] = newPropValue[subPath];
+						});
+					});
+
+					this.setProperties(updatedPaths);
+				},
+
 				_parse(appHashString) {
 					const matches = this._parseRegexp.exec(appHashString) || [];
 					return {
@@ -164,22 +197,49 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 				_appHashChanged(_appHashString) {
 					const route = this._parse(_appHashString);
 					this._setHashBang(route.hashBang);
-					this.routePath = route.path;
-					this._microUpdate('routeHash', route.hash);
-					this._microUpdate('routeQuery', route.query);
+
+					if (this.setProperties) {
+						// Batch update of properties if using Polymer 2.x
+						this._batchMicroUpdate({
+							routePath: route.path,
+							routeHash: route.hash,
+							routeQuery: route.query
+						});
+					} else {
+						this.routePath = route.path;
+						this._microUpdate('routeHash', route.hash);
+						this._microUpdate('routeQuery', route.query);
+					}
 				},
 
 				_routeChanged(change) {
 					if (!this.isAttached) {
 						return;
 					}
-					const hash = this._encode(this.getRoute()),
-						path = change && change.path;
-					if (hash === this._appHashString) {
+
+					const path = change && change.path;
+
+					let route,
+						routeHashUri;
+
+					if (path && path.startsWith('routeHash')) {
+						// See issue #36
+						// If this cosmoz-page-location query parameters are not in sync with the URL, and we are trying to update
+						// some hash params, then we will update the URL with incorrect route hash string
+						// To avoid that, use the actual location
+						route = this._parse(window.decodeURIComponent(window.location.hash.slice(1)));
+						routeHashUri = this._encode({ hashBang: route.hashBang, path: route.path, query: route.query, hash: this.routeHash });
+					} else {
+						route = this.getRoute();
+						routeHashUri = this._encode(route);
+					}
+
+					if (this._appHashString === routeHashUri) {
 						return;
 					}
-					this.$.location.dwellTime = path && path.length ? this.microDwellTime : this.dwellTime ;
-					this._appHashString = hash;
+
+					this.$.location.dwellTime = path && path.length ? this.microDwellTime : this.dwellTime;
+					this._appHashString = routeHashUri;
 				}
 			});
 		})();

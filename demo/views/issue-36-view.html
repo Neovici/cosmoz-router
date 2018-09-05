@@ -6,23 +6,22 @@
 
 	</template>
 	<script type="text/javascript">
-		/*global cz, Cosmoz*/
 		Polymer({
 			is: 'issue-36-view',
 			properties: {
 				params: {
 					type: Object,
 				},
+
 				_routeHash: {
 					type: Object,
-					value: () => {}
+					value: () => ({})
 				}
 			},
 			observers: [
 				'_paramsChanged(params.*)'
 			],
-			_paramsChanged(paramsChange) {
-				console.log(paramsChange);
+			_paramsChanged(paramsChange) { // eslint-disable-line
 				this.set('_routeHash.hashparam', this.params.param);
 			}
 		});
