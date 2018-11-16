@@ -10,15 +10,17 @@
 		"eslint": "^4.9.0",
 		"eslint-plugin-html": "^3.2.2",
 		"eslint-plugin-mocha": "^4.11.0",
-		"polymer-cli": "^1.6.0",
+		"polymer-cli": "^1.8.0",
 		"web-component-tester-istanbul": "Neovici/web-component-tester-istanbul"
 	},
 	"scripts": {
 		"start": "polymer serve -o",
-		"postinstall": "polymer install --variants",
+		"preinstall": "rm -f package-lock.json",
+		"postinstall": "polymer install --variants && yarn sync-npm",
 		"lint": "eslint --cache --ext .js,.html . && polymer lint cosmoz-*.html",
 		"test": "polymer test",
-		"analyze": "polymer analyze --input cosmoz-*.html  > analysis.json"
+		"analyze": "polymer analyze --input cosmoz-*.html  > analysis.json",
+		"sync-npm": "npm shrinkwrap && mv npm-shrinkwrap.json package-lock.json"
 	},
 	"repository": {
 		"type": "git",
