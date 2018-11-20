@@ -10,11 +10,11 @@
 	//
 	// example routeSegments ['', 'user', ':userId', '**']
 	// example urlSegments ['', 'user', '123', 'bio']
-	var segmentsMatch = function (routeSegments, routeIndex, urlSegments, urlIndex, pathVariables) {
-		var
+	const segmentsMatch = function (routeSegments, routeIndex, urlSegments, urlIndex, pathVariables) {
+		const
 			routeSegment = routeSegments[routeIndex],
-			urlSegment = urlSegments[urlIndex],
-			i;
+			urlSegment = urlSegments[urlIndex];
+		let i;
 
 		// if we're at the last route segment and it is a globstar, it will match the rest of the url
 		if (routeSegment === '**' && routeIndex === routeSegments.length - 1) {
@@ -70,11 +70,11 @@
 		//
 		// Note: The location must be a fully qualified URL with a protocol like 'http(s)://'
 		parseUrl(location, mode) {
-			var
+			const
 				url = {
 					isHashPath: mode === 'hash'
-				},
-				nativeUrl,
+				};
+			let nativeUrl,
 				anchor,
 				searchIndex,
 				secondHashIndex;
@@ -141,7 +141,7 @@
 		// Example urlPath = '/user/123/bio'
 		testRoute(routePath, urlPath) {
 			// try to fail or succeed as quickly as possible for the most common cases
-			var rPath = routePath;
+			let rPath = routePath;
 
 			// if the urlPath is an exact match or '*' then the route is a match
 			if (rPath === urlPath || rPath === '*') {
@@ -159,15 +159,14 @@
 
 		// routeArguments(routePath, urlPath, search, isRegExp) - Gets the path variables and query parameter values from the URL
 		routeArguments(routePath, urlPath, search, isRegExp, typecast) {
-			var
-				args = {},
-				rPath = routePath,
-				queryParameters,
+			const
+				args = {};
+			let arg,
+				i,
 				queryParameter,
 				queryParameterParts,
-				arg,
-				i;
-
+				queryParameters,
+				rPath = routePath;
 			// regular expressions can't have path variables
 			if (!isRegExp) {
 			// relative routes a/b/c are the same as routes that start with a globstar /**/a/b/c
