@@ -413,7 +413,7 @@
 					return;
 				}
 
-				var template = importLink.import.getElementById(route.templateId);
+				var template = importLink.import.querySelector('#' + route.templateId);
 
 				if (!template) {
 					this._fireEvent('template-not-found', eventDetail);
