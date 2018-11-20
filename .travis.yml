@@ -1,10 +1,9 @@
 language: node_js
-node_js: 6
-dist: trusty
-sudo: required
 env:
   global:
     - CC_TEST_REPORTER_ID=e0a829720254a3290ad709fb6e986879956db83fd864bd395d5389969c7d3e84
+    - SAUCE_USERNAME=nomego
+    - secure: CnP6QUvFX7Bkqb/lNm/N9KMksLBuuN5Rp88LLp9mNAZ+P/Eufv392UoJLyOeaixm7WK/yY5XdkY/UoL8cClo6NsXGunQ4J0mWbdVu7ti0CN7JrnFJmV/S7bT8top25nHI2bfdchKMGD4bzIIFiMRup2Zt1YKP5AGK+WVq08PdMgP2iDv3Lv2MoTaIDBgI3EhKsQ6y5pIV07/Q6pCuJRPlyyCNvlHe7Adfgv2w153yKAkJpL7lPIEmt3qsCzPuhI02CahgmZS7Lbo4SD0jofOOktDm9Tdb7S1jf0wYUEK6p1NP16YT8glm+iUAD/LJNwq0UlSPpZV4Wb8LJC2AmnIH5OmiS/EWhvd8Mt8wNL0B1aDAS0Iajdddp0dx1kgzXppsbaXMiH/ruwqXi1lNrwuqaV04RRwRbzsv1e18/vplWUmullN9IMA/SDJaX8fC/n/d9ugpM0eDJQXkos9zvEG3O14A7pcb1SjSWIkO+3w8NdtfifjVtY+gItA8imqmSp3SME/mUJE3aOkXzQ07r7TIixAXvSL8J9o6ZKNB+oKVRZFf3t9gWQYsgdckYxoBOAccUh7fLsbRC8SKZTD+fUH8T4t7pP0wYolQpwm6hIb0gKYGp2x7sSaNhJ6U3GI1OKIQZfHEpt3Dm798t21hiBzIOuBMnW6Jtv61m0U8onw0bo=
 addons:
   firefox: latest
   apt:
@@ -21,13 +20,14 @@ cache:
     - .eslintcache
     - $HOME/.cache/bower
 before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+    > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
   - yarn run lint
   - yarn run lint
 script:
-  - xvfb-run yarn test
+  - yarn test
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 notifications:

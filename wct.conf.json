@@ -1,7 +1,17 @@
 {
 	"plugins": {
 		"local": {
-			"browsers": ["chrome", "firefox"]
+			"browsers": ["chrome"],
+			"browserOptions": {
+				"chrome": [
+					"headless",
+					"disable-gpu",
+					"no-sandbox"
+				],
+				"firefox": [
+					"--headless"
+				]
+			}
 		},
 		"istanbul": {
       "dir": "./coverage",
@@ -16,6 +26,29 @@
 				"cosmoz-template-view.js"
       ],
       "exclude": []
+		},
+		"sauce": {
+			"browsers": [{
+				"browserName": "microsoftedge",
+				"platform": "Windows 10",
+				"version": ""
+			}, {
+				"browserName": "chrome",
+				"platform": "Windows 10",
+				"version": "dev"
+			}, {
+				"browserName": "chrome",
+				"platform": "Windows 10",
+				"version": "beta"
+			}, {
+				"browserName": "firefox",
+				"platform": "Windows 10",
+				"version": ""
+			}, {
+				"browserName": "safari",
+				"platform": "macOS 10.13",
+				"version": "11.1"
+			}]
     }
 	}
 }
