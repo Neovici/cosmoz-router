@@ -596,7 +596,7 @@
 			event.stopPropagation();
 		}
 	});
-/**
+	/**
 	 * Fires when the URL changes and cosmoz-page-router is about to do work. If a listener calls `event.preventDefault()` on this, the routing action is cancelled.
 	 *
 	 * Useful to subscribe to if re-routing / redirects are going to be made.
@@ -613,7 +613,7 @@
 			route: route,
 			oldRoute: this._activeRoute
 		}} detail
-	 */
+		*/
 
 	/**
 	 * If the HTML import fails (404 file not found or similar). A good place to show an error message to the user.
@@ -623,7 +623,7 @@
 			route: route,
 			errorEvent: event
 		}} detail
-	 */
+		*/
 
 	/**
 	 * Fires if the HTML import succeeded but no template with the correct ID could be located in the import.
@@ -634,7 +634,7 @@
 			route: route,
 			oldRoute: this._activeRoute
 		}} detail
-	 */
+		*/
 
 	/**
 	 * Fires if the HTML import succeeded but no template with the correct ID could be located in the import.
@@ -645,5 +645,5 @@
 			route: route,
 			oldRoute: this._activeRoute
 		}} detail
-	 */
+		*/
 }());
