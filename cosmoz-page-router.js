@@ -412,7 +412,7 @@
 					this._activateCustomElement(route, url, eventDetail);
 					return;
 				}
-
+				//NOTE: when polyfilled importLink.import is not a Document but querySelector is available
 				var template = importLink.import.querySelector('#' + route.templateId);
 
 				if (!template) {
