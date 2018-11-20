@@ -16,7 +16,7 @@
 	"scripts": {
 		"start": "polymer serve -o",
 		"preinstall": "rm -f package-lock.json",
-		"postinstall": "polymer install --variants && yarn sync-npm",
+		"postinstall": "polymer install && yarn sync-npm",
 		"lint": "eslint --cache --ext .js,.html . && polymer lint cosmoz-*.html",
 		"test": "polymer test",
 		"analyze": "polymer analyze --input cosmoz-*.html  > analysis.json",
