@@ -16,7 +16,6 @@ cache:
   directories:
     - node_modules
     - bower_components
-    - bower_components-1.x
     - .eslintcache
     - $HOME/.cache/bower
 before_script:
