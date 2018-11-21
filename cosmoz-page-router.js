@@ -88,11 +88,16 @@
 		* @return {Boolean} `true` = continue, `false` = prevent further actions
 		*/
 		_fireEvent(type, detail, node, bubbles) {
-			return !this.fire(type, detail, {
-				bubbles: !!bubbles,
-				cancelable: true,
-				node: node || this
-			}).defaultPrevented;
+			return !this.dispatchEvent(new CustomEvent(
+				type,
+				{
+					bubbles: !!bubbles,
+					cancelable: true,
+					composed: true,
+					detail,
+					node: node || this
+				}
+			)).defaultPrevented;
 		},
 
 		/**
@@ -137,12 +142,16 @@
 			}
 
 			// dispatch a popstate event
-			this.fire('popstate', {
-				state: {}
-			}, {
-				node: window,
-				bubbles: false
-			});
+			this.dispatchEvent(new CustomEvent(
+				'popstate',
+				{
+					bubbles: false,
+					composed: true,
+					detail: {
+						state: {}
+					}
+				}
+			));
 		},
 
 		// scroll to the element with id="hash" or name="hash"
