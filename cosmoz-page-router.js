@@ -7,7 +7,7 @@
 
 	// Try to detect importNode bug https://github.com/Polymer/polymer/issues/2157
 
-	var hasImportNodeBug = false;
+	const hasImportNodeBug = false;
 
 	/*	currentScript = document._currentScript || document.currentScript,
 		currentDocument = currentScript.ownerDocument,
@@ -104,7 +104,7 @@
 				return;
 			}
 
-			var boundStateChangeHandler = this._stateChange.bind(this);
+			const boundStateChangeHandler = this._stateChange.bind(this);
 			window.addEventListener('popstate', boundStateChangeHandler);
 			boundStateChangeHandler();
 			this._initialized = true;
@@ -120,7 +120,7 @@
 		},
 
 		go(path, options) {
-			var _path = path;
+			let _path = path;
 
 			if (this.mode !== 'pushstate') {
 				// mode == auto, hash or hashbang
@@ -157,7 +157,7 @@
 			// it will scroll to the top of the page. let the browser finish the current event loop and scroll to the top of the page
 			// before we scroll to the element with id or name `middle`.
 			setTimeout(function () {
-				var hashElement = document.querySelector('html /deep/ ' + hash) || document.querySelector('html /deep/ [name="' + hash.substring(1) + '"]');
+				const hashElement = document.querySelector('html /deep/ ' + hash) || document.querySelector('html /deep/ [name="' + hash.substring(1) + '"]');
 				if (hashElement && hashElement.scrollIntoView) {
 					hashElement.scrollIntoView(true);
 				}
@@ -166,12 +166,12 @@
 
 		_stateChange() {
 
-			var
+			const
 				url = this.parseUrl(window.location.href, this.mode),
 				eventDetail = {
 					path: url.path
-				},
-				errorEvent,
+				};
+			let errorEvent,
 				route;
 
 			// don't load a new route if only the hash fragment changed
@@ -184,7 +184,6 @@
 				return;
 			}
 			this._previousUrl = url;
-
 
 			// fire a state-change event on the app-router and return early if the user called event.preventDefault()
 			if (!this._fireEvent('state-change', eventDetail)) {
@@ -218,15 +217,14 @@
 		},
 
 		_addAdHocRoute(path) {
-			var
-				importUri = this.urlPrefix + path + this.fileSuffix,
+			const importUri = this.urlPrefix + path + this.fileSuffix,
 				templateId = path.substring(1).replace(/\//g, '-');
 
 			this._addRouteForCurrentPathAndActivate(importUri, templateId);
 		},
 
 		_addRouteForCurrentPathAndActivate(importUri, templateId) {
-			var
+			const
 				url = this.parseUrl(window.location.href, this.mode),
 				route = this.addRoute({
 					import: importUri,
@@ -244,10 +242,10 @@
 		 * @returns {void}
 		 */
 		addRoute(route) {
-			var
+			const
 				element = document.createElement('cosmoz-page-route'),
-				newRoute,
 				dom = Polymer.dom(this);
+			let	newRoute;
 			element.setAttribute('path', route.path);
 			if (route.persist) {
 				element.setAttribute('persist', '');
@@ -300,7 +298,7 @@
 				return;
 			}
 
-			var eventDetail = {
+			const eventDetail = {
 				path: url.path,
 				route: route,
 				oldRoute: this._activeRoute
@@ -319,7 +317,7 @@
 		},
 
 		_updateModelAndActivate(route, url, eventDetail) {
-			var model = this._createModel(route, url, eventDetail);
+			const model = this._createModel(route, url, eventDetail);
 
 			eventDetail.templateInstance = route.templateInstance;
 			this._setObjectProperties(route.templateInstance, model);
@@ -327,7 +325,7 @@
 		},
 
 		_removeImportLinkListeners(importLink) {
-			var listeners = this._importLinksListeners[importLink];
+			const listeners = this._importLinksListeners[importLink];
 			if (listeners) {
 				importLink.removeEventListener('load', listeners.load);
 				importLink.removeEventListener('error', listeners.error);
@@ -336,9 +334,9 @@
 		},
 
 		_importAndActivate(route, url, eventDetail) {
-			var
+			let importLink;
+			const
 				router = this,
-				importLink,
 				importUri = route.import,
 				importLoadedCallback = function (e) {
 					importLink.loaded = true;
@@ -347,10 +345,11 @@
 					router._activateImport(route, url, eventDetail, importLink);
 				},
 				importErrorCallback = function (e) {
-					var	importErrorEvent = {
-						route: route,
-						errorEvent: e
-					};
+					const
+						importErrorEvent = {
+							route: route,
+							errorEvent: e
+						};
 
 					importLink.notFound = true;
 					router._removeImportLinkListeners(importLink);
@@ -413,7 +412,7 @@
 					return;
 				}
 				//NOTE: when polyfilled importLink.import is not a Document but querySelector is available
-				var template = importLink.import.querySelector('#' + route.templateId);
+				const template = importLink.import.querySelector('#' + route.templateId);
 
 				if (!template) {
 					this._fireEvent('template-not-found', eventDetail);
@@ -441,16 +440,16 @@
 		},
 
 		_fixedImportNode(node) {
-			var clone = document.importNode(node, false);
+			const clone = document.importNode(node, false);
 			clone.innerHTML = node.innerHTML;
 			return clone;
 		},
 
 		_activateCustomElement(route, url, eventDetail) {
-			var
+			const
 				element = document.createElement(route.templateId),
-				model,
 				router = this;
+			let model;
 
 			eventDetail.templateInstance = element;
 			route.templateInstance = element;
@@ -479,10 +478,10 @@
 		},
 
 		_activateTemplate(route, url, eventDetail, template) {
-			var
+			const
 				templateInstance = this._instantiateTemplate(template),
-				templateId = route.templateId,
-				templateViewPrototype,
+				templateId = route.templateId;
+			let	templateViewPrototype,
 				model;
 
 			eventDetail.templateInstance = templateInstance;
@@ -505,7 +504,7 @@
 		},
 
 		_activateTemplateInstance(route, url, eventDetail) {
-			var
+			const
 				router = this,
 				templateInstance = eventDetail.templateInstance;
 
@@ -524,14 +523,14 @@
 		},
 
 		_changeRoute(oldRoute, newRoute) {
-			var oRoute = oldRoute,
+			let oRoute = oldRoute,
 				nRoute = newRoute;
 
-			if (oRoute === undefined) {
+			if (oRoute == null) {
 				oRoute = this._activeRoute;
 			}
 
-			if (nRoute === undefined) {
+			if (nRoute == null) {
 				nRoute = this._loadingRoute;
 			}
 
@@ -555,7 +554,7 @@
 		},
 
 		_createModel(route, url, eventDetail) {
-			var
+			const
 				model = {},
 				params = this.routeArguments(
 					route.path,
@@ -578,7 +577,7 @@
 		},
 
 		_setObjectProperties(object, model) {
-			var property;
+			let property;
 			for (property in model) {
 				if (model.hasOwnProperty(property)) {
 					object[property] = model[property];

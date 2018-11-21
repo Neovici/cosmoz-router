@@ -7,7 +7,7 @@
 		properties: {
 			active: Boolean,
 			animationConfig: {
-				value: function () {
+				value() {
 					return {
 						entry: {
 							name: 'fade-in-animation',
@@ -65,7 +65,7 @@
 		],
 
 		deactivate() {
-			var node,
+			let node,
 				nodeToRemove;
 			if (!this.persist) {
 				// remove the route content
