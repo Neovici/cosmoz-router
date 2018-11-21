@@ -56,9 +56,8 @@
 			(function () {
 				'use strict';
 
-				window.addEventListener('WebComponentsReady', function () {
-					var pageRouter = document.querySelector('cosmoz-page-router');
-					pageRouter.initialize();
+				window.addEventListener('WebComponentsReady', () => {
+					document.querySelector('cosmoz-page-router').initialize();
 				});
 			}());
 		</script>

@@ -11,6 +11,8 @@
 
 	<link rel="import" href="../../test-fixture/test-fixture.html">
 	<link rel="import" href="../../iron-test-helpers/iron-test-helpers.html">
+	<link rel="import" href="/../../polymer/lib/utils/async.html">
+
 	<link rel="import" href="../cosmoz-page-router.html">
 </head>
 <body>
@@ -42,13 +44,7 @@
 
 			setup(done => {
 				router = fixture('basic');
-				Polymer.Base.async(() => {
-					done();
-				});
-			});
-/*
-			test('instantiates a cosmoz-page-router element', () => {
-				assert.equal(router.is, 'cosmoz-page-router');
+				Polymer.Async.microTask.run(() => done());
 			});
 
 			test('initialize verifies if already initialized', done => {
@@ -61,7 +57,6 @@
 
 			test('addRoute returns new route', () => {
 				const route = router.addRoute(data);
-				assert.equal(route.is, 'cosmoz-page-route');
 				assert.equal(route.path, '/view3');
 				assert.equal(route.templateId, 'view3');
 			});
@@ -101,7 +96,7 @@
 					console.log('stateChange');
 				};
 				router.refresh(true);
-				Polymer.Base.async(() => {
+				setTimeout(() => {
 					assert.isNull(router._previousUrl);
 					done();
 				}, 100);
@@ -122,7 +117,6 @@
 				assert.calledOnce(spy);
 				spy.restore();
 			});
-*/
 		});
 
 		suite('<cosmoz-page-router mode="hashbang">', () => {
@@ -131,13 +125,7 @@
 
 			setup(done => {
 				router = fixture('hashbang');
-				Polymer.Base.async(() => {
-					done();
-				});
-			});
-
-			test('instantiates a cosmoz-page-router element', () => {
-				assert.equal(router.is, 'cosmoz-page-router');
+				Polymer.Async.microTask.run(() => done());
 			});
 
 			test('_hasCustomElement returns true for cozmoz-page-router', done => {
@@ -148,7 +136,6 @@
 
 			test('addRoute returns new route', () => {
 				const route = router.addRoute(data);
-				assert.equal(route.is, 'cosmoz-page-route');
 				assert.equal(route.path, '/view2');
 				assert.equal(route.templateId, 'view2');
 				route.deactivate();

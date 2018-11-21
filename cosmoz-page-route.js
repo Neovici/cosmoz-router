@@ -2,67 +2,68 @@
 (function () {
 	'use strict';
 
-	Polymer({
-		is: 'cosmoz-page-route',
-		properties: {
-			active: Boolean,
-			animationConfig: {
-				value() {
-					return {
-						entry: {
-							name: 'fade-in-animation',
-							node: this,
-							timing: {
-								duration: 150
+	class CosmozPageRoute extends Polymer.mixinBehaviors([Polymer.IronResizableBehavior, Polymer.NeonAnimatableBehavior], Polymer.Element) {
+
+		static get is() {
+			return 'cosmoz-page-route';
+		}
+
+		static get properties() {
+			return {
+				active: Boolean,
+				animationConfig: {
+					value() {
+						return {
+							entry: {
+								name: 'fade-in-animation',
+								node: this,
+								timing: {
+									duration: 150
+								}
+							},
+							exit: {
+								name: 'fade-out-animation',
+								node: this,
+								timing: {
+									duration: 150
+								}
 							}
-						},
-						exit: {
-							name: 'fade-out-animation',
-							node: this,
-							timing: {
-								duration: 150
-							}
-						}
-					};
+						};
+					}
+				},
+
+				import: {
+					type: String,
+				},
+
+				imported: {
+					type: Boolean,
+					value: false
+				},
+
+				path: {
+					type: String,
+				},
+
+				persist: {
+					type: Boolean,
+					value: false
+				},
+
+				templateId: {
+					type: String,
+				},
+
+				templateInstance: {
+					type: Object
+				},
+
+				hasCustomElement: {
+					type: Boolean,
+					value: false
 				}
-			},
-
-			import: {
-				type: String,
-			},
-
-			imported: {
-				type: Boolean,
-				value: false
-			},
-
-			path: {
-				type: String,
-			},
-
-			persist: {
-				type: Boolean,
-				value: false
-			},
-
-			templateId: {
-				type: String,
-			},
-
-			templateInstance: {
-				type: Object
-			},
-
-			hasCustomElement: {
-				type: Boolean,
-				value: false
-			}
-		},
-
-		behaviors: [
-			Polymer.IronResizableBehavior,
-			Polymer.NeonAnimatableBehavior
-		],
+			};
+		}
 
 		deactivate() {
 			let node,
@@ -79,7 +80,9 @@
 				this.templateInstance = null;
 			}
 		}
-	});
+	}
+
+	customElements.define(CosmozPageRoute.is, CosmozPageRoute);
 
 	/**
 	 * Fired when the template node has been imported and mixed in with its template object.
