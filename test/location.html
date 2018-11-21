@@ -11,6 +11,7 @@
 
 	<link rel="import" href="../../test-fixture/test-fixture.html">
 	<link rel="import" href="../../iron-test-helpers/iron-test-helpers.html">
+	<link rel="import" href="/../../polymer/lib/utils/async.html">
 	<link rel="import" href="../cosmoz-page-location.html">
 </head>
 <body>
@@ -26,9 +27,7 @@
 			let location;
 			setup(done => {
 				location = fixture('basic');
-				Polymer.Base.async(() => {
-					done();
-				});
+				Polymer.Async.microTask.run(() => done());
 			});
 
 			test('instantiates a cosmoz-page-location element', () => {
@@ -87,9 +86,7 @@
 
 			setup(done => {
 				location = fixture('basic');
-				Polymer.Base.async(function () {
-					done();
-				});
+				Polymer.Async.microTask.run(() => done());
 			});
 
 			Object.keys(tests).forEach((key, index) => {

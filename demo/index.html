@@ -44,16 +44,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			(function () {
 				'use strict';
 
-				window.addEventListener('WebComponentsReady', function () {
-					var pageRouter = document.querySelector('cosmoz-page-router');
+				window.addEventListener('WebComponentsReady', () => {
+					let pageRouter = document.querySelector('cosmoz-page-router');
 
-					pageRouter.addEventListener('template-created', function (event) {
+					pageRouter.addEventListener('template-created',  () => {
 						console.log('test-cz-page-router template-created');
 					});
-					pageRouter.addEventListener('template-ready', function (event) {
+					pageRouter.addEventListener('template-ready', () => {
 						console.log('test-cz-page-router template-ready');
 					});
-					pageRouter.addEventListener('template-activate', function (event) {
+					pageRouter.addEventListener('template-activate', () => {
 						console.log('test-cz-page-router template-activate');
 					});
 

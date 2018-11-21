@@ -80,7 +80,7 @@
 	(function () {
 		window.addEventListener('WebComponentsReady', function () {
 			(function () {
-				var basic = document.getElementById('basic');
+				let basic = document.getElementById('basic');
 				basic = !basic.set ? basic.firstElementChild : basic;
 				basic._computeRouteUrl = function (hashParam, queryParam) {
 					let route = this.$.location.getRoute();

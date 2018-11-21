@@ -115,7 +115,7 @@
 			this._routesInError = {};
 			this._importLinksListeners = {};
 			if (!this.manualInit) {
-				this.async(this.initialize);
+				Polymer.Async.microTask.run(() => this.initialize);
 			}
 		},
 
