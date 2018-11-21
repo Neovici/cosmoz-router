@@ -65,13 +65,6 @@
 			};
 		}
 
-		static get behaviors() {
-			return [
-				Polymer.IronResizableBehavior,
-				Polymer.NeonAnimatableBehavior
-			];
-		}
-
 		deactivate() {
 			let node,
 				nodeToRemove;
