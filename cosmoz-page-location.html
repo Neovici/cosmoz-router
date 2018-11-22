@@ -42,14 +42,12 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						},
 
 						_appHashString: {
-							type: String,
-							observer: '_appHashChanged'
+							type: String
 						},
 
 						routePath: {
 							type: String,
 							notify: true,
-							observer: '_routeChanged'
 						},
 
 						routeQuery: {
@@ -87,6 +85,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 
 				static get observers() {
 					return [
+						'_appHashChanged(_appHashString, setProperties)',
 						'_routeChanged(routeQuery.*, isAttached, routeHash, _appHashString, microDwellTime, dwellTime)',
 						'_routeChanged(routeHash.*, isAttached, routeHash, _appHashString, microDwellTime, dwellTime)'
 					];
@@ -206,11 +205,11 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					});
 				}
 
-				_appHashChanged(_appHashString) {
+				_appHashChanged(_appHashString, setProperties) {
 					const route = this._parse(_appHashString);
 					this._setHashBang(route.hashBang);
 
-					if (this.setProperties) {
+					if (setProperties) {
 						// Batch update of properties if using Polymer 2.x
 						this._batchMicroUpdate({
 							routePath: route.path,
@@ -218,7 +217,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 							routeQuery: route.query
 						});
 					} else {
-						this.routePath = route.path;
+						this.set('routePath', route.path);
 						this._microUpdate('routeHash', route.hash);
 						this._microUpdate('routeQuery', route.query);
 					}
@@ -251,7 +250,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					}
 
 					this.$.location.dwellTime = path && path.length ? microDwellTime : dwellTime;
-					this._appHashString = routeHashUri;
+					this.set('_appHashString', routeHashUri);
 				}
 			}
 
