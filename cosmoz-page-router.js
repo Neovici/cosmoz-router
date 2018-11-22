@@ -21,63 +21,68 @@
 
 	// Leave a blank comment before Polymer declaration so that iron-component-page uses the doc from the .html file
 	//
-	Polymer({
-		is: 'cosmoz-page-router',
+	class CosmozPageRouter extends Polymer.mixinBehaviors([Cosmoz.PageRouterUtilitiesBehavior], Polymer.Element) {
+		constructor() {
+			super();
+			this._currentRoute = null;
+			this._importedUris = null;
+			this._initialized = false;
+			this._previousRoute = null;
+			this._previousUrl = null;
+			this._routesInError = null;
+			this._importLinksListeners = null;
+		}
+		static get is() {
+			return 'cosmoz-page-router';
+		}
 
-		behaviors: [
-			Cosmoz.PageRouterUtilitiesBehavior
-		],
+		static get properties() {
+			return {
+				/* Ad-hoc routing template file name suffix */
+				fileSuffix: {
+					type: String,
+					value: '.html'
+				},
+				/* `hash` , `hashbang` , `pushstate` or `auto` */
+				mode: {
+					type: String,
+					value: 'auto'
+				},
+				/* Don't run `initialize` on `ready` */
+				manualInit: {
+					type: Boolean,
+					value: false
+				},
+				/* Don't create ad-hoc routes but instead fire a `not-found` event */
+				noAdHoc: {
+					type: Boolean,
+					value: false
+				},
+				/* Don't empty `cosmoz-page-route` element when navigating from a route, persisting it. */
+				persist: {
+					type: Boolean,
+					value: false
+				},
+				typecast: {
+					type: String,
+					value: 'auto'
+				},
+				/* Anything to prefix ad-hoc routes with, be it a `views` folder or a different domain */
+				urlPrefix: {
+					type: String,
+					value: ''
+				}
+			};
+		}
 
-		properties: {
-			/* Ad-hoc routing template file name suffix */
-			fileSuffix: {
-				type: String,
-				value: '.html'
-			},
-			/* `hash` , `hashbang` , `pushstate` or `auto` */
-			mode: {
-				type: String,
-				value: 'auto'
-			},
-			/* Don't run `initialize` on `ready` */
-			manualInit: {
-				type: Boolean,
-				value: false
-			},
-			/* Don't create ad-hoc routes but instead fire a `not-found` event */
-			noAdHoc: {
-				type: Boolean,
-				value: false
-			},
-			/* Don't empty `cosmoz-page-route` element when navigating from a route, persisting it. */
-			persist: {
-				type: Boolean,
-				value: false
-			},
-			typecast: {
-				type: String,
-				value: 'auto'
-			},
-			/* Anything to prefix ad-hoc routes with, be it a `views` folder or a different domain */
-			urlPrefix: {
-				type: String,
-				value: ''
-			}
-		},
-		_currentRoute: null,
-		_importedUris: null,
-		_initialized: false,
-		_previousRoute: null,
-		_previousUrl: null,
-		_routesInError: null,
-		_importLinksListeners: null,
-
-		listeners: {
-			'neon-animation-finish': '_onNeonAnimationFinish',
-			'template-activate': '_stopEventPropagation',
-			'template-created': '_stopEventPropagation',
-			'template-ready': '_stopEventPropagation'
-		},
+		static get listeners() {
+			return {
+				'neon-animation-finish': '_onNeonAnimationFinish',
+				'template-activate': '_stopEventPropagation',
+				'template-created': '_stopEventPropagation',
+				'template-ready': '_stopEventPropagation'
+			};
+		}
 
 		/**
 		* Utility function that fires an event from a polymer element and return false if preventDefault has been called on the event.
@@ -98,7 +103,7 @@
 					node: node || this
 				}
 			)).defaultPrevented;
-		},
+		}
 
 		/**
 		 * Adds event listener to `popstate` event
@@ -113,7 +118,7 @@
 			window.addEventListener('popstate', boundStateChangeHandler);
 			boundStateChangeHandler();
 			this._initialized = true;
-		},
+		}
 
 		ready() {
 			this._importedUris = {};
@@ -122,7 +127,7 @@
 			if (!this.manualInit) {
 				Polymer.Async.microTask.run(() => this.initialize);
 			}
-		},
+		}
 
 		go(path, options) {
 			let _path = path;
@@ -152,7 +157,7 @@
 					}
 				}
 			));
-		},
+		}
 
 		// scroll to the element with id="hash" or name="hash"
 		_scrollToHash(hash) {
@@ -165,13 +170,13 @@
 			// the browser will scroll to an element with id or name `/page1#middle` when the page finishes loading. if it doesn't exist
 			// it will scroll to the top of the page. let the browser finish the current event loop and scroll to the top of the page
 			// before we scroll to the element with id or name `middle`.
-			setTimeout(function () {
+			setTimeout(() => {
 				const hashElement = document.querySelector('html /deep/ ' + hash) || document.querySelector('html /deep/ [name="' + hash.substring(1) + '"]');
 				if (hashElement && hashElement.scrollIntoView) {
 					hashElement.scrollIntoView(true);
 				}
 			}, 0);
-		},
+		}
 
 		_stateChange() {
 
@@ -223,14 +228,14 @@
 			}
 
 			this._addAdHocRoute(url.path);
-		},
+		}
 
 		_addAdHocRoute(path) {
 			const importUri = this.urlPrefix + path + this.fileSuffix,
 				templateId = path.substring(1).replace(/\//g, '-');
 
 			this._addRouteForCurrentPathAndActivate(importUri, templateId);
-		},
+		}
 
 		_addRouteForCurrentPathAndActivate(importUri, templateId) {
 			const
@@ -243,7 +248,7 @@
 				});
 
 			this._activateRoute(route, url);
-		},
+		}
 
 		/**
 		 * Add a `cosmoz-page-route` element
@@ -275,11 +280,11 @@
 			}
 
 			return newRoute;
-		},
+		}
 
 		get activeRoute() {
 			return this._activeRoute;
-		},
+		}
 
 		removeRoute(route, resetPrevUrl = false) {
 			if (route == null) {
@@ -290,14 +295,14 @@
 			if (resetPrevUrl) {
 				this._previousUrl = null;
 			}
-		},
+		}
 
 		refresh(force = false) {
 			if (force) {
 				this._previousUrl = null;
 			}
 			this._stateChange();
-		},
+		}
 
 		_activateRoute(route, url) {
 			if (route.redirect) {
@@ -323,7 +328,7 @@
 				// import custom element or template
 				this._importAndActivate(route, url, eventDetail);
 			}
-		},
+		}
 
 		_updateModelAndActivate(route, url, eventDetail) {
 			const model = this._createModel(route, url, eventDetail);
@@ -331,7 +336,7 @@
 			eventDetail.templateInstance = route.templateInstance;
 			this._setObjectProperties(route.templateInstance, model);
 			this._fireEvent('template-activate', eventDetail, route.templateInstance, true);
-		},
+		}
 
 		_removeImportLinkListeners(importLink) {
 			const listeners = this._importLinksListeners[importLink];
@@ -340,20 +345,20 @@
 				importLink.removeEventListener('error', listeners.error);
 				this._importLinksListeners[importLink] = null;
 			}
-		},
+		}
 
 		_importAndActivate(route, url, eventDetail) {
 			let importLink;
 			const
 				router = this,
 				importUri = route.import,
-				importLoadedCallback = function (e) {
+				importLoadedCallback = () => {
 					importLink.loaded = true;
 					router._removeImportLinkListeners(importLink);
 					route.imported = true;
 					router._activateImport(route, url, eventDetail, importLink);
 				},
-				importErrorCallback = function (e) {
+				importErrorCallback = e => {
 					const
 						importErrorEvent = {
 							route: route,
@@ -402,14 +407,14 @@
 					this._activateImport(route, url, eventDetail, importLink);
 				}
 			}
-		},
+		}
 
 		_hasCustomElement(elementName) {
 			const customElements = window.customElements;
-			return Polymer.telemetry.registrations.some(function (element) {
+			return Polymer.telemetry.registrations.some(element => {
 				return element.is === elementName;
 			}) || customElements && customElements.get(elementName) != null;
-		},
+		}
 
 		_activateImport(route, url, eventDetail, importLink) {
 			route.importLink = importLink;
@@ -439,20 +444,20 @@
 
 				this._activateTemplate(route, url, eventDetail, template);
 			}
-		},
+		}
 
 		_instantiateTemplate(template) {
 			if (hasImportNodeBug) {
 				return this._fixedImportNode(template);
 			}
 			return document.importNode(template, true);
-		},
+		}
 
 		_fixedImportNode(node) {
 			const clone = document.importNode(node, false);
 			clone.innerHTML = node.innerHTML;
 			return clone;
-		},
+		}
 
 		_activateCustomElement(route, url, eventDetail) {
 			const
@@ -484,7 +489,7 @@
 			router._changeRoute();
 
 			this._fireEvent('template-activate', eventDetail, route, true);
-		},
+		}
 
 		_activateTemplate(route, url, eventDetail, template) {
 			const
@@ -510,7 +515,7 @@
 			this._fireEvent('template-ready', eventDetail, route, true);
 
 			this._activateTemplateInstance(route, url, eventDetail);
-		},
+		}
 
 		_activateTemplateInstance(route, url, eventDetail) {
 			const
@@ -518,18 +523,18 @@
 				templateInstance = eventDetail.templateInstance;
 
 
-			templateInstance.addEventListener('dom-change', function (e) {
+			templateInstance.addEventListener('dom-change', e => {
 				router._fireEvent('template-activate', eventDetail, templateInstance, true);
 			});
 
 			// Make sure _changeRoute is run for both new and persisted routes
-			templateInstance.addEventListener('template-activate', function (e) {
+			templateInstance.addEventListener('template-activate', e => {
 				router._changeRoute();
 			});
 
 			// add the new content
 			Polymer.dom(this._loadingRoute.root).appendChild(templateInstance);
-		},
+		}
 
 		_changeRoute(oldRoute, newRoute) {
 			let oRoute = oldRoute,
@@ -555,12 +560,12 @@
 			nRoute.active = true;
 
 			this.$.routes.selected = nRoute.path;
-		},
+		}
 
 		// Remove the route's content
 		_deactivateRoute(route) {
 			route.deactivate();
-		},
+		}
 
 		_createModel(route, url, eventDetail) {
 			const
@@ -583,7 +588,7 @@
 			this._fireEvent('before-data-binding', eventDetail);
 			this._fireEvent('before-data-binding', eventDetail, route);
 			return eventDetail.model;
-		},
+		}
 
 		_setObjectProperties(object, model) {
 			let property;
@@ -592,18 +597,21 @@
 					object[property] = model[property];
 				}
 			}
-		},
+		}
 
 		_onNeonAnimationFinish(event) {
 			if (this._previousRoute && !this._previousRoute.active) {
 				this._deactivateRoute(this._previousRoute);
 			}
-		},
+		}
 
 		_stopEventPropagation(event) {
 			event.stopPropagation();
 		}
-	});
+	}
+
+	customElements.define(CosmozPageRouter.is, CosmozPageRouter);
+
 	/**
 	 * Fires when the URL changes and cosmoz-page-router is about to do work. If a listener calls `event.preventDefault()` on this, the routing action is cancelled.
 	 *

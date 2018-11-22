@@ -20,66 +20,77 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 		(function () {
 			'use strict';
 
-			Polymer({
-				is: 'cosmoz-page-location',
-				properties: {
-					appPath: {
-						type: String,
-						notify: true
-					},
+			class CosmozPageLocation extends Polymer.Element {
+				constructor() {
+					super();
+						this._parseRegexp = /(!(?=\/))?([^#?]+)?\??([^#]+)?#?(.+)?$/i;
+				}
 
-					_appQueryString: {
-						type: String
-					},
+				static get is() {
+					return 'cosmoz-page-location';
+				}
 
-					_appHashString: {
-						type: String,
-						observer: '_appHashChanged'
-					},
-
-					routePath: {
-						type: String,
-						notify: true,
-						observer: '_routeChanged'
-					},
-
-					routeQuery: {
-						type: Object,
-						value() {
-							return {};
+				static get properties() {
+					return {
+						appPath: {
+							type: String,
+							notify: true
 						},
-						notify: true
-					},
 
-					routeHash: {
-						type: Object,
-						value() {
-							return {};
+						_appQueryString: {
+							type: String
 						},
-						notify: true
-					},
 
-					dwellTime: {
-						type: Number,
-						value: 2000
-					},
+						_appHashString: {
+							type: String,
+							observer: '_appHashChanged'
+						},
 
-					microDwellTime: {
-						type: Number,
-						value: Infinity
-					},
+						routePath: {
+							type: String,
+							notify: true,
+							observer: '_routeChanged'
+						},
 
-					hashBang: {
-						type: Boolean,
-						readOnly: true
-					}
-				},
-				_parseRegexp: /(!(?=\/))?([^#?]+)?\??([^#]+)?#?(.+)?$/i,
+						routeQuery: {
+							type: Object,
+							value() {
+								return {};
+							},
+							notify: true
+						},
 
-				observers: [
-					'_routeChanged(routeQuery.*)',
-					'_routeChanged(routeHash.*)'
-				],
+						routeHash: {
+							type: Object,
+							value() {
+								return {};
+							},
+							notify: true
+						},
+
+						dwellTime: {
+							type: Number,
+							value: 2000
+						},
+
+						microDwellTime: {
+							type: Number,
+							value: Infinity
+						},
+
+						hashBang: {
+							type: Boolean,
+							readOnly: true
+						}
+					};
+				}
+
+				static get observers() {
+					return [
+						'_routeChanged(routeQuery.*)',
+						'_routeChanged(routeHash.*)'
+					];
+				}
 
 				_paramsToString(value) {
 					if (typeof value === 'string') {
@@ -87,11 +98,11 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					}
 					return this.$.params._encodeParams(value)
 						.replace(/%3F/g, '?').replace(/%2F/g, '/').replace(/'/g, '%27');
-				},
+				}
 
 				_paramsFromString(value) {
 					return this.$.params._decodeParams(value);
-				},
+				}
 
 				_microUpdate(path, value = {}) {
 					const current = this.get(path),
@@ -112,7 +123,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						}
 						this.set([path, key], value[key]);
 					});
-				},
+				}
 
 				_batchMicroUpdate(props) {
 					const updatedPaths = {};
@@ -145,7 +156,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					});
 
 					this.setProperties(updatedPaths);
-				},
+				}
 
 				_parse(appHashString) {
 					const matches = this._parseRegexp.exec(appHashString) || [];
@@ -155,7 +166,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						query: this._paramsFromString(matches[3]),
 						hash: this._paramsFromString(matches[4])
 					};
-				},
+				}
 
 				_encode(route = {}) {
 					const path = (route.hashBang ? '!' : '') + (route.path || ''),
@@ -166,7 +177,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 							hash ? '#' + hash.replace(/\?/g, '%3F') : ''
 						];
 					return path + hashAndQuery.join('');
-				},
+				}
 
 				getRoute() {
 					return {
@@ -175,11 +186,11 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						query: Object.assign({}, this.routeQuery),
 						hash: Object.assign({}, this.routeHash),
 					};
-				},
+				}
 
 				getRouteUrl(route = this.getRoute()) {
 					return '#' + this._encode(route);
-				},
+				}
 
 				getAppUrl(query, route = this.getRoute()) {
 					let appQuery = this._appQueryString;
@@ -193,7 +204,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						query: appQuery,
 						hash: this._encode(route)
 					});
-				},
+				}
 
 				_appHashChanged(_appHashString) {
 					const route = this._parse(_appHashString);
@@ -211,7 +222,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						this._microUpdate('routeHash', route.hash);
 						this._microUpdate('routeQuery', route.query);
 					}
-				},
+				}
 
 				_routeChanged(change) {
 					if (!this.isAttached) {
@@ -242,7 +253,9 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					this.$.location.dwellTime = path && path.length ? this.microDwellTime : this.dwellTime;
 					this._appHashString = routeHashUri;
 				}
-			});
+			}
+
+			customElements.define(CosmozPageLocation.is, CosmozPageLocation);
 		})();
 	</script>
 </dom-module>
