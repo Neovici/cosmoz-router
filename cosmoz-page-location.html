@@ -224,11 +224,11 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 				}
 
 				_routeChanged(change, isAttached, routeHash, _appHashString, microDwellTime, dwellTime) {
-					this.set('_appHashString', 'inte-attached');
 					if (!isAttached) {
+						this.set('_appHashString', 'not-attached');
 						return;
 					}
-					this.set('_appHashString', 'attached');
+
 					const path = change && change.path;
 
 					let route,
@@ -251,7 +251,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					}
 
 					this.$.location.dwellTime = path && path.length ? microDwellTime : dwellTime;
-					//this.set('_appHashString', routeHashUri);
+					this.set('_appHashString', routeHashUri);
 				}
 			}
 
