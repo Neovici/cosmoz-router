@@ -86,8 +86,8 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 				static get observers() {
 					return [
 						'_appHashChanged(_appHashString, setProperties)',
-						'_routeChanged(routeQuery.*, isAttached, routeHash, _appHashString, microDwellTime, dwellTime)',
-						'_routeChanged(routeHash.*, isAttached, routeHash, _appHashString, microDwellTime, dwellTime)'
+						'_routeChanged(routeQuery.*, routeHash, _appHashString, microDwellTime, dwellTime)',
+						'_routeChanged(routeHash.*, routeHash, _appHashString, microDwellTime, dwellTime)'
 					];
 				}
 
@@ -223,11 +223,7 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					}
 				}
 
-				_routeChanged(change, isAttached, routeHash, _appHashString, microDwellTime, dwellTime) {
-					//if (!isAttached) {
-					//	return;
-					//}
-
+				_routeChanged(change, routeHash, _appHashString, microDwellTime, dwellTime) {
 					const path = change && change.path;
 
 					let route,
