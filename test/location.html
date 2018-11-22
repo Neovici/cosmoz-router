@@ -29,10 +29,6 @@
 				location = fixture('basic');
 				Polymer.Async.microTask.run(() => done());
 			});
-
-			test('instantiates a cosmoz-page-location element', () => {
-				assert.equal(location.is, 'cosmoz-page-location');
-			});
 		});
 
 		suite('parse', () => {
