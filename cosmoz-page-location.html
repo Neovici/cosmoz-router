@@ -87,8 +87,8 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 
 				static get observers() {
 					return [
-						'_routeChanged(routeQuery.*)',
-						'_routeChanged(routeHash.*)'
+						'_routeChanged(routeQuery.*, isAttached, routeHash, _appHashString, microDwellTime, dwellTime)',
+						'_routeChanged(routeHash.*, isAttached, routeHash, _appHashString, microDwellTime, dwellTime)'
 					];
 				}
 
@@ -224,8 +224,8 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					}
 				}
 
-				_routeChanged(change) {
-					if (!this.isAttached) {
+				_routeChanged(change, isAttached, routeHash, _appHashString, microDwellTime, dwellTime) {
+					if (!isAttached) {
 						return;
 					}
 
@@ -240,17 +240,17 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						// some hash params, then we will update the URL with incorrect route hash string
 						// To avoid that, use the actual location
 						route = this._parse(window.decodeURIComponent(window.location.hash.slice(1)));
-						routeHashUri = this._encode({ hashBang: route.hashBang, path: route.path, query: route.query, hash: this.routeHash });
+						routeHashUri = this._encode({ hashBang: route.hashBang, path: route.path, query: route.query, hash: routeHash });
 					} else {
 						route = this.getRoute();
 						routeHashUri = this._encode(route);
 					}
 
-					if (this._appHashString === routeHashUri) {
+					if (_appHashString === routeHashUri) {
 						return;
 					}
 
-					this.$.location.dwellTime = path && path.length ? this.microDwellTime : this.dwellTime;
+					this.$.location.dwellTime = path && path.length ? microDwellTime : dwellTime;
 					this._appHashString = routeHashUri;
 				}
 			}
