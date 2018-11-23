@@ -411,6 +411,10 @@
 
 		_hasCustomElement(elementName) {
 			const customElements = window.customElements;
+			if (Polymer.telemetry == null ||
+				!Array.isArray(Polymer.telemetry.registrations)) {
+				return;
+			}
 			return Polymer.telemetry.registrations.some(element => {
 				return element.is === elementName;
 			}) || customElements && customElements.get(elementName) != null;
