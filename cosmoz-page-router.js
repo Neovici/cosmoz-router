@@ -410,11 +410,7 @@
 		}
 
 		_hasCustomElement(elementName) {
-			let defined = false;
-			customElements.whenDefined(elementName).then(() => {
-				defined = true;
-			});
-			return defined;
+			return customElements.get(elementName) != null;
 		}
 
 		_activateImport(route, url, eventDetail, importLink) {
