@@ -410,14 +410,11 @@
 		}
 
 		_hasCustomElement(elementName) {
-			const customElements = window.customElements;
-			if (Polymer.telemetry == null ||
-				!Array.isArray(Polymer.telemetry.registrations)) {
-				return;
-			}
-			return Polymer.telemetry.registrations.some(element => {
-				return element.is === elementName;
-			}) || customElements && customElements.get(elementName) != null;
+			let defined = false;
+			customElements.whenDefined(elementName).then(() => {
+				defined = true;
+			});
+			return defined;
 		}
 
 		_activateImport(route, url, eventDetail, importLink) {
