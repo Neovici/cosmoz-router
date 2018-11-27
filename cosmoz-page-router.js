@@ -352,12 +352,12 @@
 			const
 				router = this,
 				importUri = route.import,
-				importLoadedCallback = () => {
+				importLoadedCallback = function () {
 					importLink.loaded = true;
 					router._removeImportLinkListeners(importLink);
 					route.imported = true;
-					router._activateImport(route, url, eventDetail, importLink);
-				},
+					router._activateImport(route, url, eventDetail, importLink).bind(this);
+				}.bind(this),
 				importErrorCallback = e => {
 					const
 						importErrorEvent = {
@@ -419,7 +419,7 @@
 			if (route === this._loadingRoute) {
 
 				if (route.hasCustomElement && this._hasCustomElement(route.templateId)) {
-					this._activateCustomElement(route, url, eventDetail);
+					this._activateCustomElement(route, url, eventDetail).bind(this);
 					return;
 				}
 				//NOTE: when polyfilled importLink.import is not a Document but querySelector is available
@@ -432,7 +432,7 @@
 
 				if (template.tagName === 'DOM-MODULE') {
 					if (this._hasCustomElement(route.templateId)) {
-						this._activateCustomElement(route, url, eventDetail);
+						this._activateCustomElement(route, url, eventDetail).bind(this);
 						return;
 					}
 					this._fireEvent('element-not-found', eventDetail);
@@ -483,7 +483,7 @@
 			Polymer.dom(this._loadingRoute.root).appendChild(element);
 
 			// FIXME: Change route after element ready()
-			router._changeRoute();
+			router._changeRoute().bind(this);
 
 			this._fireEvent('template-activate', eventDetail, route, true);
 		}
