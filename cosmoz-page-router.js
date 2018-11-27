@@ -556,7 +556,8 @@
 
 			nRoute.active = true;
 
-			this.$.routes.selected = nRoute.path;
+			// this.$.routes.selected = nRoute.path;
+			this.root.querySelector('#routes').selected = nRoute.path;
 		}
 
 		// Remove the route's content
