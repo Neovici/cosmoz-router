@@ -2,7 +2,10 @@
 (function () {
 	'use strict';
 
-	class CosmozPageRoute extends Polymer.mixinBehaviors([Polymer.IronResizableBehavior, Polymer.NeonAnimatableBehavior], Polymer.Element) {
+	class CosmozPageRoute extends Polymer.mixinBehaviors([
+		Polymer.IronResizableBehavior,
+		Polymer.NeonAnimatableBehavior
+	], Polymer.Element) {
 
 		static get is() {
 			return 'cosmoz-page-route';

@@ -352,12 +352,12 @@
 			const
 				router = this,
 				importUri = route.import,
-				importLoadedCallback = function () {
+				importLoadedCallback =  () => {
 					importLink.loaded = true;
 					router._removeImportLinkListeners(importLink);
 					route.imported = true;
-					router._activateImport(route, url, eventDetail, importLink).bind(this);
-				}.bind(this),
+					router._activateImport(route, url, eventDetail, importLink);
+				},
 				importErrorCallback = e => {
 					const
 						importErrorEvent = {
