@@ -44,7 +44,7 @@
 
 			setup(done => {
 				router = fixture('basic');
-				Polymer.Async.microTask.run(() => done());
+				flush(done);
 			});
 
 			test('initialize verifies if already initialized', done => {
@@ -125,7 +125,7 @@
 
 			setup(done => {
 				router = fixture('hashbang');
-				Polymer.Async.microTask.run(() => done());
+				flush(done);
 			});
 
 			test('_hasCustomElement returns true for cozmoz-page-router', done => {
