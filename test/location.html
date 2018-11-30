@@ -22,19 +22,6 @@
 	</test-fixture>
 
 	<script>
-
-		suite('basic', () => {
-			let location;
-			setup(done => {
-				location = fixture('basic');
-				Polymer.Async.microTask.run(() => done());
-			});
-
-			test('instantiates a cosmoz-page-location element', () => {
-				assert.equal(location.is, 'cosmoz-page-location');
-			});
-		});
-
 		suite('parse', () => {
 			let location,
 				tests = {
@@ -132,6 +119,5 @@
 				done();
 			});
 		});
-
 	</script>
 </body></html>
