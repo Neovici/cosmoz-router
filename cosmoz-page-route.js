@@ -73,11 +73,11 @@
 				nodeToRemove;
 			if (!this.persist) {
 				// remove the route content
-				node = Polymer.dom(this.root).firstChild;
+				node = this.root.firstChild;
 				while (node) {
 					nodeToRemove = node;
-					node = Polymer.dom(node).nextSibling;
-					Polymer.dom(this.root).removeChild(nodeToRemove);
+					node = node.nextSibling;
+					this.root.removeChild(nodeToRemove);
 
 				}
 				this.templateInstance = null;

@@ -211,13 +211,13 @@
 			}
 
 			// find the first matching route
-			route = Polymer.dom(this).firstElementChild;
+			route = this.root.firstChild;
 			while (route) {
 				if (route.tagName === 'COSMOZ-PAGE-ROUTE' && this.testRoute(route.path, url.path)) {
 					this._activateRoute(route, url);
 					return;
 				}
-				route = Polymer.dom(route).nextSibling;
+				route = route.nextSibling;
 			}
 
 			eventDetail.url = url;
@@ -258,7 +258,7 @@
 		addRoute(route) {
 			const
 				element = document.createElement('cosmoz-page-route'),
-				dom = Polymer.dom(this);
+				dom = this;
 			let	newRoute;
 			element.setAttribute('path', route.path);
 			if (route.persist) {
@@ -291,7 +291,7 @@
 				return;
 			}
 			this._deactivateRoute(route);
-			Polymer.dom(this).removeChild(route);
+			this.root.removeChild(route);
 			if (resetPrevUrl) {
 				this._previousUrl = null;
 			}
@@ -480,7 +480,7 @@
 				this._deactivateRoute(this._previousRoute);
 			}
 
-			Polymer.dom(this._loadingRoute.root).appendChild(element);
+			this._loadingRoute.root.appendChild(element);
 
 			// FIXME: Change route after element ready()
 			router._changeRoute().bind(this);
@@ -530,7 +530,7 @@
 			});
 
 			// add the new content
-			Polymer.dom(this._loadingRoute.root).appendChild(templateInstance);
+			this._loadingRoute.root.appendChild(templateInstance);
 		}
 
 		_changeRoute(oldRoute, newRoute) {
