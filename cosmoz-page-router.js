@@ -32,10 +32,19 @@
 			this._routesInError = null;
 			this._importLinksListeners = null;
 		}
+		/**
+		 * Get component name.
+		 *
+		 * @returns {string} Name.
+		 */
 		static get is() {
 			return 'cosmoz-page-router';
 		}
-
+		/**
+		 * Get component properties.
+		 *
+		 * @returns {string} Name.
+		 */
 		static get properties() {
 			return {
 				/* Ad-hoc routing template file name suffix */
@@ -74,7 +83,11 @@
 				}
 			};
 		}
-
+		/**
+		 * Get component listeners.
+		 *
+		 * @returns {string} Listeners.
+		 */
 		static get listeners() {
 			return {
 				'neon-animation-finish': '_onNeonAnimationFinish',
@@ -83,9 +96,10 @@
 				'template-ready': '_stopEventPropagation'
 			};
 		}
-
 		/**
-		* Utility function that fires an event from a polymer element and return false if preventDefault has been called on the event.
+		* Utility function that fires an event from a polymer element and return
+		* false if preventDefault has been called on the event.
+		*
 		* @param {String} type The event type
 		* @param {Object} detail The event detail
 		* @param {HTMLElement} node The node that will fire the event
@@ -104,9 +118,9 @@
 				}
 			)).defaultPrevented;
 		}
-
 		/**
 		 * Adds event listener to `popstate` event
+		 *
 		 * @returns {void}
 		 */
 		initialize() {
@@ -158,8 +172,12 @@
 				}
 			));
 		}
-
-		// scroll to the element with id="hash" or name="hash"
+		/**
+		 * Scroll to the element with id="hash" or name="hash".
+		 *
+		 * @param {string} hash Hash to scroll to.
+		 * @returns {void}
+		 */
 		_scrollToHash(hash) {
 			if (!hash) {
 				return;
@@ -281,7 +299,10 @@
 
 			return newRoute;
 		}
-
+		/**
+		 * Get the active route.
+		 * @returns {object} Active route.
+		 */
 		get activeRoute() {
 			return this._activeRoute;
 		}
