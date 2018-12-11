@@ -21,7 +21,7 @@
 
 	// Leave a blank comment before Polymer declaration so that iron-component-page uses the doc from the .html file
 	//
-	class CosmozPageRouter extends Polymer.mixinBehaviors([Cosmoz.PageRouterUtilitiesBehavior], Polymer.Element) {
+	class CosmozPageRouter extends Cosmoz.PageRouterUtilitiesBehavior(Polymer.Element) {
 		constructor() {
 			super();
 			this._currentRoute = null;
@@ -135,6 +135,7 @@
 		}
 
 		ready() {
+			super.ready();
 			this._importedUris = {};
 			this._routesInError = {};
 			this._importLinksListeners = {};
