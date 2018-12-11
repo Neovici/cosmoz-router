@@ -230,7 +230,7 @@
 			}
 
 			// find the first matching route
-			route = this.root.firstChild;
+			route = this.shadowRoot.firstChild;
 			while (route) {
 				if (route.tagName === 'COSMOZ-PAGE-ROUTE' && this.testRoute(route.path, url.path)) {
 					this._activateRoute(route, url);
@@ -276,8 +276,7 @@
 		 */
 		addRoute(route) {
 			const
-				element = document.createElement('cosmoz-page-route'),
-				dom = this;
+				element = document.createElement('cosmoz-page-route');
 			let	newRoute;
 			element.setAttribute('path', route.path);
 			if (route.persist) {
@@ -290,14 +289,8 @@
 				route: element
 			}, this, true);
 
-			newRoute = dom.appendChild(element);
-
-			if (dom.flush) {
-				dom.flush();
-			} else if (Polymer.flush) {
-				Polymer.flush();
-			}
-
+			newRoute = this.appendChild(element);
+			Polymer.flush();
 			return newRoute;
 		}
 		/**
@@ -313,7 +306,7 @@
 				return;
 			}
 			this._deactivateRoute(route);
-			this.root.removeChild(route);
+			this.removeChild(route);
 			if (resetPrevUrl) {
 				this._previousUrl = null;
 			}
@@ -441,7 +434,7 @@
 			if (route === this._loadingRoute) {
 
 				if (route.hasCustomElement && this._hasCustomElement(route.templateId)) {
-					this._activateCustomElement(route, url, eventDetail).bind(this);
+					this._activateCustomElement(route, url, eventDetail);
 					return;
 				}
 				//NOTE: when polyfilled importLink.import is not a Document but querySelector is available
@@ -454,7 +447,7 @@
 
 				if (template.tagName === 'DOM-MODULE') {
 					if (this._hasCustomElement(route.templateId)) {
-						this._activateCustomElement(route, url, eventDetail).bind(this);
+						this._activateCustomElement(route, url, eventDetail);
 						return;
 					}
 					this._fireEvent('element-not-found', eventDetail);
@@ -502,10 +495,10 @@
 				this._deactivateRoute(this._previousRoute);
 			}
 
-			this._loadingRoute.root.appendChild(element);
+			this._loadingRoute.shadowRoot.appendChild(element);
 
 			// FIXME: Change route after element ready()
-			router._changeRoute().bind(this);
+			router._changeRoute();
 
 			this._fireEvent('template-activate', eventDetail, route, true);
 		}
@@ -552,7 +545,7 @@
 			});
 
 			// add the new content
-			this._loadingRoute.root.appendChild(templateInstance);
+			this._loadingRoute.shadowRoot.appendChild(templateInstance);
 		}
 
 		_changeRoute(oldRoute, newRoute) {
@@ -578,8 +571,7 @@
 
 			nRoute.active = true;
 
-			// this.$.routes.selected = nRoute.path;
-			this.root.querySelector('#routes').selected = nRoute.path;
+			this.shadowRoot.querySelector('#routes').selected = nRoute.path;
 		}
 
 		// Remove the route's content
