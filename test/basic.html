@@ -48,7 +48,7 @@
 			});
 
 			test('initialize verifies if already initialized', done => {
-				const spy = sinon.spy(router, '_stateChange');
+				const spy = sinon.spy(router, '_boundStateChange');
 				router.initialize();
 				assert.calledOnce(spy);
 				spy.restore();
