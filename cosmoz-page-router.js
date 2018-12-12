@@ -8,7 +8,7 @@
 	// Try to detect importNode bug https://github.com/Polymer/polymer/issues/2157
 
 	const hasImportNodeBug = false,
-	 stopPropagation = e => e.stopPropagation();
+		stopPropagation = e => e.stopPropagation();
 
 	/*	currentScript = document._currentScript || document.currentScript,
 		currentDocument = currentScript.ownerDocument,
@@ -150,7 +150,7 @@
 			this._routesInError = {};
 			this._importLinksListeners = {};
 			if (!this.manualInit) {
-				Polymer.Async.microTask.run(() => this.initialize);
+				Polymer.Async.microTask.run(() => this.initialize());
 			}
 		}
 
