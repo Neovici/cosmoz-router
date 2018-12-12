@@ -85,11 +85,11 @@
 				nodeToRemove;
 			if (!this.persist) {
 				// remove the route content
-				node = this.root.firstChild;
+				node = this.firstChild;
 				while (node) {
 					nodeToRemove = node;
 					node = node.nextSibling;
-					this.root.removeChild(nodeToRemove);
+					this.removeChild(nodeToRemove);
 
 				}
 				this.templateInstance = null;
