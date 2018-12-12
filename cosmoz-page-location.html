@@ -50,12 +50,14 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						},
 
 						_appHashString: {
-							type: String
+							type: String,
+							observer: '_appHashChanged'
 						},
 
 						routePath: {
 							type: String,
 							notify: true,
+							observer: '_routeChanged'
 						},
 
 						routeQuery: {
@@ -97,9 +99,8 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 				 */
 				static get observers() {
 					return [
-						'_appHashChanged(_appHashString, setProperties)',
-						'_routeChanged(routeQuery.*, routeHash, _appHashString, microDwellTime, dwellTime)',
-						'_routeChanged(routeHash.*, routeHash, _appHashString, microDwellTime, dwellTime)'
+						'_routeChanged(routeQuery.*)',
+						'_routeChanged(routeHash.*)'
 					];
 				}
 				/**
@@ -123,33 +124,6 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 				 */
 				_paramsFromString(value) {
 					return this.$.params._decodeParams(value);
-				}
-				/**
-				 * Set a path to a given value.
-				 *
-				 * @param {object} path Path.
-				 * @param {object} value Value.
-				 * @returns {void}
-				 */
-				_microUpdate(path, value = {}) {
-					const current = this.get(path),
-						valueKeys = Object.keys(value);
-
-					// In the new object set deleted properties to null
-					Object.keys(current).forEach(key =>  {
-						if (valueKeys.indexOf(key) > -1) {
-							return;
-						}
-						value[key] = null;
-					});
-
-					//Update changed keys
-					Object.keys(value).forEach(key => {
-						if (current[key] === value[key]) {
-							return;
-						}
-						this.set([path, key], value[key]);
-					});
 				}
 				/**
 				 * Set a quantity of properties.
@@ -273,18 +247,12 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					const route = this._parse(_appHashString);
 					this._setHashBang(route.hashBang);
 
-					if (setProperties) {
-						// Batch update of properties if using Polymer 2.x
-						this._batchMicroUpdate({
-							routePath: route.path,
-							routeHash: route.hash,
-							routeQuery: route.query
-						});
-					} else {
-						this.set('routePath', route.path);
-						this._microUpdate('routeHash', route.hash);
-						this._microUpdate('routeQuery', route.query);
-					}
+					// Batch update of properties if using Polymer 2.x
+					this._batchMicroUpdate({
+						routePath: route.path,
+						routeHash: route.hash,
+						routeQuery: route.query
+					});
 				}
 				/**
 				 * Prepare and set application hash string.
