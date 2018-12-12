@@ -31,6 +31,8 @@
 			this._previousUrl = null;
 			this._routesInError = null;
 			this._importLinksListeners = null;
+			this._boundOnNeonAnimationFinish =  this._onNeonAnimationFinish.bind(this);
+			this._boundStateChange = this._stateChange.bind(this);
 		}
 		/**
 		 * Get component name.
@@ -96,6 +98,22 @@
 				'template-ready': '_stopEventPropagation'
 			};
 		}
+
+		connectedCallback() {
+			super.connectedCallback();
+			this.addEventListener('neon-animation-finish', this._boundOnNeonAnimationFinish);
+			this.addEventListener('template-activate', this._stopEventPropagation);
+			this.addEventListener('template-created', this._stopEventPropagation);
+			this.addEventListener('template-ready', this._stopEventPropagation);
+		}
+
+		disconnectedCallback() {
+			super.disconnectedCallback();
+			this.removeEventListener('neon-animation-finish', this._boundOnNeonAnimationFinish);
+			this.removeEventListener('template-activate', this._stopEventPropagation);
+			this.removeEventListener('template-created', this._stopEventPropagation);
+			this.removeEventListener('template-ready', this._stopEventPropagation);
+		}
 		/**
 		* Utility function that fires an event from a polymer element and return
 		* false if preventDefault has been called on the event.
@@ -128,9 +146,8 @@
 				return;
 			}
 
-			const boundStateChangeHandler = this._stateChange.bind(this);
-			window.addEventListener('popstate', boundStateChangeHandler);
-			boundStateChangeHandler();
+			window.addEventListener('popstate', this._boundStateChange);
+			this._boundStateChange();
 			this._initialized = true;
 		}
 
@@ -162,7 +179,7 @@
 			}
 
 			// dispatch a popstate event
-			this.dispatchEvent(new CustomEvent(
+			window.dispatchEvent(new CustomEvent(
 				'popstate',
 				{
 					bubbles: false,
@@ -230,7 +247,7 @@
 			}
 
 			// find the first matching route
-			route = this.shadowRoot.firstChild;
+			route = this.firstChild;
 			while (route) {
 				if (route.tagName === 'COSMOZ-PAGE-ROUTE' && this.testRoute(route.path, url.path)) {
 					this._activateRoute(route, url);
@@ -495,7 +512,7 @@
 				this._deactivateRoute(this._previousRoute);
 			}
 
-			this._loadingRoute.shadowRoot.appendChild(element);
+			this._loadingRoute.appendChild(element);
 
 			// FIXME: Change route after element ready()
 			router._changeRoute();
@@ -545,7 +562,7 @@
 			});
 
 			// add the new content
-			this._loadingRoute.shadowRoot.appendChild(templateInstance);
+			this._loadingRoute.appendChild(templateInstance);
 		}
 
 		_changeRoute(oldRoute, newRoute) {
