@@ -240,10 +240,9 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 				 * Update application hash bang, properties, route path, route hash and route query.
 				 *
 				 * @param {string} _appHashString Application hash string.
-				 * @param {boolean} setProperties Whether properties should be set.
 				 * @returns {void}
 				 */
-				_appHashChanged(_appHashString, setProperties) {
+				_appHashChanged(_appHashString) {
 					const route = this._parse(_appHashString);
 					this._setHashBang(route.hashBang);
 
@@ -258,13 +257,13 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 				 * Prepare and set application hash string.
 				 *
 				 * @param {object} change Notified change.
-				 * @param {string} routeHash Route hash bang.
-				 * @param {string} _appHashString Application hash string.
-				 * @param {number} microDwellTime Micro dwell time.
-				 * @param {number} dwellTime Dwell time.
 				 * @returns {void}
 				 */
-				_routeChanged(change, routeHash, _appHashString, microDwellTime, dwellTime) {
+				_routeChanged(change) {
+					if (!this.isConnected) {
+						return;
+					}
+
 					const path = change && change.path;
 
 					let route,
@@ -276,18 +275,18 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						// some hash params, then we will update the URL with incorrect route hash string
 						// To avoid that, use the actual location
 						route = this._parse(window.decodeURIComponent(window.location.hash.slice(1)));
-						routeHashUri = this._encode({ hashBang: route.hashBang, path: route.path, query: route.query, hash: routeHash });
+						routeHashUri = this._encode({ hashBang: route.hashBang, path: route.path, query: route.query, hash: this.routeHash });
 					} else {
 						route = this.getRoute();
 						routeHashUri = this._encode(route);
 					}
 
-					if (_appHashString === routeHashUri) {
+					if (this._appHashString === routeHashUri) {
 						return;
 					}
 
-					this.$.location.dwellTime = path && path.length ? microDwellTime : dwellTime;
-					this.set('_appHashString', routeHashUri);
+					this.$.location.dwellTime = path && path.length ? this.microDwellTime : this.dwellTime;
+					this._appHashString = routeHashUri;
 				}
 			}
 
