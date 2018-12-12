@@ -25,11 +25,19 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					super();
 					this._parseRegexp = /(!(?=\/))?([^#?]+)?\??([^#]+)?#?(.+)?$/i;
 				}
-
+				/**
+				 * Get component name.
+				 *
+				 * @returns {string} Name.
+				 */
 				static get is() {
 					return 'cosmoz-page-location';
 				}
-
+				/**
+				 * Get component properties.
+				 *
+				 * @returns {object} Properties.
+				 */
 				static get properties() {
 					return {
 						appPath: {
@@ -42,12 +50,14 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						},
 
 						_appHashString: {
-							type: String
+							type: String,
+							observer: '_appHashChanged'
 						},
 
 						routePath: {
 							type: String,
 							notify: true,
+							observer: '_routeChanged'
 						},
 
 						routeQuery: {
@@ -82,15 +92,23 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						}
 					};
 				}
-
+				/**
+				 * Get component observers.
+				 *
+				 * @returns {array} Observers.
+				 */
 				static get observers() {
 					return [
-						'_appHashChanged(_appHashString, setProperties)',
-						'_routeChanged(routeQuery.*, routeHash, _appHashString, microDwellTime, dwellTime)',
-						'_routeChanged(routeHash.*, routeHash, _appHashString, microDwellTime, dwellTime)'
+						'_routeChanged(routeQuery.*)',
+						'_routeChanged(routeHash.*)'
 					];
 				}
-
+				/**
+				 * Convert parameters object to a string.
+				 *
+				 * @param {object} value Parameters.
+				 * @returns {string} Name.
+				 */
 				_paramsToString(value) {
 					if (typeof value === 'string') {
 						return value;
@@ -98,32 +116,21 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					return this.$.params._encodeParams(value)
 						.replace(/%3F/g, '?').replace(/%2F/g, '/').replace(/'/g, '%27');
 				}
-
+				/**
+				 * Convert parameters string to an object.
+				 *
+				 * @param {object} value Parameters.
+				 * @returns {string} Name.
+				 */
 				_paramsFromString(value) {
 					return this.$.params._decodeParams(value);
 				}
-
-				_microUpdate(path, value = {}) {
-					const current = this.get(path),
-						valueKeys = Object.keys(value);
-
-					// In the new object set deleted properties to null
-					Object.keys(current).forEach(key =>  {
-						if (valueKeys.indexOf(key) > -1) {
-							return;
-						}
-						value[key] = null;
-					});
-
-					//Update changed keys
-					Object.keys(value).forEach(key => {
-						if (current[key] === value[key]) {
-							return;
-						}
-						this.set([path, key], value[key]);
-					});
-				}
-
+				/**
+				 * Set a quantity of properties.
+				 *
+				 * @param {array} props Properties.
+				 * @returns {void}
+				 */
 				_batchMicroUpdate(props) {
 					const updatedPaths = {};
 
@@ -156,7 +163,12 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 
 					this.setProperties(updatedPaths);
 				}
-
+				/**
+				 * Parse the application hash string and return it as an object.
+				 *
+				 * @param {string} appHashString App hash string.
+				 * @returns {object} Objectified app hash string.
+				 */
 				_parse(appHashString) {
 					const matches = this._parseRegexp.exec(appHashString) || [];
 					return {
@@ -166,7 +178,12 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						hash: this._paramsFromString(matches[4])
 					};
 				}
-
+				/**
+				 * Encode an object route as a string.
+				 *
+				 * @param {object} route Route.
+				 * @returns {string} Encoded route.
+				 */
 				_encode(route = {}) {
 					const path = (route.hashBang ? '!' : '') + (route.path || ''),
 						query = this._paramsToString(route.query),
@@ -177,7 +194,11 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						];
 					return path + hashAndQuery.join('');
 				}
-
+				/**
+				 * Get route.
+				 *
+				 * @returns {object} Route.
+				 */
 				getRoute() {
 					return {
 						hashBang: this.hashBang,
@@ -186,11 +207,22 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						hash: Object.assign({}, this.routeHash),
 					};
 				}
-
+				/**
+				 * Get route URL.
+				 *
+				 * @param {object} route Route to base URL on.
+				 * @returns {string} Route URL.
+				 */
 				getRouteUrl(route = this.getRoute()) {
 					return '#' + this._encode(route);
 				}
-
+				/**
+				 * Get application URL.
+				 *
+				 * @param {object} query Query.
+				 * @param {object} route Route.
+				 * @returns {string} URL.
+				 */
 				getAppUrl(query, route = this.getRoute()) {
 					let appQuery = this._appQueryString;
 
@@ -204,26 +236,34 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						hash: this._encode(route)
 					});
 				}
-
-				_appHashChanged(_appHashString, setProperties) {
+				/**
+				 * Update application hash bang, properties, route path, route hash and route query.
+				 *
+				 * @param {string} _appHashString Application hash string.
+				 * @returns {void}
+				 */
+				_appHashChanged(_appHashString) {
 					const route = this._parse(_appHashString);
 					this._setHashBang(route.hashBang);
 
-					if (setProperties) {
-						// Batch update of properties if using Polymer 2.x
-						this._batchMicroUpdate({
-							routePath: route.path,
-							routeHash: route.hash,
-							routeQuery: route.query
-						});
-					} else {
-						this.set('routePath', route.path);
-						this._microUpdate('routeHash', route.hash);
-						this._microUpdate('routeQuery', route.query);
-					}
+					// Batch update of properties if using Polymer 2.x
+					this._batchMicroUpdate({
+						routePath: route.path,
+						routeHash: route.hash,
+						routeQuery: route.query
+					});
 				}
+				/**
+				 * Prepare and set application hash string.
+				 *
+				 * @param {object} change Notified change.
+				 * @returns {void}
+				 */
+				_routeChanged(change) {
+					if (!this.isConnected) {
+						return;
+					}
 
-				_routeChanged(change, routeHash, _appHashString, microDwellTime, dwellTime) {
 					const path = change && change.path;
 
 					let route,
@@ -235,18 +275,18 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						// some hash params, then we will update the URL with incorrect route hash string
 						// To avoid that, use the actual location
 						route = this._parse(window.decodeURIComponent(window.location.hash.slice(1)));
-						routeHashUri = this._encode({ hashBang: route.hashBang, path: route.path, query: route.query, hash: routeHash });
+						routeHashUri = this._encode({ hashBang: route.hashBang, path: route.path, query: route.query, hash: this.routeHash });
 					} else {
 						route = this.getRoute();
 						routeHashUri = this._encode(route);
 					}
 
-					if (_appHashString === routeHashUri) {
+					if (this._appHashString === routeHashUri) {
 						return;
 					}
 
-					this.$.location.dwellTime = path && path.length ? microDwellTime : dwellTime;
-					this.set('_appHashString', routeHashUri);
+					this.$.location.dwellTime = path && path.length ? this.microDwellTime : this.dwellTime;
+					this._appHashString = routeHashUri;
 				}
 			}
 

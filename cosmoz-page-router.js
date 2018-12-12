@@ -7,7 +7,8 @@
 
 	// Try to detect importNode bug https://github.com/Polymer/polymer/issues/2157
 
-	const hasImportNodeBug = false;
+	const hasImportNodeBug = false,
+		stopPropagation = e => e.stopPropagation();
 
 	/*	currentScript = document._currentScript || document.currentScript,
 		currentDocument = currentScript.ownerDocument,
@@ -21,7 +22,7 @@
 
 	// Leave a blank comment before Polymer declaration so that iron-component-page uses the doc from the .html file
 	//
-	class CosmozPageRouter extends Polymer.mixinBehaviors([Cosmoz.PageRouterUtilitiesBehavior], Polymer.Element) {
+	class CosmozPageRouter extends Cosmoz.PageRouterUtilitiesBehavior(Polymer.Element) {
 		constructor() {
 			super();
 			this._currentRoute = null;
@@ -31,11 +32,22 @@
 			this._previousUrl = null;
 			this._routesInError = null;
 			this._importLinksListeners = null;
+			this._boundOnNeonAnimationFinish =  this._onNeonAnimationFinish.bind(this);
+			this._boundStateChange = this._stateChange.bind(this);
 		}
+		/**
+		 * Get component name.
+		 *
+		 * @returns {string} Name.
+		 */
 		static get is() {
 			return 'cosmoz-page-router';
 		}
-
+		/**
+		 * Get component properties.
+		 *
+		 * @returns {string} Name.
+		 */
 		static get properties() {
 			return {
 				/* Ad-hoc routing template file name suffix */
@@ -75,17 +87,30 @@
 			};
 		}
 
-		static get listeners() {
-			return {
-				'neon-animation-finish': '_onNeonAnimationFinish',
-				'template-activate': '_stopEventPropagation',
-				'template-created': '_stopEventPropagation',
-				'template-ready': '_stopEventPropagation'
-			};
+
+		connectedCallback() {
+			super.connectedCallback();
+			this.addEventListener('neon-animation-finish', this._boundOnNeonAnimationFinish);
+			[
+				'template-activate',
+				'template-created',
+				'template-ready'
+			].forEach(e => this.addEventListener(e, stopPropagation));
 		}
 
+		disconnectedCallback() {
+			super.disconnectedCallback();
+			this.removeEventListener('neon-animation-finish', this._boundOnNeonAnimationFinish);
+			[
+				'template-activate',
+				'template-created',
+				'template-ready'
+			].forEach(e => this.removeEventListener(e, stopPropagation));
+		}
 		/**
-		* Utility function that fires an event from a polymer element and return false if preventDefault has been called on the event.
+		* Utility function that fires an event from a polymer element and return
+		* false if preventDefault has been called on the event.
+		*
 		* @param {String} type The event type
 		* @param {Object} detail The event detail
 		* @param {HTMLElement} node The node that will fire the event
@@ -104,9 +129,9 @@
 				}
 			)).defaultPrevented;
 		}
-
 		/**
 		 * Adds event listener to `popstate` event
+		 *
 		 * @returns {void}
 		 */
 		initialize() {
@@ -114,18 +139,18 @@
 				return;
 			}
 
-			const boundStateChangeHandler = this._stateChange.bind(this);
-			window.addEventListener('popstate', boundStateChangeHandler);
-			boundStateChangeHandler();
+			window.addEventListener('popstate', this._boundStateChange);
+			this._boundStateChange();
 			this._initialized = true;
 		}
 
 		ready() {
+			super.ready();
 			this._importedUris = {};
 			this._routesInError = {};
 			this._importLinksListeners = {};
 			if (!this.manualInit) {
-				Polymer.Async.microTask.run(() => this.initialize);
+				Polymer.Async.microTask.run(() => this.initialize());
 			}
 		}
 
@@ -147,7 +172,7 @@
 			}
 
 			// dispatch a popstate event
-			this.dispatchEvent(new CustomEvent(
+			window.dispatchEvent(new CustomEvent(
 				'popstate',
 				{
 					bubbles: false,
@@ -158,8 +183,12 @@
 				}
 			));
 		}
-
-		// scroll to the element with id="hash" or name="hash"
+		/**
+		 * Scroll to the element with id="hash" or name="hash".
+		 *
+		 * @param {string} hash Hash to scroll to.
+		 * @returns {void}
+		 */
 		_scrollToHash(hash) {
 			if (!hash) {
 				return;
@@ -211,13 +240,13 @@
 			}
 
 			// find the first matching route
-			route = Polymer.dom(this).firstElementChild;
+			route = this.firstChild;
 			while (route) {
 				if (route.tagName === 'COSMOZ-PAGE-ROUTE' && this.testRoute(route.path, url.path)) {
 					this._activateRoute(route, url);
 					return;
 				}
-				route = Polymer.dom(route).nextSibling;
+				route = route.nextSibling;
 			}
 
 			eventDetail.url = url;
@@ -257,8 +286,7 @@
 		 */
 		addRoute(route) {
 			const
-				element = document.createElement('cosmoz-page-route'),
-				dom = Polymer.dom(this);
+				element = document.createElement('cosmoz-page-route');
 			let	newRoute;
 			element.setAttribute('path', route.path);
 			if (route.persist) {
@@ -271,17 +299,14 @@
 				route: element
 			}, this, true);
 
-			newRoute = dom.appendChild(element);
-
-			if (dom.flush) {
-				dom.flush();
-			} else if (Polymer.flush) {
-				Polymer.flush();
-			}
-
+			newRoute = this.appendChild(element);
+			Polymer.flush();
 			return newRoute;
 		}
-
+		/**
+		 * Get the active route.
+		 * @returns {object} Active route.
+		 */
 		get activeRoute() {
 			return this._activeRoute;
 		}
@@ -291,7 +316,7 @@
 				return;
 			}
 			this._deactivateRoute(route);
-			Polymer.dom(this).removeChild(route);
+			this.removeChild(route);
 			if (resetPrevUrl) {
 				this._previousUrl = null;
 			}
@@ -419,7 +444,7 @@
 			if (route === this._loadingRoute) {
 
 				if (route.hasCustomElement && this._hasCustomElement(route.templateId)) {
-					this._activateCustomElement(route, url, eventDetail).bind(this);
+					this._activateCustomElement(route, url, eventDetail);
 					return;
 				}
 				//NOTE: when polyfilled importLink.import is not a Document but querySelector is available
@@ -432,7 +457,7 @@
 
 				if (template.tagName === 'DOM-MODULE') {
 					if (this._hasCustomElement(route.templateId)) {
-						this._activateCustomElement(route, url, eventDetail).bind(this);
+						this._activateCustomElement(route, url, eventDetail);
 						return;
 					}
 					this._fireEvent('element-not-found', eventDetail);
@@ -480,10 +505,10 @@
 				this._deactivateRoute(this._previousRoute);
 			}
 
-			Polymer.dom(this._loadingRoute.root).appendChild(element);
+			this._loadingRoute.appendChild(element);
 
 			// FIXME: Change route after element ready()
-			router._changeRoute().bind(this);
+			router._changeRoute();
 
 			this._fireEvent('template-activate', eventDetail, route, true);
 		}
@@ -530,7 +555,7 @@
 			});
 
 			// add the new content
-			Polymer.dom(this._loadingRoute.root).appendChild(templateInstance);
+			this._loadingRoute.appendChild(templateInstance);
 		}
 
 		_changeRoute(oldRoute, newRoute) {
@@ -556,8 +581,7 @@
 
 			nRoute.active = true;
 
-			// this.$.routes.selected = nRoute.path;
-			this.root.querySelector('#routes').selected = nRoute.path;
+			this.shadowRoot.querySelector('#routes').selected = nRoute.path;
 		}
 
 		// Remove the route's content
@@ -601,10 +625,6 @@
 			if (this._previousRoute && !this._previousRoute.active) {
 				this._deactivateRoute(this._previousRoute);
 			}
-		}
-
-		_stopEventPropagation(event) {
-			event.stopPropagation();
 		}
 	}
 

@@ -6,11 +6,19 @@
 		Polymer.IronResizableBehavior,
 		Polymer.NeonAnimatableBehavior
 	], Polymer.Element) {
-
+		/**
+		 * Get component name.
+		 *
+		 * @returns {string} Name.
+		 */
 		static get is() {
 			return 'cosmoz-page-route';
 		}
-
+		/**
+		 * Get component properties.
+		 *
+		 * @returns {object} Properties.
+		 */
 		static get properties() {
 			return {
 				active: Boolean,
@@ -67,17 +75,21 @@
 				}
 			};
 		}
-
+		/**
+		 * Remove the route node.
+		 *
+		 * @returns {void}
+		 */
 		deactivate() {
 			let node,
 				nodeToRemove;
 			if (!this.persist) {
 				// remove the route content
-				node = Polymer.dom(this.root).firstChild;
+				node = this.firstChild;
 				while (node) {
 					nodeToRemove = node;
-					node = Polymer.dom(node).nextSibling;
-					Polymer.dom(this.root).removeChild(nodeToRemove);
+					node = node.nextSibling;
+					this.removeChild(nodeToRemove);
 
 				}
 				this.templateInstance = null;

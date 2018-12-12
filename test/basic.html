@@ -48,7 +48,7 @@
 			});
 
 			test('initialize verifies if already initialized', done => {
-				const spy = sinon.spy(router, '_stateChange');
+				const spy = sinon.spy(router, '_boundStateChange');
 				router.initialize();
 				assert.calledOnce(spy);
 				spy.restore();
@@ -96,10 +96,9 @@
 					console.log('stateChange');
 				};
 				router.refresh(true);
-				setTimeout(() => {
-					assert.isNull(router._previousUrl);
-					done();
-				}, 100);
+				Polymer.flush();
+				assert.isNull(router._previousUrl);
+				done();
 			});
 
 			test('activeRoute returns route', done => {

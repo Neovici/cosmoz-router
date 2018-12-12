@@ -52,7 +52,8 @@
 
 	window.Cosmoz = window.Cosmoz || {};
 	/** @polymerBehavior */
-	Cosmoz.PageRouterUtilitiesBehavior = {
+	Cosmoz.PageRouterUtilitiesBehavior = Polymer.dedupingMixin(base => class extends base {
+
 
 		// @license MIT
 		// @copyright Erik Ringsmuth 2015
@@ -133,7 +134,7 @@
 				}
 			}
 			return url;
-		},
+		}
 
 		// testRoute(routePath, urlPath) - Test if the route's path matches the URL's path
 		//
@@ -155,7 +156,7 @@
 
 			// recursively test if the segments match (start at 1 because 0 is always an empty string)
 			return segmentsMatch(rPath.split('/'), 1, urlPath.split('/'), 1);
-		},
+		}
 
 		// routeArguments(routePath, urlPath, search, isRegExp) - Gets the path variables and query parameter values from the URL
 		routeArguments(routePath, urlPath, search, isRegExp, typecast) {
@@ -202,7 +203,7 @@
 			}
 
 			return args;
-		},
+		}
 
 		// typecast(value) - Typecast the string value to an unescaped string, number, or boolean
 		_typecast(value) {
@@ -222,5 +223,5 @@
 			// string
 			return decodeURIComponent(value);
 		}
-	};
+	});
 }());
