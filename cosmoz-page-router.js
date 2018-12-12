@@ -7,7 +7,8 @@
 
 	// Try to detect importNode bug https://github.com/Polymer/polymer/issues/2157
 
-	const hasImportNodeBug = false;
+	const hasImportNodeBug = false,
+	 stopPropagation = e => e.stopPropagation();
 
 	/*	currentScript = document._currentScript || document.currentScript,
 		currentDocument = currentScript.ownerDocument,
@@ -85,34 +86,26 @@
 				}
 			};
 		}
-		/**
-		 * Get component listeners.
-		 *
-		 * @returns {string} Listeners.
-		 */
-		static get listeners() {
-			return {
-				'neon-animation-finish': '_onNeonAnimationFinish',
-				'template-activate': '_stopEventPropagation',
-				'template-created': '_stopEventPropagation',
-				'template-ready': '_stopEventPropagation'
-			};
-		}
+
 
 		connectedCallback() {
 			super.connectedCallback();
 			this.addEventListener('neon-animation-finish', this._boundOnNeonAnimationFinish);
-			this.addEventListener('template-activate', this._stopEventPropagation);
-			this.addEventListener('template-created', this._stopEventPropagation);
-			this.addEventListener('template-ready', this._stopEventPropagation);
+			[
+				'template-activate',
+				'template-created',
+				'template-ready'
+			].forEach(e => this.addEventListener(e, stopPropagation));
 		}
 
 		disconnectedCallback() {
 			super.disconnectedCallback();
 			this.removeEventListener('neon-animation-finish', this._boundOnNeonAnimationFinish);
-			this.removeEventListener('template-activate', this._stopEventPropagation);
-			this.removeEventListener('template-created', this._stopEventPropagation);
-			this.removeEventListener('template-ready', this._stopEventPropagation);
+			[
+				'template-activate',
+				'template-created',
+				'template-ready'
+			].forEach(e => this.removeEventListener(e, stopPropagation));
 		}
 		/**
 		* Utility function that fires an event from a polymer element and return
@@ -632,10 +625,6 @@
 			if (this._previousRoute && !this._previousRoute.active) {
 				this._deactivateRoute(this._previousRoute);
 			}
-		}
-
-		_stopEventPropagation(event) {
-			event.stopPropagation();
 		}
 	}
 
