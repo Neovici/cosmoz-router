@@ -93,17 +93,6 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 					};
 				}
 				/**
-				 * Get component observers.
-				 *
-				 * @returns {array} Observers.
-				 */
-				static get observers() {
-					return [
-						'_routeChanged(routeQuery.*)',
-						'_routeChanged(routeHash.*)'
-					];
-				}
-				/**
 				 * Convert parameters object to a string.
 				 *
 				 * @param {object} value Parameters.
@@ -252,6 +241,13 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 						routeHash: route.hash,
 						routeQuery: route.query
 					});
+
+					if (this._hasRouteObservers) {
+						return;
+					}
+					this._createMethodObserver('_routeChanged(routeQuery.*)');
+					this._createMethodObserver('_routeChanged(routeHash.*)');
+					this._hasRouteObservers = true;
 				}
 				/**
 				 * Prepare and set application hash string.
