@@ -5,20 +5,7 @@
 (function () {
 	'use strict';
 
-	// Try to detect importNode bug https://github.com/Polymer/polymer/issues/2157
-
-	const hasImportNodeBug = false,
-		stopPropagation = e => e.stopPropagation();
-
-	/*	currentScript = document._currentScript || document.currentScript,
-		currentDocument = currentScript.ownerDocument,
-		testImportLink = currentDocument.querySelector('link[rel="import"][href="detect-import-node-bug.html"]'),
-		testTemplate = testImportLink.import.querySelector('template'),
-		clonedTemplate = document.importNode(testTemplate, true);
-
-	if (!clonedTemplate.content || clonedTemplate.content.childNodes.length === 0) {
-		hasImportNodeBug = true;
-	} */
+	const stopPropagation = e => e.stopPropagation();
 
 	// Leave a blank comment before Polymer declaration so that iron-component-page uses the doc from the .html file
 	//
@@ -468,19 +455,6 @@
 			}
 		}
 
-		_instantiateTemplate(template) {
-			if (hasImportNodeBug) {
-				return this._fixedImportNode(template);
-			}
-			return document.importNode(template, true);
-		}
-
-		_fixedImportNode(node) {
-			const clone = document.importNode(node, false);
-			clone.innerHTML = node.innerHTML;
-			return clone;
-		}
-
 		_activateCustomElement(route, url, eventDetail) {
 			const
 				element = document.createElement(route.templateId),
@@ -515,7 +489,7 @@
 
 		_activateTemplate(route, url, eventDetail, template) {
 			const
-				templateInstance = this._instantiateTemplate(template),
+				templateInstance = document.importNode(template, true),
 				templateId = route.templateId;
 			let	templateViewPrototype,
 				model;
