@@ -105,16 +105,15 @@
 		* @return {Boolean} `true` = continue, `false` = prevent further actions
 		*/
 		_fireEvent(type, detail, node, bubbles) {
-			return !this.dispatchEvent(new CustomEvent(
+			return this.dispatchEvent(new CustomEvent(
 				type,
 				{
 					bubbles: !!bubbles,
 					cancelable: true,
 					composed: true,
-					detail,
-					node: node || this
+					detail
 				}
-			)).defaultPrevented;
+			));
 		}
 		/**
 		 * Adds event listener to `popstate` event
