@@ -115,6 +115,18 @@
 				assert.calledOnce(spy);
 				spy.restore();
 			});
+
+			test('_fireEvent returns true if event handler did not call event.preventDefault', () => {
+				router.addEventListener('some-event', () => undefined);
+				const shouldContinue = router._fireEvent('some-event');
+				assert.isTrue(shouldContinue);
+			});
+
+			test('_fireEvent returns false if event handler called event.preventDefault', () => {
+				router.addEventListener('some-event', ev => ev.preventDefault());
+				const shouldContinue = router._fireEvent('some-event');
+				assert.isFalse(shouldContinue);
+			});
 		});
 
 		suite('<cosmoz-page-router mode="hashbang">', () => {
