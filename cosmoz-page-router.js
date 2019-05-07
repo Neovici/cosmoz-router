@@ -100,11 +100,10 @@
 		*
 		* @param {String} type The event type
 		* @param {Object} detail The event detail
-		* @param {HTMLElement} node The node that will fire the event
 		* @param {Boolean} bubbles True if event should bubble
 		* @return {Boolean} `true` = continue, `false` = prevent further actions
 		*/
-		_fireEvent(type, detail, node, bubbles) {
+		_fireEvent(type, detail, bubbles) {
 			return this.dispatchEvent(new CustomEvent(
 				type,
 				{
@@ -283,7 +282,7 @@
 
 			this._fireEvent('before-add-route', {
 				route: element
-			}, this, true);
+			}, true);
 
 			newRoute = this.appendChild(element);
 			Polymer.flush();
@@ -346,7 +345,7 @@
 
 			eventDetail.templateInstance = route.templateInstance;
 			this._setObjectProperties(route.templateInstance, model);
-			this._fireEvent('template-activate', eventDetail, route.templateInstance, true);
+			this._fireEvent('template-activate', eventDetail, true);
 		}
 
 		_removeImportLinkListeners(importLink) {
@@ -463,13 +462,13 @@
 			eventDetail.templateInstance = element;
 			route.templateInstance = element;
 
-			this._fireEvent('template-created', eventDetail, route, true);
+			this._fireEvent('template-created', eventDetail, true);
 
 			model = this._createModel(route, url, eventDetail);
 
 			this._setObjectProperties(eventDetail.templateInstance, model);
 
-			this._fireEvent('template-ready', eventDetail, route, true);
+			this._fireEvent('template-ready', eventDetail, true);
 
 			if (this._previousRoute && this._previousRoute.classList.contains('neon-animating')) {
 				// When switching fast between routes, previous animation
@@ -483,7 +482,7 @@
 			// FIXME: Change route after element ready()
 			router._changeRoute();
 
-			this._fireEvent('template-activate', eventDetail, route, true);
+			this._fireEvent('template-activate', eventDetail, true);
 		}
 
 		_activateTemplate(route, url, eventDetail, template) {
@@ -501,13 +500,13 @@
 				Polymer.Base.mixin(templateInstance, templateViewPrototype);
 			}
 
-			this._fireEvent('template-created', eventDetail, route, true);
+			this._fireEvent('template-created', eventDetail, true);
 
 			model = this._createModel(route, url, eventDetail);
 
 			this._setObjectProperties(eventDetail.templateInstance, model);
 
-			this._fireEvent('template-ready', eventDetail, route, true);
+			this._fireEvent('template-ready', eventDetail, true);
 
 			this._activateTemplateInstance(route, url, eventDetail);
 		}
@@ -519,7 +518,7 @@
 
 
 			templateInstance.addEventListener('dom-change', e => {
-				router._fireEvent('template-activate', eventDetail, templateInstance, true);
+				router._fireEvent('template-activate', eventDetail, true);
 			});
 
 			// Make sure _changeRoute is run for both new and persisted routes
@@ -581,7 +580,6 @@
 
 			eventDetail.model = model;
 			this._fireEvent('before-data-binding', eventDetail);
-			this._fireEvent('before-data-binding', eventDetail, route);
 			return eventDetail.model;
 		}
 
