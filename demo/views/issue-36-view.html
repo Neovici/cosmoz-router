@@ -6,24 +6,27 @@
 
 	</template>
 	<script type="text/javascript">
-		Polymer({
-			is: 'issue-36-view',
-			properties: {
-				params: {
-					type: Object,
-				},
-
-				_routeHash: {
-					type: Object,
-					value: () => ({})
-				}
-			},
-			observers: [
-				'_paramsChanged(params.*)'
-			],
-			_paramsChanged(paramsChange) { // eslint-disable-line
-				this.set('_routeHash.hashparam', this.params.param);
+		/*global Polymer*/
+		class Issue36View extends Polymer.Element {
+			static get is() {
+				return 'issue-36-view';
 			}
-		});
+			static get properties() {
+				return {
+					params: {
+						type: Object,
+						// eslint-disable-next-line object-shorthand
+						observer: function() {
+							this.set('_routeHash.hashparam', this.params.param);
+						}
+					},
+					_routeHash: {
+						type: Object,
+						value: () => ({})
+					}
+				};
+			}
+		}
+		customElements.define(Issue36View.is, Issue36View);
 	</script>
 </dom-module>
