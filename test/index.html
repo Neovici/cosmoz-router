@@ -12,9 +12,8 @@
 				'location.html'
 			],
 			suites = [];
-		let i;
 
-		for (i = 0; i < pages.length; i++) {
+		for (let i = 0; i < pages.length; i++) {
 			suites.push(pages[i] + '?dom=shadow');
 			suites.push(pages[i] + '?wc-shadydom=true&wc-ce=true');
 		}

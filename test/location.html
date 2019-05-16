@@ -76,9 +76,8 @@
 			});
 
 			Object.keys(tests).forEach((key, index) => {
-				var result = tests[key];
 				test('parses location #' + index, done => {
-					assert.deepEqual(location._parse(key), result);
+					assert.deepEqual(location._parse(key), tests[key]);
 					done();
 				});
 			});
