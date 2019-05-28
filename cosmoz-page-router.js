@@ -301,7 +301,10 @@
 				return;
 			}
 			this._deactivateRoute(route);
-			this.removeChild(route);
+			const parent = route.parentNode;
+			if (parent) {
+				parent.removeChild(route);
+			}
 			if (resetPrevUrl) {
 				this._previousUrl = null;
 			}
