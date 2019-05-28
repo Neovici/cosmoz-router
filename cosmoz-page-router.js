@@ -433,7 +433,7 @@
 					return;
 				}
 				//NOTE: when polyfilled importLink.import is not a Document but querySelector is available
-				const template = importLink.import.querySelector('#' + route.templateId);
+				const template = route.templateId && importLink.import.querySelector('#' + route.templateId);
 
 				if (!template) {
 					this._fireEvent('template-not-found', eventDetail);
