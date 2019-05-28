@@ -301,7 +301,10 @@
 				return;
 			}
 			this._deactivateRoute(route);
-			this.removeChild(route);
+			const parent = route.parentNode;
+			if (parent) {
+				parent.removeChild(route);
+			}
 			if (resetPrevUrl) {
 				this._previousUrl = null;
 			}
@@ -433,7 +436,7 @@
 					return;
 				}
 				//NOTE: when polyfilled importLink.import is not a Document but querySelector is available
-				const template = importLink.import.querySelector('#' + route.templateId);
+				const template = route.templateId && importLink.import.querySelector('#' + route.templateId);
 
 				if (!template) {
 					this._fireEvent('template-not-found', eventDetail);
