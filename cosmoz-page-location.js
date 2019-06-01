@@ -1,32 +1,24 @@
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import '@polymer/iron-location/iron-location.js';
+import '@polymer/iron-location/iron-query-params.js';
+
 /**
 The `cosmoz-page-location` element manages binding to and from the current URL.
 
 @demo demo/location.html
 */
-/*
-	FIXME(polymer-modulizer): the above comments were extracted
-	from HTML and may be out of place here. Review them and
-	then delete this comment!
-*/
-import '../@webcomponents/shadycss/entrypoints/apply-shim.js';
-
-import { PolymerElement } from '../@polymer/polymer/polymer-element.js';
-import '../@polymer/iron-location/iron-location.js';
-import '../@polymer/iron-location/iron-query-params.js';
-import { html } from '../@polymer/polymer/lib/utils/html-tag.js';
-
 class CosmozPageLocation extends PolymerElement {
 	static get template() {
 		return html`
 		<iron-location url-space-regex="^\$" id="location" path="{{ appPath }}" query="{{ _appQueryString }}" hash="{{ _appHashString }}">
 		</iron-location>
 		<iron-query-params id="params"></iron-query-params>
-`;
+	`;
 	}
 
 	constructor() {
 		super();
-		this._parseRegexp = /(!(?=\/))?([^#?]+)?\??([^#]+)?#?(.+)?$/i;
+		this._parseRegexp = /(!(?=\/))?([^#?]+)?\??([^#]+)?#?(.+)?$/ui;
 	}
 	/**
 	 * Get component name.
@@ -106,7 +98,8 @@ class CosmozPageLocation extends PolymerElement {
 			return value;
 		}
 		return this.$.params._encodeParams(value)
-			.replace(/%3F/g, '?').replace(/%2F/g, '/').replace(/'/g, '%27');
+			.replace(/%3F/ug, '?').replace(/%2F/ug, '/')
+			.replace(/'/ug, '%27');
 	}
 	/**
 	 * Convert parameters string to an object.
@@ -181,8 +174,8 @@ class CosmozPageLocation extends PolymerElement {
 			query = this._paramsToString(route.query),
 			hash = this._paramsToString(route.hash),
 			hashAndQuery = [
-				query ? '?' + query.replace(/#/g, '%23') : '',
-				hash ? '#' + hash.replace(/\?/g, '%3F') : ''
+				query ? '?' + query.replace(/#/ug, '%23') : '',
+				hash ? '#' + hash.replace(/\?/ug, '%3F') : ''
 			];
 		return path + hashAndQuery.join('');
 	}
@@ -196,7 +189,7 @@ class CosmozPageLocation extends PolymerElement {
 			hashBang: this.hashBang,
 			path: this.routePath,
 			query: Object.assign({}, this.routeQuery),
-			hash: Object.assign({}, this.routeHash),
+			hash: Object.assign({}, this.routeHash)
 		};
 	}
 	/**

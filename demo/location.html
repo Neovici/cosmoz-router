@@ -6,11 +6,11 @@
 
 	<title>cosmoz-page-location demo</title>
 
-	<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+	<script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 
-	<script type="module" src="../../@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
-	<script type="module" src="../../@polymer/iron-demo-helpers/demo-snippet.js"></script>
-	<script type="module" src="../../@polymer/iron-demo-helpers/url-bar.js"></script>
+	<script type="module" src="/components/@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
+	<script type="module" src="/components/@polymer/iron-demo-helpers/demo-snippet.js"></script>
+	<script type="module" src="/components/@polymer/iron-demo-helpers/url-bar.js"></script>
 	<script type="module" src="../cosmoz-page-location.js"></script>
 
 	<!-- FIXME(polymer-modulizer):
@@ -91,24 +91,25 @@ $_documentContainer.innerHTML = `<div id="container" class="vertical-section-con
 
 document.body.appendChild($_documentContainer.content);
 </script>
-	<script type="module">
-import '../../@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
-import '../../@polymer/iron-demo-helpers/demo-snippet.js';
-import '../../@polymer/iron-demo-helpers/url-bar.js';
-import '../cosmoz-page-location.js';
-window.addEventListener('WebComponentsReady', function () {
+<script type="module">
+	import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
+	import '@polymer/iron-demo-helpers/demo-snippet.js';
+	import '@polymer/iron-demo-helpers/url-bar.js';
+	import '../cosmoz-page-location.js';
+
+window.addEventListener('WebComponentsReady', () => {
 	(function () {
-		let basic = document.getElementById('basic');
-		basic = !basic.set ? basic.firstElementChild : basic;
-		basic._computeRouteUrl = function (hashParam, queryParam) {
-			let route = this.$.location.getRoute();
-			route.hash.hashParam = hashParam;
-			route.query.queryParam = queryParam;
-			return this.$.location.getRouteUrl(route);
-		};
-		basic._computeAppUrl = function (appParam) {
-			return this.$.location.getAppUrl({appParam: appParam});
-		};
+			let basic = document.getElementById('basic');
+			basic = !basic.set ? basic.firstElementChild : basic;
+			basic._computeRouteUrl = function (hashParam, queryParam) {
+				let route = this.$.location.getRoute();
+				route.hash.hashParam = hashParam;
+				route.query.queryParam = queryParam;
+				return this.$.location.getRouteUrl(route);
+			};
+			basic._computeAppUrl = function (appParam) {
+				return this.$.location.getAppUrl({appParam});
+			};
 	})();
 
 });
