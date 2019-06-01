@@ -1,10 +1,8 @@
-import '../@webcomponents/shadycss/entrypoints/apply-shim.js';
-import { PolymerElement } from '../@polymer/polymer/polymer-element.js';
-import '../@polymer/iron-flex-layout/iron-flex-layout.js';
-import { IronResizableBehavior } from '../@polymer/iron-resizable-behavior/iron-resizable-behavior.js';
-import { NeonAnimatableBehavior } from '../@polymer/neon-animation/neon-animatable-behavior.js';
-import { html } from '../@polymer/polymer/lib/utils/html-tag.js';
-import { mixinBehaviors } from '../@polymer/polymer/lib/legacy/class.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import '@polymer/iron-flex-layout/iron-flex-layout.js';
+import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-resizable-behavior.js';
+import { NeonAnimatableBehavior } from '@polymer/neon-animation/neon-animatable-behavior.js';
+import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 
 class CosmozPageRoute extends mixinBehaviors([
 	IronResizableBehavior,
@@ -63,7 +61,7 @@ class CosmozPageRoute extends mixinBehaviors([
 			},
 
 			import: {
-				type: String,
+				type: String
 			},
 
 			imported: {
@@ -72,7 +70,7 @@ class CosmozPageRoute extends mixinBehaviors([
 			},
 
 			path: {
-				type: String,
+				type: String
 			},
 
 			persist: {
@@ -81,7 +79,7 @@ class CosmozPageRoute extends mixinBehaviors([
 			},
 
 			templateId: {
-				type: String,
+				type: String
 			},
 
 			templateInstance: {
