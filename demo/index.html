@@ -40,20 +40,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	</div>
 
 <script type="module">
-import '../cosmoz-page-router.js';
+	import '../cosmoz-page-router.js';
 
-const pageRouter = document.querySelector('cosmoz-page-router');
+	const pageRouter = document.querySelector('cosmoz-page-router');
 
-pageRouter.addEventListener('template-created',	 () => {
-	console.log('test-cz-page-router template-created');
-});
-pageRouter.addEventListener('template-ready', () => {
-	console.log('test-cz-page-router template-ready');
-});
-pageRouter.addEventListener('template-activate', () => {
-	console.log('test-cz-page-router template-activate');
-});
+	pageRouter.addEventListener('template-created',	 () => {
+		console.log('test-cz-page-router template-created');
+	});
+	pageRouter.addEventListener('template-ready', () => {
+		console.log('test-cz-page-router template-ready');
+	});
+	pageRouter.addEventListener('template-activate', () => {
+		console.log('test-cz-page-router template-activate');
+	});
 
-pageRouter.initialize();
+	pageRouter.initialize();
 </script>
 </body></html>
