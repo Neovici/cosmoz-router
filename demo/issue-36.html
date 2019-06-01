@@ -6,10 +6,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 		<title>cosmoz-page-router Demo</title>
-		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-		<link rel="import" href="../cosmoz-page-router.html">
-		<link rel="import" href="../cosmoz-page-route.html">
-		<link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
+		<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+		<script type="module" src="../cosmoz-page-router.js"></script>
+		<script type="module" src="../cosmoz-page-route.js"></script>
+		<script type="module" src="../../@polymer/iron-flex-layout/iron-flex-layout.js"></script>
 		<style>
 			#content {
 				display: flex;
@@ -52,15 +52,15 @@
 				</cosmoz-page-router>
 			</div>
 		</div>
-		<script>
-			(function () {
-				'use strict';
+		<script type="module">
+import '../cosmoz-page-router.js';
+import '../cosmoz-page-route.js';
+import '../../@polymer/iron-flex-layout/iron-flex-layout.js';
 
-				window.addEventListener('WebComponentsReady', () => {
-					document.querySelector('cosmoz-page-router').initialize();
-				});
-			}());
-		</script>
+window.addEventListener('WebComponentsReady', () => {
+	document.querySelector('cosmoz-page-router').initialize();
+});
+</script>
 
 	</body>
 </html>

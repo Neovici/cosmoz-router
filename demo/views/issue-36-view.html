@@ -1,32 +1,34 @@
-<link rel="import" href="../../cosmoz-page-location.html">
+<script type="module" src="../../cosmoz-page-location.js"></script>
 <dom-module id="issue-36-view">
 	<template>
 		<cosmoz-page-location route-hash="{{ _routeHash }}"></cosmoz-page-location>
 		<div>Param value:<span>[[ params.param ]]</span>.</div>
 
 	</template>
-	<script type="text/javascript">
-		/*global Polymer*/
-		class Issue36View extends Polymer.Element {
-			static get is() {
-				return 'issue-36-view';
+	<script type="module">
+import '../../cosmoz-page-location.js';
+import { PolymerElement } from '../../../@polymer/polymer/polymer-element.js';
+/*global Polymer*/
+class Issue36View extends PolymerElement {
+	static get is() {
+		return 'issue-36-view';
+	}
+	static get properties() {
+		return {
+			params: {
+				type: Object,
+				// eslint-disable-next-line object-shorthand
+				observer: function () {
+					this.set('_routeHash.hashparam', this.params.param);
+				}
+			},
+			_routeHash: {
+				type: Object,
+				value: () => ({})
 			}
-			static get properties() {
-				return {
-					params: {
-						type: Object,
-						// eslint-disable-next-line object-shorthand
-						observer: function () {
-							this.set('_routeHash.hashparam', this.params.param);
-						}
-					},
-					_routeHash: {
-						type: Object,
-						value: () => ({})
-					}
-				};
-			}
-		}
-		customElements.define(Issue36View.is, Issue36View);
-	</script>
+		};
+	}
+}
+customElements.define(Issue36View.is, Issue36View);
+</script>
 </dom-module>

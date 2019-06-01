@@ -13,8 +13,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 		<title>cosmoz-page-router Demo</title>
-		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-		<link rel="import" href="../cosmoz-page-router.html">
+		<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+		<script type="module" src="../cosmoz-page-router.js"></script>
 	</head>
 	<body unresolved>
 
@@ -40,27 +40,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			</cosmoz-page-router>
 		</div>
 
-		<script>
-			(function () {
-				'use strict';
+		<script type="module">
+import '../cosmoz-page-router.js';
 
-				window.addEventListener('WebComponentsReady', () => {
-					let pageRouter = document.querySelector('cosmoz-page-router');
+window.addEventListener('WebComponentsReady', () => {
+	let pageRouter = document.querySelector('cosmoz-page-router');
 
-					pageRouter.addEventListener('template-created',  () => {
-						console.log('test-cz-page-router template-created');
-					});
-					pageRouter.addEventListener('template-ready', () => {
-						console.log('test-cz-page-router template-ready');
-					});
-					pageRouter.addEventListener('template-activate', () => {
-						console.log('test-cz-page-router template-activate');
-					});
+	pageRouter.addEventListener('template-created',	 () => {
+		console.log('test-cz-page-router template-created');
+	});
+	pageRouter.addEventListener('template-ready', () => {
+		console.log('test-cz-page-router template-ready');
+	});
+	pageRouter.addEventListener('template-activate', () => {
+		console.log('test-cz-page-router template-activate');
+	});
 
-					pageRouter.initialize();
-				});
-			}());
-		</script>
+	pageRouter.initialize();
+});
+</script>
 
 	</body>
 </html>
