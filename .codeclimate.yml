@@ -2,33 +2,23 @@
 version: "2"
 checks:
   argument-count:
-    enabled: true
-    config:
-      threshold: 4
+    enabled: false  # handled by eslint rule "max-params"
   complex-logic:
     enabled: true
     config:
       threshold: 4
   file-lines:
-    enabled: true
-    config:
-      threshold: 250
+    enabled: false  # handled by eslint rule "max-lines"
   method-complexity:
-    enabled: true
-    config:
-      threshold: 5
+    enabled: false  # handled by eslint rule "complexity"
   method-count:
     enabled: true
     config:
       threshold: 20
   method-lines:
-    enabled: true
-    config:
-      threshold: 30
+    enabled: false  # handled by eslint rule "max-lines-per-function"
   nested-control-flow:
-    enabled: true
-    config:
-      threshold: 4
+    enabled: false  # handled by eslint rule "max-depth"
   return-statements:
     enabled: true
     config:
@@ -41,7 +31,7 @@ checks:
 plugins:
   eslint:
     enabled: true
-    channel: "eslint-4"
+    channel: "eslint-5"
     config:
       sanitize_batch: false
       extensions:
@@ -49,3 +39,9 @@ plugins:
         - .html
   fixme:
     enabled: true
+
+exclude_patterns:
+  - "node_modules/"
+  - "tests/"
+  - "demo/"
+  - "*.bak"
