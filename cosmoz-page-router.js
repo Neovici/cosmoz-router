@@ -446,13 +446,12 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 	_importAndActivate(route, url, eventDetail) {
 		let importLink;
 		const
-			router = this,
 			importUri = route.import,
 			importLoadedCallback =	() => {
 				importLink.loaded = true;
-				router._removeImportLinkListeners(importLink);
+				this._removeImportLinkListeners(importLink);
 				route.imported = true;
-				router._activateImport(route, url, eventDetail, importLink);
+				this._activateImport(route, url, eventDetail, importLink);
 			},
 			importErrorCallback = e => {
 				const
@@ -462,16 +461,16 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 					};
 
 				importLink.notFound = true;
-				router._removeImportLinkListeners(importLink);
-				router._routesInError[importUri] = importErrorEvent;
-				router._fireEvent('import-error', importErrorEvent);
+				this._removeImportLinkListeners(importLink);
+				this._routesInError[importUri] = importErrorEvent;
+				this._fireEvent('import-error', importErrorEvent);
 			};
 
 		if (this._importedUris === null) {
 			this._importedUris = {};
 		}
-
-		if (!this._importedUris.hasOwnProperty(route.import)) {
+		const isNew = !this._importedUris.hasOwnProperty(route.import);
+		if (isNew) {
 			importLink = document.createElement('link');
 			importLink.setAttribute('rel', 'import');
 			importLink.setAttribute('href', importUri);
@@ -492,9 +491,10 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 		} else {
 			// previously imported. this is an async operation and may not be complete yet.
 			importLink = this._importedUris[importUri];
+			const isUnloaded = !importLink.loaded;
 			if (importLink.notFound) {
 				importErrorCallback(null, route);
-			} else if (!importLink.loaded) {
+			} else if (isUnloaded) {
 				importLink.addEventListener('load', importLoadedCallback);
 				importLink.addEventListener('error', importErrorCallback);
 
@@ -541,8 +541,7 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 
 	_activateCustomElement(route, url, eventDetail) {
 		const
-			element = document.createElement(route.templateId),
-			router = this;
+			element = document.createElement(route.templateId);
 		let model;
 
 		eventDetail.templateInstance = element;
@@ -566,7 +565,7 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 		this._loadingRoute.appendChild(element);
 
 		// FIXME: Change route after element ready()
-		router._changeRoute();
+		this._changeRoute();
 
 		this._fireEvent('template-activate', eventDetail, true);
 	}
@@ -599,17 +598,16 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 
 	_activateTemplateInstance(route, url, eventDetail) {
 		const
-			router = this,
 			templateInstance = eventDetail.templateInstance;
 
 
-		templateInstance.addEventListener('dom-change', e => {
-			router._fireEvent('template-activate', eventDetail, true);
+		templateInstance.addEventListener('dom-change', () => {
+			this._fireEvent('template-activate', eventDetail, true);
 		});
 
 		// Make sure _changeRoute is run for both new and persisted routes
-		templateInstance.addEventListener('template-activate', e => {
-			router._changeRoute();
+		templateInstance.addEventListener('template-activate', () => {
+			this._changeRoute();
 		});
 
 		// add the new content
@@ -678,7 +676,7 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 		}
 	}
 
-	_onNeonAnimationFinish(event) {
+	_onNeonAnimationFinish() {
 		if (this._previousRoute && !this._previousRoute.active) {
 			this._deactivateRoute(this._previousRoute);
 		}
