@@ -9,7 +9,7 @@
 		<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 		<script type="module" src="../cosmoz-page-router.js"></script>
 		<script type="module" src="../cosmoz-page-route.js"></script>
-		<script type="module" src="../../@polymer/iron-flex-layout/iron-flex-layout.js"></script>
+		<script type="module" src="/components/@polymer/iron-flex-layout/iron-flex-layout.js"></script>
 		<style>
 			#content {
 				display: flex;
@@ -53,14 +53,10 @@
 			</div>
 		</div>
 		<script type="module">
-import '../cosmoz-page-router.js';
-import '../cosmoz-page-route.js';
-import '../../@polymer/iron-flex-layout/iron-flex-layout.js';
-
-window.addEventListener('WebComponentsReady', () => {
-	document.querySelector('cosmoz-page-router').initialize();
-});
-</script>
-
+		import '../cosmoz-page-router.js';
+		import '../cosmoz-page-route.js';
+		import '/componenets/@polymer/iron-flex-layout/iron-flex-layout.js';
+		document.querySelector('cosmoz-page-router').initialize();
+		</script>
 	</body>
 </html>
