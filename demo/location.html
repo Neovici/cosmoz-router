@@ -56,7 +56,7 @@
 					</p>
 					<p>
 						<label>Result:</label>
-						</p><p><a href\$="{{ _computeRouteUrl(newRouteQueryParam, newRouteHashParam) }}">{{ _computeRouteUrl(newRouteQueryParam, newRouteHashParam) }}</a></p>
+						</p><p><a href$="{{ _computeRouteUrl(newRouteQueryParam, newRouteHashParam) }}">{{ _computeRouteUrl(newRouteQueryParam, newRouteHashParam) }}</a></p>
 					<p></p>
 
 					<h4>Compute full URL form app params:</h4>
@@ -71,15 +71,10 @@
 	</demo-snippet>
 </div>
 <script type="module">
-	import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
-	import '@polymer/iron-demo-helpers/demo-snippet.js';
-	import '@polymer/iron-demo-helpers/url-bar.js';
-	import '../cosmoz-page-location.js';
-
 	let basic = document.getElementById('basic');
 	basic = basic.set ? basic : basic.firstElementChild;
-	basic._computeRouteUrl = function (hashParam, queryParam) {
-		let route = this.$.location.getRoute();
+	basic._computeRouteUrl = function (queryParam, hashParam) {
+		const route = this.$.location.getRoute();
 		route.hash.hashParam = hashParam;
 		route.query.queryParam = queryParam;
 		return this.$.location.getRouteUrl(route);

@@ -6,29 +6,28 @@
 
 	</template>
 	<script type="module">
-import '../../cosmoz-page-location.js';
-import { PolymerElement } from '../../../@polymer/polymer/polymer-element.js';
-/*global Polymer*/
-class Issue36View extends PolymerElement {
-	static get is() {
-		return 'issue-36-view';
-	}
-	static get properties() {
-		return {
-			params: {
-				type: Object,
-				// eslint-disable-next-line object-shorthand
-				observer: function () {
-					this.set('_routeHash.hashparam', this.params.param);
-				}
-			},
-			_routeHash: {
-				type: Object,
-				value: () => ({})
+		import { PolymerElement } from '@polymer/polymer/polymer-element';
+
+		class Issue36View extends PolymerElement {
+			static get is() {
+				return 'issue-36-view';
 			}
-		};
-	}
-}
-customElements.define(Issue36View.is, Issue36View);
-</script>
+			static get properties() {
+				return {
+					params: {
+						type: Object,
+						// eslint-disable-next-line object-shorthand
+						observer: function () {
+							this.set('_routeHash.hashparam', this.params.param);
+						}
+					},
+					_routeHash: {
+						type: Object,
+						value: () => ({})
+					}
+				};
+			}
+		}
+		customElements.define(Issue36View.is, Issue36View);
+	</script>
 </dom-module>

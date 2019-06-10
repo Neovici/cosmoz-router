@@ -14,46 +14,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 	<title>cosmoz-page-router Demo</title>
 	<script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+	<script src="/components/web-animations-js/web-animations-next-lite.min.js"></script>
 	<script type="module" src="../cosmoz-page-router.js"></script>
+	<style>
+		#content {
+			display: flex;
+			flex-direction: column;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+		}
+		#view {
+			flex: 1;
+			flex-basis: 0.000000001px;
+			position: relative;
+			display: block;
+		}
+
+		#appRouter {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+		}
+
+	</style>
 </head>
 <body unresolved>
-	<h1>cz-page-router test</h1>
-	<ul>
-		<li><a href="#!/">/Home</a>
-		<li><a href="#!/view1">/view1</a>
-		<li><a href="#!/view2">/view2</a>
-		<li><a href="#!/view3">/view3 (ad-hoc)</a>
-		<li><a href="#!/scroll-view">/scroll-view</a>
-		<li><a href="#!/scroll-view#top">/scroll-view#top</a>
-		<li><a href="#!/scroll-view#middle">/scroll-view#middle</a>
-		<li><a href="#!/scroll-view#bottom">/scroll-view#bottom</a>
-	</ul>
+	<div id="content">
+		<h1>cz-page-router test</h1>
+		<ul>
+			<li><a href="#!/">/Home</a>
+			<li><a href="#!/view-1">/view-1</a>
+			<li><a href="#!/view-2">/view-2</a>
+			<li><a href="#!/view-3">/view-3 (ad-hoc)</a>
+			<li><a href="#!/scroll-view">/scroll-view</a>
+			<li><a href="#!/scroll-view#top">/scroll-view#top</a>
+			<li><a href="#!/scroll-view#middle">/scroll-view#middle</a>
+			<li><a href="#!/scroll-view#bottom">/scroll-view#bottom</a>
+		</ul>
 
-	<div style="position: relative">
-		<cosmoz-page-router id="appRouter" manual-init mode="hash" url-prefix="views">
-			<cosmoz-page-route path="/" import="views/home.html" template-id="home"></cosmoz-page-route>
-			<cosmoz-page-route path="/view1" import="views/view1.html" template-id="view1"></cosmoz-page-route>
-			<cosmoz-page-route path="/view2" import="views/view2.html" template-id="view2"></cosmoz-page-route>
-			<!-- <cosmoz-page-route path="/view3" import="views/view3.html" template-id="view3"></cosmoz-page-route> -->
-			<cosmoz-page-route path="/scroll-view" import="views/scroll-view.html" template-id="scroll-view"></cosmoz-page-route>
-		</cosmoz-page-router>
+		<div id="view">
+			<cosmoz-page-router id="appRouter" manual-init mode="hash" url-prefix="views">
+				<cosmoz-page-route path="/" import="views/home.html" template-id="demo-home"></cosmoz-page-route>
+				<cosmoz-page-route path="/view-1" import="views/view-1.html" template-id="view-1"></cosmoz-page-route>
+				<cosmoz-page-route path="/view-2" import="views/view-2.html" template-id="view-2"></cosmoz-page-route>
+				<!-- <cosmoz-page-route path="/view-3" import="views/view-3.html" template-id="view-3"></cosmoz-page-route> -->
+				<cosmoz-page-route path="/scroll-view" import="views/scroll-view.html" template-id="scroll-view"></cosmoz-page-route>
+			</cosmoz-page-router>
+		</div>
 	</div>
+	<script type="module">
+		const pageRouter = document.querySelector('cosmoz-page-router');
 
-<script type="module">
-	import '../cosmoz-page-router.js';
+		pageRouter.addEventListener('template-created',	 () => {
+			console.log('test-cz-page-router template-created');
+		});
+		pageRouter.addEventListener('template-ready', () => {
+			console.log('test-cz-page-router template-ready');
+		});
+		pageRouter.addEventListener('template-activate', () => {
+			console.log('test-cz-page-router template-activate');
+		});
 
-	const pageRouter = document.querySelector('cosmoz-page-router');
-
-	pageRouter.addEventListener('template-created',	 () => {
-		console.log('test-cz-page-router template-created');
-	});
-	pageRouter.addEventListener('template-ready', () => {
-		console.log('test-cz-page-router template-ready');
-	});
-	pageRouter.addEventListener('template-activate', () => {
-		console.log('test-cz-page-router template-activate');
-	});
-
-	pageRouter.initialize();
-</script>
+		pageRouter.initialize();
+	</script>
 </body></html>

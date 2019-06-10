@@ -6,10 +6,13 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 		<title>cosmoz-page-router Demo</title>
-		<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+		<script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+		<script src="/components/web-animations-js/web-animations-next-lite.min.js"></script>
+		<script type="module" src="/components/@polymer/iron-flex-layout/iron-flex-layout.js"></script>
+
+
 		<script type="module" src="../cosmoz-page-router.js"></script>
 		<script type="module" src="../cosmoz-page-route.js"></script>
-		<script type="module" src="/components/@polymer/iron-flex-layout/iron-flex-layout.js"></script>
 		<style>
 			#content {
 				display: flex;
@@ -41,22 +44,20 @@
 		<div id="content">
 			<h1>cosmoz-page-route issue xxx test</h1>
 			<ul>
+				<li><a href="#!/">Home</a>
 				<li><a href="#!/issue-36-view?param=firstvalue">/issue-36-view?param=firstvalue</a>
 				<li><a href="#!/issue-36-view?param=secondvalue">/issue-36-view?param=secondvalue</a>
 			</ul>
 
 			<div id="view">
 				<cosmoz-page-router id="appRouter" manual-init mode="hash" url-prefix="views">
-					<cosmoz-page-route path="/" import="views/home.html" template-id="home"></cosmoz-page-route>
+					<cosmoz-page-route path="/" import="views/home.html" template-id="demo-home"></cosmoz-page-route>
 					<cosmoz-page-route path="/issue-36-view" import="views/issue-36-view.html" template-id="issue-36-view"></cosmoz-page-route>
 				</cosmoz-page-router>
 			</div>
 		</div>
 		<script type="module">
-		import '../cosmoz-page-router.js';
-		import '../cosmoz-page-route.js';
-		import '/componenets/@polymer/iron-flex-layout/iron-flex-layout.js';
-		document.querySelector('cosmoz-page-router').initialize();
+			document.querySelector('cosmoz-page-router').initialize();
 		</script>
 	</body>
 </html>

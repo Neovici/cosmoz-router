@@ -1,12 +1,15 @@
-<template id="home" is="dom-bind">
-	<h2>Welcome to the home page</h2>
-</template>
-<script>
-	(function () {
-		'use strict';
+<dom-module id="demo-home">
+	<template>
+		<h2>Welcome to the home page</h2>
+	</template>
+	<script type="module">
+		import { PolymerElement } from '@polymer/polymer/polymer-element';
 
-		Cosmoz.TemplateView['home'] = {
-
-		};
-	}());
-</script>
+		class DemoHome extends PolymerElement {
+			static get is() {
+				return 'demo-home';
+			}
+		}
+		customElements.define(DemoHome.is, DemoHome);
+	</script>
+</dom-module>
