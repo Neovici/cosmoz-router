@@ -1,6 +1,7 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
-import '@polymer/iron-location/iron-location.js';
-import '@polymer/iron-location/iron-query-params.js';
+import '@polymer/iron-location/iron-location';
+import '@polymer/iron-location/iron-query-params';
+
+import { PolymerElement, html } from '@polymer/polymer/polymer-element';
 
 /**
 The `cosmoz-page-location` element manages binding to and from the current URL.

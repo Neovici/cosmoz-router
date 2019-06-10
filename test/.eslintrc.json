@@ -1,6 +1,3 @@
 {
-	"extends": "@neovici/eslint-config/test-config",
-	"globals": {
-		"flush": "readonly"
-	}
+	"extends": "@neovici/eslint-config/test-config"
 }

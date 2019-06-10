@@ -5,12 +5,14 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-	<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-	<script src="../../wct-browser-legacy/browser.js"></script>
-	<script src="../../@polymer/test-fixture/test-fixture-mocha.js"></script>
+	<script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+	<script src="/components/mocha/mocha.js"></script>
+	<script src="/components/wct-mocha/wct-mocha.js"></script>
+	<script src="/components/chai/chai.js"></script>
+	<script src="/components/@polymer/test-fixture/test-fixture-mocha.js"></script>
 
-	<script type="module" src="../../@polymer/test-fixture/test-fixture.js"></script>
-	<script type="module" src="../../@polymer/iron-test-helpers/iron-test-helpers.js"></script>
+	<script type="module" src="/components/@polymer/test-fixture/test-fixture.js"></script>
+	<script type="module" src="/components/@polymer/iron-test-helpers/iron-test-helpers.js"></script>
 	<script type="module" src="../cosmoz-page-location.js"></script>
 </head>
 <body>
@@ -21,105 +23,102 @@
 	</test-fixture>
 
 	<script type="module">
-import '../../@polymer/test-fixture/test-fixture.js';
-import '../../@polymer/iron-test-helpers/iron-test-helpers.js';
-import '../cosmoz-page-location.js';
-import { microTask } from '../../@polymer/polymer/lib/utils/async.js';
-suite('parse', () => {
-	let location,
-		tests = {
-			'path/to/route': {
-				hashBang: false,
-				path: 'path/to/route',
-				hash: {},
-				query: {}
-			},
-			'path/to/route#hashKey=hashValue': {
-				hashBang: false,
-				path: 'path/to/route',
-				hash: {
-					hashKey: 'hashValue'
+		import { microTask } from '@polymer/polymer/lib/utils/async';
+		suite('parse', () => {
+			let location;
+			const tests = {
+				'path/to/route': {
+					hashBang: false,
+					path: 'path/to/route',
+					hash: {},
+					query: {}
 				},
-				query: {}
-			},
-			'path/to/route?queryKey=queryValue': {
-				hashBang: false,
-				path: 'path/to/route',
-				hash: {},
-				query: {
-					queryKey: 'queryValue'
-				}
-			},
-			'path/to/route?queryKey=queryValue#hashKey=hashValue': {
-				hashBang: false,
-				path: 'path/to/route',
-				hash: {
-					hashKey: 'hashValue'
+				'path/to/route#hashKey=hashValue': {
+					hashBang: false,
+					path: 'path/to/route',
+					hash: {
+						hashKey: 'hashValue'
+					},
+					query: {}
 				},
-				query: {
-					queryKey: 'queryValue'
+				'path/to/route?queryKey=queryValue': {
+					hashBang: false,
+					path: 'path/to/route',
+					hash: {},
+					query: {
+						queryKey: 'queryValue'
+					}
+				},
+				'path/to/route?queryKey=queryValue#hashKey=hashValue': {
+					hashBang: false,
+					path: 'path/to/route',
+					hash: {
+						hashKey: 'hashValue'
+					},
+					query: {
+						queryKey: 'queryValue'
+					}
+				},
+				'!path/to/route': {
+					hashBang: false,
+					path: '!path/to/route',
+					hash: {},
+					query: {}
+				},
+				'!/path/to/route': {
+					hashBang: true,
+					path: '/path/to/route',
+					hash: {},
+					query: {}
 				}
-			},
-			'!path/to/route': {
-				hashBang: false,
-				path: '!path/to/route',
-				hash: {},
-				query: {}
-			},
-			'!/path/to/route': {
-				hashBang: true,
-				path: '/path/to/route',
-				hash: {},
-				query: {}
-			}
-		};
+			};
 
-	setup(done => {
-		location = fixture('basic');
-		microTask.run(() => done());
-	});
+			setup(done => {
+				location = fixture('basic');
+				microTask.run(() => done());
+			});
 
-	Object.keys(tests).forEach((key, index) => {
-		test('parses location #' + index, done => {
-			assert.deepEqual(location._parse(key), tests[key]);
-			done();
+			Object.keys(tests).forEach((key, index) => {
+				test('parses location #' + index, done => {
+					assert.deepEqual(location._parse(key), tests[key]);
+					done();
+				});
+			});
+
+			Object.keys(tests).forEach((key, index) => {
+				const value = tests[key];
+				test('encodes location #' + index, done => {
+					assert.equal(location._encode(value), key);
+					done();
+				});
+			});
+
+			test('getRouteUrl returns route url', done => {
+				assert.equal(location.getRouteUrl(), '#');
+				assert.equal(location.getRouteUrl({
+					hashBang: false,
+					path: 'path/to/route',
+					hash: {
+						hashKey: 'hashValue'
+					},
+					query: {}
+				}), '#path/to/route#hashKey=hashValue');
+				done();
+			});
+
+			test('getAppUrl returns app url with query', done => {
+				const parts = location.getAppUrl({ queryKey: 'queryValue'}).split('?');
+				assert.equal(parts[parts.length - 1], 'queryKey=queryValue');
+				done();
+			});
+
+			test('_routeChanged updates _appHashString', done => {
+				location.routeQuery = {
+					queryKey: 'queryValue'
+				};
+				assert.equal(location._appHashString, '?queryKey=queryValue');
+				done();
+			});
 		});
-	});
-
-	Object.keys(tests).forEach((key, index) => {
-		const value = tests[key];
-		test('encodes location #' + index, done => {
-			assert.equal(location._encode(value), key);
-			done();
-		});
-	});
-
-	test('getRouteUrl returns route url', done => {
-		assert.equal(location.getRouteUrl(), '#');
-		assert.equal(location.getRouteUrl({
-			hashBang: false,
-			path: 'path/to/route',
-			hash: {
-				hashKey: 'hashValue'
-			},
-			query: {}
-		}), '#path/to/route#hashKey=hashValue');
-		done();
-	});
-
-	test('getAppUrl returns app url with query', done => {
-		const parts = location.getAppUrl({ queryKey: 'queryValue'}).split('&');
-		assert.equal(parts[parts.length - 1], 'queryKey=queryValue');
-		done();
-	});
-
-	test('_routeChanged updates _appHashString', done => {
-		location.routeQuery = {
-			queryKey: 'queryValue'
-		};
-		assert.equal(location._appHashString, '?queryKey=queryValue');
-		done();
-	});
-});
-</script>
+	</script>
 </body></html>

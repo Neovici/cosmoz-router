@@ -1,8 +1,10 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
-import '@polymer/iron-flex-layout/iron-flex-layout.js';
-import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-resizable-behavior.js';
-import { NeonAnimatableBehavior } from '@polymer/neon-animation/neon-animatable-behavior.js';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
+import '@polymer/iron-flex-layout/iron-flex-layout';
+
+import { PolymerElement, html } from '@polymer/polymer/polymer-element';
+
+import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-resizable-behavior';
+import { NeonAnimatableBehavior } from '@polymer/neon-animation/neon-animatable-behavior';
+import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class';
 
 class CosmozPageRoute extends mixinBehaviors([
 	IronResizableBehavior,

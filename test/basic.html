@@ -5,12 +5,16 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-	<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-	<script src="../../wct-browser-legacy/browser.js"></script>
-	<script src="../../@polymer/test-fixture/test-fixture-mocha.js"></script>
+	<script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+	<script src="/components/mocha/mocha.js"></script>
+	<script src="/components/wct-mocha/wct-mocha.js"></script>
+	<script src="/components/chai/chai.js"></script>
+	<script src="/components/sinon/pkg/sinon.js"></script>
 
-	<script type="module" src="../../@polymer/test-fixture/test-fixture.js"></script>
-	<script type="module" src="../../@polymer/iron-test-helpers/iron-test-helpers.js"></script>
+	<script src="/components/@polymer/test-fixture/test-fixture-mocha.js"></script>
+
+	<script type="module" src="/components/@polymer/test-fixture/test-fixture.js"></script>
+	<script type="module" src="/components/@polymer/iron-test-helpers/iron-test-helpers.js"></script>
 
 	<script type="module" src="../cosmoz-page-router.js"></script>
 </head>
@@ -18,142 +22,135 @@
 	<test-fixture id="basic">
 		<template>
 			<cosmoz-page-router manual-init mode="hash" url-prefix="views">
-					<cosmoz-page-route path="/" import="../demo/views/home.html" template-id="home"></cosmoz-page-route>
-					<cosmoz-page-route path="/view1" import="../demo/views/view1.html" template-id="view1"></cosmoz-page-route>
-					<cosmoz-page-route path="/view2" import="../demo/views/view2.html" template-id="view2"></cosmoz-page-route>
+				<cosmoz-page-route path="/" import="../demo/views/home.html" template-id="home"></cosmoz-page-route>
+				<cosmoz-page-route path="/view1" import="../demo/views/view1.html" template-id="view1"></cosmoz-page-route>
+				<cosmoz-page-route path="/view2" import="../demo/views/view2.html" template-id="view2"></cosmoz-page-route>
 			</cosmoz-page-router>
 		</template>
 	</test-fixture>
 	<test-fixture id="hashbang">
 		<template>
 			<cosmoz-page-router mode="hashbang" url-prefix="views">
-					<cosmoz-page-route path="/" import="../demo/views/home.html" template-id="test"></cosmoz-page-route>
-					<cosmoz-page-route path="/view1" import="../demo/views/view1.html" template-id="view1"></cosmoz-page-route>
+				<cosmoz-page-route path="/" import="../demo/views/home.html" template-id="test"></cosmoz-page-route>
+				<cosmoz-page-route path="/view1" import="../demo/views/view1.html" template-id="view1"></cosmoz-page-route>
 			</cosmoz-page-router>
 		</template>
 	</test-fixture>
 
 	<script type="module">
-import '../../@polymer/test-fixture/test-fixture.js';
-import '../../@polymer/iron-test-helpers/iron-test-helpers.js';
-import '../cosmoz-page-router.js';
-import { flush as flush$0 } from '../../@polymer/polymer/lib/utils/flush.js';
-/* global sinon chai */
-sinon.assert.expose(chai.assert, { prefix: '' });
+		import { flush } from '@polymer/polymer/lib/utils/flush';
+		/* global sinon chai */
+		sinon.assert.expose(chai.assert, { prefix: '' });
 
-suite('<cosmoz-page-router>', () => {
-	let router,
-		data = { persist: true, templateId: 'view3', import: '/view3', path: '/view3' };
+		suite('<cosmoz-page-router>', () => {
+			let router;
+			const data = { persist: true, templateId: 'view3', import: '/view3', path: '/view3' };
 
-	setup(done => {
-		router = fixture('basic');
-		flush(done);
-	});
+			setup(() => {
+				router = fixture('basic');
+				flush();
+			});
 
-	test('initialize verifies if already initialized', done => {
-		const spy = sinon.spy(router, '_boundStateChange');
-		router.initialize();
-		assert.calledOnce(spy);
-		spy.restore();
-		done();
-	});
+			test('initialize verifies if already initialized', () => {
+				const spy = sinon.spy(router, '_boundStateChange');
+				router.initialize();
+				assert.calledOnce(spy);
+				spy.restore();
+			});
 
-	test('addRoute returns new route', () => {
-		const route = router.addRoute(data);
-		assert.equal(route.path, '/view3');
-		assert.equal(route.templateId, 'view3');
-	});
+			test('addRoute returns new route', () => {
+				const route = router.addRoute(data);
+				assert.equal(route.path, '/view3');
+				assert.equal(route.templateId, 'view3');
+			});
 
-	test('removeRoute handles undefined', () => {
-		const spy = sinon.spy(router, '_deactivateRoute');
-		router.removeRoute();
-		assert.notCalled(spy);
-		spy.restore();
-	});
+			test('removeRoute handles undefined', () => {
+				const spy = sinon.spy(router, '_deactivateRoute');
+				router.removeRoute();
+				assert.notCalled(spy);
+				spy.restore();
+			});
 
-	test('removeRoute calls _deactivateRoute', () => {
-		const spy = sinon.spy(router, '_deactivateRoute'),
-			route = router.addRoute(data);
-		router.removeRoute(route);
-		assert.calledOnce(spy);
-		spy.restore();
-	});
+			test('removeRoute calls _deactivateRoute', () => {
+				const spy = sinon.spy(router, '_deactivateRoute'),
+					route = router.addRoute(data);
+				router.removeRoute(route);
+				assert.calledOnce(spy);
+				spy.restore();
+			});
 
-	test('removeRoute sets previousUrl to null if resetPrevUrl is true', () => {
-		router._previousUrl = 'test';
-		const route = router.addRoute(data);
-		router.removeRoute(route, true);
-		assert.isNull(router._previousUrl);
-	});
+			test('removeRoute sets previousUrl to null if resetPrevUrl is true', () => {
+				router._previousUrl = 'test';
+				const route = router.addRoute(data);
+				router.removeRoute(route, true);
+				assert.isNull(router._previousUrl);
+			});
 
-	test('refresh calls _stateChange', () => {
-		const spy = sinon.spy(router, '_stateChange');
-		router.refresh();
-		assert.calledOnce(spy);
-		spy.restore();
-	});
+			test('refresh calls _stateChange', () => {
+				const spy = sinon.spy(router, '_stateChange');
+				router.refresh();
+				assert.calledOnce(spy);
+				spy.restore();
+			});
 
-	test('refresh with force updates _previousUrl as null', done => {
-		router._previousUrl = 'test';
-		router._stateChange = () => {
-			console.log('stateChange');
-		};
-		router.refresh(true);
-		flush$0();
-		assert.isNull(router._previousUrl);
-		done();
-	});
+			test('refresh with force updates _previousUrl as null', () => {
+				router._previousUrl = 'test';
+				router._stateChange = () => {
+					console.log('stateChange');
+				};
+				router.refresh(true);
+				flush();
+				assert.isNull(router._previousUrl);
+			});
 
-	test('activeRoute returns route', done => {
-		const route = router.addRoute(data);
-		router._activeRoute = route;
-		assert.deepEqual(router.activeRoute, route);
-		done();
-	});
+			test('activeRoute returns route', () => {
+				const route = router.addRoute(data);
+				router._activeRoute = route;
+				assert.deepEqual(router.activeRoute, route);
+			});
 
-	test('_activateRoute calls go function to redirect', () => {
-		const spy = sinon.spy(router, 'go'),
-			route = router.addRoute(data);
-		route.redirect = true;
-		router._activateRoute(route);
-		assert.calledOnce(spy);
-		spy.restore();
-	});
+			test('_activateRoute calls go function to redirect', () => {
+				const spy = sinon.spy(router, 'go'),
+					route = router.addRoute(data);
+				route.redirect = true;
+				router._activateRoute(route);
+				assert.calledOnce(spy);
+				spy.restore();
+			});
 
-	test('_fireEvent returns true if event handler did not call event.preventDefault', () => {
-		router.addEventListener('some-event', () => undefined);
-		const shouldContinue = router._fireEvent('some-event');
-		assert.isTrue(shouldContinue);
-	});
+			test('_fireEvent returns true if event handler did not call event.preventDefault', () => {
+				router.addEventListener('some-event', () => undefined);
+				const shouldContinue = router._fireEvent('some-event');
+				assert.isTrue(shouldContinue);
+			});
 
-	test('_fireEvent returns false if event handler called event.preventDefault', () => {
-		router.addEventListener('some-event', ev => ev.preventDefault());
-		const shouldContinue = router._fireEvent('some-event');
-		assert.isFalse(shouldContinue);
-	});
-});
+			test('_fireEvent returns false if event handler called event.preventDefault', () => {
+				router.addEventListener('some-event', ev => ev.preventDefault());
+				const shouldContinue = router._fireEvent('some-event');
+				assert.isFalse(shouldContinue);
+			});
+		});
 
-suite('<cosmoz-page-router mode="hashbang">', () => {
-	let router,
-		data = { persist: false, templateId: 'view2', import: '/view2', path: '/view2' };
+		suite('<cosmoz-page-router mode="hashbang">', () => {
+			let router;
+			const data = { persist: false, templateId: 'view2', import: '/view2', path: '/view2' };
 
-	setup(done => {
-		router = fixture('hashbang');
-		flush(done);
-	});
+			setup(() => {
+				router = fixture('hashbang');
+				flush();
+			});
 
-	test('_hasCustomElement returns true for cozmoz-page-router', done => {
-		assert.isTrue(router._hasCustomElement('cosmoz-page-route'));
-		assert.isTrue(router._hasCustomElement('cosmoz-page-router'));
-		done();
-	});
+			test('_hasCustomElement returns true for cozmoz-page-router', () => {
+				assert.isTrue(router._hasCustomElement('cosmoz-page-route'));
+				assert.isTrue(router._hasCustomElement('cosmoz-page-router'));
+			});
 
-	test('addRoute returns new route', () => {
-		const route = router.addRoute(data);
-		assert.equal(route.path, '/view2');
-		assert.equal(route.templateId, 'view2');
-		route.deactivate();
-	});
-});
-</script>
+			test('addRoute returns new route', () => {
+				const route = router.addRoute(data);
+				assert.equal(route.path, '/view2');
+				assert.equal(route.templateId, 'view2');
+				route.deactivate();
+			});
+		});
+		</script>
 </body></html>

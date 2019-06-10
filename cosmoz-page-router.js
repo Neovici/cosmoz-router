@@ -1,12 +1,12 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
-import { microTask } from '@polymer/polymer/lib/utils/async.js';
-import { flush } from '@polymer/polymer/lib/utils/flush.js';
-import { Base } from '@polymer/polymer/polymer-legacy.js';
-
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 import '@polymer/neon-animation/neon-animated-pages.js';
 import '@polymer/neon-animation/animations/fade-in-animation.js';
 import '@polymer/neon-animation/animations/fade-out-animation.js';
+
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import { microTask } from '@polymer/polymer/lib/utils/async.js';
+import { flush } from '@polymer/polymer/lib/utils/flush.js';
+import { Base } from '@polymer/polymer/polymer-legacy.js';
 
 import './cosmoz-page-route.js';
 import * as utils from './cosmoz-page-router-utilities';
