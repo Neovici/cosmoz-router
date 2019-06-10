@@ -9,7 +9,7 @@ import '@polymer/neon-animation/animations/fade-in-animation.js';
 import '@polymer/neon-animation/animations/fade-out-animation.js';
 
 import './cosmoz-page-route.js';
-import { PageRouterUtilities } from './cosmoz-page-router-utilities';
+import * as utils from './cosmoz-page-router-utilities';
 
 window.Cosmoz = window.Cosmoz || {};
 window.Cosmoz.TemplateView = {};
@@ -47,13 +47,17 @@ Make sure the `<cosmoz-page-router>` element takes up all the space the views wi
 			};
 		</script>
 
-`Cosmoz.TemplateView` is an object that will link the template with ID `start` to this Polymer object named `start`.
+`Cosmoz.TemplateView` is an object that will link the template with ID `start`
+to this Polymer object named `start`.
 
 The object itself will be mixed in like any other custom element / template.
 
-The template has `is="dom-bind"` to hand over the stamping, listeners, bindings and other to Polymer once inserted.
+The template has `is="dom-bind"` to hand over the stamping, listeners, bindings
+and other to Polymer once inserted.
 
-For ad-hoc routing, `url-prefix` + `url` + `file-suffix` will be used to find the template file. The template id will be the url path with slashes (/) replaced with dashes (-), `users/list/all` -> `users-list-all`.
+For ad-hoc routing, `url-prefix` + `url` + `file-suffix` will be used to find
+the template file. The template id will be the url path with slashes (/)
+replaced with dashes (-), `users/list/all` -> `users-list-all`.
 
 ### View events
 
@@ -79,7 +83,7 @@ Will otherwise be fired when activated for persisted views.
 @element cosmoz-page-router
 @demo demo/index.html
 */
-class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
+class CosmozPageRouter extends PolymerElement {
 	static get template() {
 		return html`
 		<style>
@@ -278,7 +282,7 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 
 	_stateChange() {
 		const
-			url = this.parseUrl(window.location.href, this.mode),
+			url = utils.parseUrl(window.location.href, this.mode),
 			eventDetail = {
 				path: url.path
 			};
@@ -310,7 +314,7 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 		// find the first matching route
 		route = this.firstChild;
 		while (route) {
-			if (route.tagName === 'COSMOZ-PAGE-ROUTE' && this.testRoute(route.path, url.path)) {
+			if (route.tagName === 'COSMOZ-PAGE-ROUTE' && utils.testRoute(route.path, url.path)) {
 				this._activateRoute(route, url);
 				return;
 			}
@@ -336,7 +340,7 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 
 	_addRouteForCurrentPathAndActivate(importUri, templateId) {
 		const
-			url = this.parseUrl(window.location.href, this.mode),
+			url = utils.parseUrl(window.location.href, this.mode),
 			route = this.addRoute({
 				import: importUri,
 				path: url.path,
@@ -355,7 +359,6 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 	addRoute(route) {
 		const
 			element = document.createElement('cosmoz-page-route');
-		let newRoute;
 		element.setAttribute('path', route.path);
 		if (route.persist) {
 			element.setAttribute('persist', '');
@@ -367,7 +370,7 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 			route: element
 		}, true);
 
-		newRoute = this.appendChild(element);
+		const newRoute = this.appendChild(element);
 		flush();
 		return newRoute;
 	}
@@ -542,14 +545,13 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 	_activateCustomElement(route, url, eventDetail) {
 		const
 			element = document.createElement(route.templateId);
-		let model;
 
 		eventDetail.templateInstance = element;
 		route.templateInstance = element;
 
 		this._fireEvent('template-created', eventDetail, true);
 
-		model = this._createModel(route, url, eventDetail);
+		const model = this._createModel(route, url, eventDetail);
 
 		this._setObjectProperties(eventDetail.templateInstance, model);
 
@@ -566,7 +568,6 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 
 		// FIXME: Change route after element ready()
 		this._changeRoute();
-
 		this._fireEvent('template-activate', eventDetail, true);
 	}
 
@@ -574,20 +575,18 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 		const
 			templateInstance = document.importNode(template, true),
 			templateId = route.templateId;
-		let templateViewPrototype,
-			model;
 
 		eventDetail.templateInstance = templateInstance;
 		route.templateInstance = templateInstance;
 
-		templateViewPrototype = window.Cosmoz.TemplateView[templateId];
+		const templateViewPrototype = window.Cosmoz.TemplateView[templateId];
 		if (templateViewPrototype) {
 			Base.mixin(templateInstance, templateViewPrototype);
 		}
 
 		this._fireEvent('template-created', eventDetail, true);
 
-		model = this._createModel(route, url, eventDetail);
+		const model = this._createModel(route, url, eventDetail);
 
 		this._setObjectProperties(eventDetail.templateInstance, model);
 
@@ -648,7 +647,7 @@ class CosmozPageRouter extends PageRouterUtilities(PolymerElement) {
 	_createModel(route, url, eventDetail) {
 		const
 			model = {},
-			params = this.routeArguments(
+			params = utils.routeArguments(
 				route.path,
 				url.path,
 				url.search,

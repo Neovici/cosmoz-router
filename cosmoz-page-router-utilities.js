@@ -1,5 +1,3 @@
-import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
-
 // segmentsMatch(routeSegments, routeIndex, urlSegments, urlIndex, pathVariables)
 // recursively test the route segments against the url segments in place (without creating copies of the arrays
 // for each recursive call)
@@ -46,174 +44,172 @@ const segmentsMatch = function (routeSegments, routeIndex, urlSegments, urlIndex
 	return false;
 };
 
-/** @polymerBehavior */
-export const PageRouterUtilities = dedupingMixin(base => class extends base {
-	// @license MIT
-	// @copyright Erik Ringsmuth 2015
-	//
-	// parseUrl(location, mode) - Augment the native URL() constructor to get info about hash paths
-	//
-	// Example parseUrl('http://domain.com/other/path?queryParam3=false#/example/path?queryParam1=true&queryParam2=example%20string#middle', 'auto')
-	//
-	// returns {
-	//	 path: '/example/path',
-	//	 hash: '#middle'
-	//	 search: '?queryParam1=true&queryParam2=example%20string',
-	//	 isHashPath: true
-	// }
-	//
-	// Note: The location must be a fully qualified URL with a protocol like 'http(s)://'
-	parseUrl(location, mode) {
-		const
-			url = {
-				isHashPath: mode === 'hash'
-			};
-		let nativeUrl,
-			anchor,
-			searchIndex,
-			secondHashIndex;
-
-		if (typeof URL === 'function') {
-			// browsers that support `new URL()`
-			nativeUrl = new URL(location);
-			url.path = nativeUrl.pathname;
-			url.hash = nativeUrl.hash;
-			url.search = nativeUrl.search;
-		} else {
-			// IE
-			anchor = document.createElement('a');
-			anchor.href = location;
-			url.path = anchor.pathname;
-			if (url.path.charAt(0) !== '/') {
-				url.path = '/' + url.path;
-			}
-			url.hash = anchor.hash;
-			url.search = anchor.search;
-		}
-
-		// check for a hash path
-		if (url.hash.substring(0, 2) === '#/') {
-			// hash path
-			url.isHashPath = true;
-			url.path = url.hash.substring(1);
-		} else if (url.hash.substring(0, 3) === '#!/') {
-		// hashbang path
-			url.isHashPath = true;
-			url.path = url.hash.substring(2);
-		} else if (url.isHashPath) {
-		// still use the hash if mode="hash"
-			if (url.hash.length === 0) {
-				url.path = '/';
-			} else {
-				url.path = url.hash.substring(1);
-			}
-		}
-
-		if (url.isHashPath) {
-			url.hash = '';
-
-			// hash paths might have an additional hash in the hash path for scrolling to a specific part of the page #/hash/path#elementId
-			secondHashIndex = url.path.indexOf('#');
-			if (secondHashIndex !== -1) {
-				url.hash = url.path.substring(secondHashIndex);
-				url.path = url.path.substring(0, secondHashIndex);
-			}
-
-			// hash paths get the search from the hash if it exists
-			searchIndex = url.path.indexOf('?');
-			if (searchIndex !== -1) {
-				url.search = url.path.substring(searchIndex);
-				url.path = url.path.substring(0, searchIndex);
-			}
-		}
-		return url;
+// typecast(value) - Typecast the string value to an unescaped string, number, or boolean
+const _typecast = function (value) {
+	// bool
+	if (value === 'true') {
+		return true;
+	}
+	if (value === 'false') {
+		return false;
 	}
 
-	// testRoute(routePath, urlPath) - Test if the route's path matches the URL's path
-	//
-	// Example routePath: '/user/:userId/**'
-	// Example urlPath = '/user/123/bio'
-	testRoute(routePath, urlPath) {
-		// try to fail or succeed as quickly as possible for the most common cases
-		let rPath = routePath;
+	// number
+	if (!isNaN(value) && value !== '' && value.charAt(0) !== '0') {
+		return +value;
+	}
 
-		// if the urlPath is an exact match or '*' then the route is a match
-		if (rPath === urlPath || rPath === '*') {
-			return true;
+	// string
+	return decodeURIComponent(value);
+};
+
+
+// @license MIT
+// @copyright Erik Ringsmuth 2015
+//
+// parseUrl(location, mode) - Augment the native URL() constructor to get info about hash paths
+//
+// Example parseUrl('http://domain.com/other/path?queryParam3=false#/example/path?queryParam1=true&queryParam2=example%20string#middle', 'auto')
+//
+// returns {
+//	 path: '/example/path',
+//	 hash: '#middle'
+//	 search: '?queryParam1=true&queryParam2=example%20string',
+//	 isHashPath: true
+// }
+//
+// Note: The location must be a fully qualified URL with a protocol like 'http(s)://'
+export const parseUrl = function (location, mode) {
+	const
+		url = {
+			isHashPath: mode === 'hash'
+		};
+	let nativeUrl,
+		anchor,
+		searchIndex,
+		secondHashIndex;
+
+	if (typeof URL === 'function') {
+		// browsers that support `new URL()`
+		nativeUrl = new URL(location);
+		url.path = nativeUrl.pathname;
+		url.hash = nativeUrl.hash;
+		url.search = nativeUrl.search;
+	} else {
+		// IE
+		anchor = document.createElement('a');
+		anchor.href = location;
+		url.path = anchor.pathname;
+		if (url.path.charAt(0) !== '/') {
+			url.path = '/' + url.path;
+		}
+		url.hash = anchor.hash;
+		url.search = anchor.search;
+	}
+
+	// check for a hash path
+	if (url.hash.substring(0, 2) === '#/') {
+		// hash path
+		url.isHashPath = true;
+		url.path = url.hash.substring(1);
+	} else if (url.hash.substring(0, 3) === '#!/') {
+	// hashbang path
+		url.isHashPath = true;
+		url.path = url.hash.substring(2);
+	} else if (url.isHashPath) {
+	// still use the hash if mode="hash"
+		if (url.hash.length === 0) {
+			url.path = '/';
+		} else {
+			url.path = url.hash.substring(1);
+		}
+	}
+
+	if (url.isHashPath) {
+		url.hash = '';
+
+		// hash paths might have an additional hash in the hash path for scrolling to a specific part of the page #/hash/path#elementId
+		secondHashIndex = url.path.indexOf('#');
+		if (secondHashIndex !== -1) {
+			url.hash = url.path.substring(secondHashIndex);
+			url.path = url.path.substring(0, secondHashIndex);
 		}
 
-		// relative routes a/b/c are the same as routes that start with a globstar /**/a/b/c
+		// hash paths get the search from the hash if it exists
+		searchIndex = url.path.indexOf('?');
+		if (searchIndex !== -1) {
+			url.search = url.path.substring(searchIndex);
+			url.path = url.path.substring(0, searchIndex);
+		}
+	}
+	return url;
+};
+
+// testRoute(routePath, urlPath) - Test if the route's path matches the URL's path
+//
+// Example routePath: '/user/:userId/**'
+// Example urlPath = '/user/123/bio'
+export const testRoute = function (routePath, urlPath) {
+	// try to fail or succeed as quickly as possible for the most common cases
+	let rPath = routePath;
+
+	// if the urlPath is an exact match or '*' then the route is a match
+	if (rPath === urlPath || rPath === '*') {
+		return true;
+	}
+
+	// relative routes a/b/c are the same as routes that start with a globstar /**/a/b/c
+	if (rPath.charAt(0) !== '/') {
+		rPath = '/**/' + rPath;
+	}
+
+	// recursively test if the segments match (start at 1 because 0 is always an empty string)
+	return segmentsMatch(rPath.split('/'), 1, urlPath.split('/'), 1);
+};
+
+// routeArguments(routePath, urlPath, search, isRegExp) - Gets the path variables and query parameter values from the URL
+export const routeArguments = function (routePath, urlPath, search, isRegExp, typecast) {
+	const
+		args = {};
+	let arg,
+		i,
+		queryParameter,
+		queryParameterParts,
+		queryParameters,
+		rPath = routePath;
+	// regular expressions can't have path variables
+	if (!isRegExp) {
+	// relative routes a/b/c are the same as routes that start with a globstar /**/a/b/c
 		if (rPath.charAt(0) !== '/') {
 			rPath = '/**/' + rPath;
 		}
 
-		// recursively test if the segments match (start at 1 because 0 is always an empty string)
-		return segmentsMatch(rPath.split('/'), 1, urlPath.split('/'), 1);
+		// get path variables
+		// urlPath '/customer/123'
+		// routePath '/customer/:id'
+		// parses id = '123'
+		segmentsMatch(rPath.split('/'), 1, urlPath.split('/'), 1, args);
 	}
 
-	// routeArguments(routePath, urlPath, search, isRegExp) - Gets the path variables and query parameter values from the URL
-	routeArguments(routePath, urlPath, search, isRegExp, typecast) {
-		const
-			args = {};
-		let arg,
-			i,
-			queryParameter,
-			queryParameterParts,
-			queryParameters,
-			rPath = routePath;
-		// regular expressions can't have path variables
-		if (!isRegExp) {
-		// relative routes a/b/c are the same as routes that start with a globstar /**/a/b/c
-			if (rPath.charAt(0) !== '/') {
-				rPath = '/**/' + rPath;
-			}
+	queryParameters = search.substring(1).split('&');
+	// split() on an empty string has a strange behavior of returning [''] instead of []
+	if (queryParameters.length === 1 && queryParameters[0] === '') {
+		queryParameters = [];
+	}
+	for (i = 0; i < queryParameters.length; i += 1) {
+		queryParameter = queryParameters[i];
+		queryParameterParts = queryParameter.split('=');
+		args[queryParameterParts[0]] = queryParameterParts.splice(1, queryParameterParts.length - 1).join('=');
+	}
 
-			// get path variables
-			// urlPath '/customer/123'
-			// routePath '/customer/:id'
-			// parses id = '123'
-			segmentsMatch(rPath.split('/'), 1, urlPath.split('/'), 1, args);
-		}
-
-		queryParameters = search.substring(1).split('&');
-		// split() on an empty string has a strange behavior of returning [''] instead of []
-		if (queryParameters.length === 1 && queryParameters[0] === '') {
-			queryParameters = [];
-		}
-		for (i = 0; i < queryParameters.length; i += 1) {
-			queryParameter = queryParameters[i];
-			queryParameterParts = queryParameter.split('=');
-			args[queryParameterParts[0]] = queryParameterParts.splice(1, queryParameterParts.length - 1).join('=');
-		}
-
-		if (typecast) {
-		// parse the arguments into unescaped strings, numbers, or booleans
-			for (arg in args) {
-				if (args.hasOwnProperty(arg)) {
-					args[arg] = this._typecast(args[arg]);
-				}
+	if (typecast) {
+	// parse the arguments into unescaped strings, numbers, or booleans
+		for (arg in args) {
+			if (args.hasOwnProperty(arg)) {
+				args[arg] = _typecast(args[arg]);
 			}
 		}
-
-		return args;
 	}
 
-	// typecast(value) - Typecast the string value to an unescaped string, number, or boolean
-	_typecast(value) {
-		// bool
-		if (value === 'true') {
-			return true;
-		}
-		if (value === 'false') {
-			return false;
-		}
-
-		// number
-		if (!isNaN(value) && value !== '' && value.charAt(0) !== '0') {
-			return +value;
-		}
-
-		// string
-		return decodeURIComponent(value);
-	}
-});
+	return args;
+};
