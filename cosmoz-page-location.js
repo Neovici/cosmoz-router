@@ -120,7 +120,7 @@ class CosmozPageLocation extends PolymerElement {
 		const updatedPaths = {};
 
 		Object.keys(props).forEach(path => {
-			let currentPropValue = this.get(path),
+			const currentPropValue = this.get(path),
 				newPropValue = props[path],
 				newPropValueKeys = Object.keys(newPropValue);
 
