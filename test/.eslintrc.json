@@ -1,17 +1,6 @@
 {
-	"plugins": [
-		"mocha"
-	],
+	"extends": "@neovici/eslint-config/test-config",
 	"globals": {
-		"a11ySuite": false,
-		"assert": false,
-		"expect": false,
-		"fixture": false,
-		"flush": false,
-		"MockInteractions": false,
-		"setup": false,
-		"suite": false,
-		"test": false,
-		"WCT": false
+		"flush": "readonly"
 	}
 }

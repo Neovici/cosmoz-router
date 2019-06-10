@@ -492,6 +492,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
+"@neovici/eslint-config@neovici/eslint-config#semver:~1.0.0":
+  version "1.0.3"
+  resolved "https://codeload.github.com/neovici/eslint-config/tar.gz/f9b59fe2c11a0bbedc1ef7063905863d8f401475"
+
 "@nodelib/fs.stat@^1.1.2":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
@@ -8887,6 +8891,11 @@ wd@^1.2.0:
     q "1.4.1"
     request "2.88.0"
     vargs "0.1.0"
+
+web-animations-js@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/web-animations-js/-/web-animations-js-2.3.1.tgz#3a6d9bc15196377a90f8e2803fa5262165b04510"
+  integrity sha1-Om2bwVGWN3qQ+OKAP6UmIWWwRRA=
 
 web-component-tester@^6.9.0:
   version "6.9.2"
