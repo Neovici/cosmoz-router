@@ -16,7 +16,7 @@
 	},
 	"license": "Apache-2.0",
 	"author": "",
-	"main": "cosmoz-page-router.html",
+	"main": "cosmoz-page-router.js",
 	"directories": {
 		"test": "test"
 	},
