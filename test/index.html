@@ -3,20 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>cosmoz-page-router tests</title>
-	<script src="../../web-component-tester/browser.js"></script>
+	<script src="/components/mocha/mocha.js"></script>
+	<script src="/components/wct-mocha/wct-mocha.js"></script>
 </head>
 <body>
 	<script>
-		const pages = [
-				'basic.html',
-				'location.html'
-			],
-			suites = [];
-
-		for (let i = 0; i < pages.length; i++) {
-			suites.push(pages[i] + '?dom=shadow');
-			suites.push(pages[i] + '?wc-shadydom=true&wc-ce=true');
-		}
-		WCT.loadSuites(suites);
+		WCT.loadSuites([
+			'basic.html',
+			'location.html'
+		]);
 	</script>
 </body></html>

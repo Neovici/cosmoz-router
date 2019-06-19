@@ -5,53 +5,57 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-	<script src="../../web-component-tester/browser.js"></script>
-	<script src="../../test-fixture/test-fixture-mocha.js"></script>
+	<script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+	<script src="/components/mocha/mocha.js"></script>
+	<script src="/components/wct-mocha/wct-mocha.js"></script>
+	<script src="/components/chai/chai.js"></script>
+	<script src="/components/sinon/pkg/sinon.js"></script>
 
-	<link rel="import" href="../../test-fixture/test-fixture.html">
-	<link rel="import" href="../../iron-test-helpers/iron-test-helpers.html">
+	<script src="/components/@polymer/test-fixture/test-fixture-mocha.js"></script>
 
-	<link rel="import" href="../cosmoz-page-router.html">
+	<script type="module" src="/components/@polymer/test-fixture/test-fixture.js"></script>
+	<script type="module" src="/components/@polymer/iron-test-helpers/iron-test-helpers.js"></script>
+
+	<script type="module" src="../cosmoz-page-router.js"></script>
 </head>
 <body>
 	<test-fixture id="basic">
 		<template>
 			<cosmoz-page-router manual-init mode="hash" url-prefix="views">
-					<cosmoz-page-route path="/" import="../demo/views/home.html" template-id="home"></cosmoz-page-route>
-					<cosmoz-page-route path="/view1" import="../demo/views/view1.html" template-id="view1"></cosmoz-page-route>
-					<cosmoz-page-route path="/view2" import="../demo/views/view2.html" template-id="view2"></cosmoz-page-route>
+				<cosmoz-page-route path="/" import="../demo/views/home.html" template-id="home"></cosmoz-page-route>
+				<cosmoz-page-route path="/view1" import="../demo/views/view1.html" template-id="view1"></cosmoz-page-route>
+				<cosmoz-page-route path="/view2" import="../demo/views/view2.html" template-id="view2"></cosmoz-page-route>
 			</cosmoz-page-router>
 		</template>
 	</test-fixture>
 	<test-fixture id="hashbang">
 		<template>
 			<cosmoz-page-router mode="hashbang" url-prefix="views">
-					<cosmoz-page-route path="/" import="../demo/views/home.html" template-id="test"></cosmoz-page-route>
-					<cosmoz-page-route path="/view1" import="../demo/views/view1.html" template-id="view1"></cosmoz-page-route>
+				<cosmoz-page-route path="/" import="../demo/views/home.html" template-id="test"></cosmoz-page-route>
+				<cosmoz-page-route path="/view1" import="../demo/views/view1.html" template-id="view1"></cosmoz-page-route>
 			</cosmoz-page-router>
 		</template>
 	</test-fixture>
 
-	<script>
+	<script type="module">
+		import { flush } from '@polymer/polymer/lib/utils/flush';
 		/* global sinon chai */
 		sinon.assert.expose(chai.assert, { prefix: '' });
 
 		suite('<cosmoz-page-router>', () => {
-			let router,
-				data = { persist: true, templateId: 'view3', import: '/view3', path: '/view3' };
+			let router;
+			const data = { persist: true, templateId: 'view3', import: '/view3', path: '/view3' };
 
-			setup(done => {
+			setup(() => {
 				router = fixture('basic');
-				flush(done);
+				flush();
 			});
 
-			test('initialize verifies if already initialized', done => {
+			test('initialize verifies if already initialized', () => {
 				const spy = sinon.spy(router, '_boundStateChange');
 				router.initialize();
 				assert.calledOnce(spy);
 				spy.restore();
-				done();
 			});
 
 			test('addRoute returns new route', () => {
@@ -89,22 +93,20 @@
 				spy.restore();
 			});
 
-			test('refresh with force updates _previousUrl as null', done => {
+			test('refresh with force updates _previousUrl as null', () => {
 				router._previousUrl = 'test';
 				router._stateChange = () => {
 					console.log('stateChange');
 				};
 				router.refresh(true);
-				Polymer.flush();
+				flush();
 				assert.isNull(router._previousUrl);
-				done();
 			});
 
-			test('activeRoute returns route', done => {
+			test('activeRoute returns route', () => {
 				const route = router.addRoute(data);
 				router._activeRoute = route;
 				assert.deepEqual(router.activeRoute, route);
-				done();
 			});
 
 			test('_activateRoute calls go function to redirect', () => {
@@ -130,18 +132,17 @@
 		});
 
 		suite('<cosmoz-page-router mode="hashbang">', () => {
-			let router,
-				data = { persist: false, templateId: 'view2', import: '/view2', path: '/view2' };
+			let router;
+			const data = { persist: false, templateId: 'view2', import: '/view2', path: '/view2' };
 
-			setup(done => {
+			setup(() => {
 				router = fixture('hashbang');
-				flush(done);
+				flush();
 			});
 
-			test('_hasCustomElement returns true for cozmoz-page-router', done => {
+			test('_hasCustomElement returns true for cozmoz-page-router', () => {
 				assert.isTrue(router._hasCustomElement('cosmoz-page-route'));
 				assert.isTrue(router._hasCustomElement('cosmoz-page-router'));
-				done();
 			});
 
 			test('addRoute returns new route', () => {
@@ -151,6 +152,5 @@
 				route.deactivate();
 			});
 		});
-
-	</script>
+		</script>
 </body></html>

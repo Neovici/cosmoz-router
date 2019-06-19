@@ -1,0 +1,35 @@
+<dom-module id="view-3">
+	<template>
+		<h2>Welcome to the test view 3</h2>
+		<div>
+		count = <span>{{ count }}</span>.
+		</div>
+		<ul>
+		<template is="dom-repeat" items="{{items}}">
+			<li>{{item}}</li>
+		</template>
+		</ul>
+
+		<button on-click="handleClick">increase count</button>
+	</template>
+	<script type="module">
+		import { Polymer } from '@polymer/polymer/polymer-legacy';
+		Polymer({
+			is: 'view-3',
+
+			attached() {
+				console.log('I\'ve been activated !');
+				this.count = 0;
+			},
+
+			handleClick() {
+				this.count += 1;
+				const newItems = [];
+				for (let i = 0; i < this.count; i += 1) {
+					newItems.push(i);
+				}
+				this.items = newItems;
+			}
+		});
+	</script>
+</dom-module>

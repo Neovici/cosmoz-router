@@ -1,13 +1,14 @@
-<link rel="import" href="../../cosmoz-page-location.html">
+<script type="module" src="../../cosmoz-page-location.js"></script>
 <dom-module id="issue-36-view">
 	<template>
 		<cosmoz-page-location route-hash="{{ _routeHash }}"></cosmoz-page-location>
 		<div>Param value:<span>[[ params.param ]]</span>.</div>
 
 	</template>
-	<script type="text/javascript">
-		/*global Polymer*/
-		class Issue36View extends Polymer.Element {
+	<script type="module">
+		import { PolymerElement } from '@polymer/polymer/polymer-element';
+
+		class Issue36View extends PolymerElement {
 			static get is() {
 				return 'issue-36-view';
 			}

@@ -1,6 +1,7 @@
 ---
 language: node_js
-node_js: "lts/*"
+node_js: lts/*
+dist: xenial
 
 addons:
   firefox: latest
@@ -14,7 +15,6 @@ cache:
   yarn: true
   directories:
     - node_modules
-    - bower_components
     - .eslintcache
     - $HOME/.cache/bower
     - $HOME/cc
