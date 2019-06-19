@@ -34,15 +34,17 @@
 		"@polymer/polymer": "^3.0.0"
 	},
 	"devDependencies": {
-		"@neovici/eslint-config": "neovici/eslint-config#semver:~1.0.0",
+		"@neovici/eslint-config": "neovici/eslint-config#semver:^1.0.0",
 		"@polymer/iron-component-page": "^4.0.0",
 		"@polymer/iron-demo-helpers": "^3.0.0",
 		"@polymer/iron-test-helpers": "^3.0.0",
 		"@polymer/test-fixture": "^4.0.2",
 		"@webcomponents/webcomponentsjs": "^2.0.0",
+		"babel-eslint": "^10.0.2",
 		"chai": "^4.2.0",
 		"eslint": "^5.9.0",
 		"eslint-plugin-html": "^5.0.0",
+		"eslint-plugin-import": "^2.17.3",
 		"eslint-plugin-mocha": "^5.2.0",
 		"mocha": "^5.0.0",
 		"polymer-cli": "^1.9.9",

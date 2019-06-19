@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 import '@polymer/neon-animation/neon-animated-pages.js';
 import '@polymer/neon-animation/animations/fade-in-animation.js';
@@ -280,6 +281,7 @@ class CosmozPageRouter extends PolymerElement {
 		}, 0);
 	}
 
+	// eslint-disable-next-line max-statements
 	_stateChange() {
 		const
 			url = utils.parseUrl(window.location.href, this.mode),
@@ -446,6 +448,7 @@ class CosmozPageRouter extends PolymerElement {
 		}
 	}
 
+	// eslint-disable-next-line max-statements, max-lines-per-function
 	_importAndActivate(route, url, eventDetail) {
 		let importLink;
 		const
@@ -512,6 +515,7 @@ class CosmozPageRouter extends PolymerElement {
 		return customElements.get(elementName) != null;
 	}
 
+	// eslint-disable-next-line max-statements
 	_activateImport(route, url, eventDetail, importLink) {
 		route.importLink = importLink;
 		// make sure the user didn't navigate to a different route while it loaded

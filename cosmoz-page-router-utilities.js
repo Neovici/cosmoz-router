@@ -79,7 +79,7 @@ const _typecast = function (value) {
 // }
 //
 // Note: The location must be a fully qualified URL with a protocol like 'http(s)://'
-export const parseUrl = function (location, mode) {
+export const parseUrl = function (location, mode) { // eslint-disable-line max-lines-per-function, max-statements
 	const
 		url = {
 			isHashPath: mode === 'hash'
@@ -168,7 +168,7 @@ export const testRoute = function (routePath, urlPath) {
 };
 
 // routeArguments(routePath, urlPath, search, isRegExp) - Gets the path variables and query parameter values from the URL
-export const routeArguments = function (routePath, urlPath, search, isRegExp, typecast) {
+export const routeArguments = function (routePath, urlPath, search, isRegExp, typecast) { // eslint-disable-line max-statements
 	const
 		args = {};
 	let arg,
