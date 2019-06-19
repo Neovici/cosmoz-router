@@ -134,7 +134,7 @@ class CosmozPageLocation extends PolymerElement {
 
 			// Set deleted properties to null
 			Object.keys(currentPropValue).forEach(subPath => {
-				if (newPropValueKeys.indexOf(subPath) < 0) {
+				if (!newPropValueKeys.includes(subPath)) {
 					updatedPaths[path + '.' + subPath] = null;
 				}
 			});

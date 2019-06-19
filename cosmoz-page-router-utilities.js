@@ -8,7 +8,6 @@ const segmentsMatch = function (routeSegments, routeIndex, urlSegments, urlIndex
 	const
 		routeSegment = routeSegments[routeIndex],
 		urlSegment = urlSegments[urlIndex];
-	let i;
 
 	// if we're at the last route segment and it is a globstar, it will match the rest of the url
 	if (routeSegment === '**' && routeIndex === routeSegments.length - 1) {
@@ -33,7 +32,7 @@ const segmentsMatch = function (routeSegments, routeIndex, urlSegments, urlIndex
 	// globstars can match zero to many URL segments
 	if (routeSegment === '**') {
 		// test if the remaining route segments match any combination of the remaining url segments
-		for (i = urlIndex; i < urlSegments.length; i += 1) {
+		for (let i = urlIndex; i < urlSegments.length; i += 1) {
 			if (segmentsMatch(routeSegments, routeIndex + 1, urlSegments, i, pathVariables)) {
 				return true;
 			}
@@ -169,14 +168,12 @@ export const testRoute = function (routePath, urlPath) {
 
 // routeArguments(routePath, urlPath, search, isRegExp) - Gets the path variables and query parameter values from the URL
 export const routeArguments = function (routePath, urlPath, search, isRegExp, typecast) { // eslint-disable-line max-statements
-	const
-		args = {};
-	let arg,
-		i,
-		queryParameter,
-		queryParameterParts,
+	const args = {};
+
+	let queryParameter,
 		queryParameters,
 		rPath = routePath;
+
 	// regular expressions can't have path variables
 	if (!isRegExp) {
 	// relative routes a/b/c are the same as routes that start with a globstar /**/a/b/c
@@ -196,15 +193,15 @@ export const routeArguments = function (routePath, urlPath, search, isRegExp, ty
 	if (queryParameters.length === 1 && queryParameters[0] === '') {
 		queryParameters = [];
 	}
-	for (i = 0; i < queryParameters.length; i += 1) {
+	for (let i = 0; i < queryParameters.length; i += 1) {
 		queryParameter = queryParameters[i];
-		queryParameterParts = queryParameter.split('=');
+		const queryParameterParts = queryParameter.split('=');
 		args[queryParameterParts[0]] = queryParameterParts.splice(1, queryParameterParts.length - 1).join('=');
 	}
 
 	if (typecast) {
 	// parse the arguments into unescaped strings, numbers, or booleans
-		for (arg in args) {
+		for (const arg in args) {
 			if (args.hasOwnProperty(arg)) {
 				args[arg] = _typecast(args[arg]);
 			}
