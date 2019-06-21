@@ -22,7 +22,7 @@
 	},
 	"scripts": {
 		"analyze": "polymer analyze --input cosmoz-*.js  > analysis.json",
-		"lint": "eslint --cache --ext .js,.html . && polymer lint cosmoz-*.js",
+		"lint": "eslint --cache cosmoz-*.js && polymer lint cosmoz-*.js",
 		"start": "polymer serve -o",
 		"test": "polymer test"
 	},
@@ -43,7 +43,6 @@
 		"babel-eslint": "^10.0.2",
 		"chai": "^4.2.0",
 		"eslint": "^5.9.0",
-		"eslint-plugin-html": "^5.0.0",
 		"eslint-plugin-import": "^2.17.3",
 		"eslint-plugin-mocha": "^5.2.0",
 		"mocha": "^5.0.0",
