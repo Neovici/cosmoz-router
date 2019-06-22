@@ -453,9 +453,11 @@ class CosmozPageRouter extends PolymerElement {
 		let importLink;
 		const
 			importUri = route.import,
-			importLoadedCallback =	() => {
-				importLink.loaded = true;
-				this._removeImportLinkListeners(importLink);
+			importLoadedCallback = () => {
+				if (importLink != null) {
+					importLink.loaded = true;
+					this._removeImportLinkListeners(importLink);
+				}
 				route.imported = true;
 				this._activateImport(route, url, eventDetail, importLink);
 			},
@@ -472,6 +474,11 @@ class CosmozPageRouter extends PolymerElement {
 				this._fireEvent('import-error', importErrorEvent);
 			};
 
+		if (importUri.endsWith('.js')) {
+			this._fireEvent('route-loading', eventDetail);
+			import(importUri).catch(importErrorCallback).then(importLoadedCallback);
+			return;
+		}
 		if (this._importedUris === null) {
 			this._importedUris = {};
 		}
