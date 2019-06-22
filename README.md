@@ -1,7 +1,7 @@
 cosmoz-page-router
 ==================
 
-[![Build Status](https://travis-ci.org/Neovici/cosmoz-page-router.svg?branch=master)](https://travis-ci.org/Neovici/cosmoz-page-router)
+[![Build Status](https://travis-ci.com/Neovici/cosmoz-page-router.svg?branch=master)](https://travis-ci.org/Neovici/cosmoz-page-router)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/Neovici/cosmoz-page-router)
 
 ## &lt;cosmoz-page-router&gt;

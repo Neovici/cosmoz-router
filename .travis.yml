@@ -34,7 +34,7 @@ before_script:
   - $NEO_CC before-build
 
 script:
-  - yarn test $([ -z "$SAUCE_ACCESS_KEY" ] && echo "--skip-plugin sauce")
+  - npm test $([ -z "$SAUCE_ACCESS_KEY" ] && echo "-- --skip-plugin sauce")
   - $NEO_CC after-build --exit-code $TRAVIS_TEST_RESULT
 
 notifications:
