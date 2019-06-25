@@ -467,9 +467,10 @@ class CosmozPageRouter extends PolymerElement {
 						route,
 						errorEvent: e
 					};
-
-				importLink.notFound = true;
-				this._removeImportLinkListeners(importLink);
+				if (importLink != null) {
+					importLink.notFound = true;
+					this._removeImportLinkListeners(importLink);
+				}
 				this._routesInError[importUri] = importErrorEvent;
 				this._fireEvent('import-error', importErrorEvent);
 			};
