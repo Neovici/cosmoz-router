@@ -1,6 +1,6 @@
 {
-	"name": "cosmoz-page-router",
-	"version": "1.0.0",
+	"name": "@neovici/cosmoz-page-router",
+	"version": "3.0.2",
 	"description": "[![Build Status](https://travis-ci.com/Neovici/cosmoz-page-router.svg?branch=master)](https://travis-ci.com/Neovici/cosmoz-page-router)",
 	"keywords": [
 		"polymer",
@@ -22,7 +22,9 @@
 	},
 	"scripts": {
 		"analyze": "polymer analyze --input cosmoz-*.js  > analysis.json",
-		"lint": "eslint --cache cosmoz-*.js && polymer lint cosmoz-*.js",
+		"lint": "eslint --cache --ext .js,.html . && polymer lint cosmoz-*.js",
+		"preversion": "npm run lint && npm run test -- --skip-plugin sauce",
+		"postversion": "git push && git push --tags",
 		"start": "polymer serve -o",
 		"test": "polymer test"
 	},
@@ -34,7 +36,7 @@
 		"@polymer/polymer": "^3.0.0"
 	},
 	"devDependencies": {
-		"@neovici/eslint-config": "neovici/eslint-config#semver:^1.0.0",
+		"@neovici/eslint-config": "github:neovici/eslint-config#semver:^1.0.0",
 		"@polymer/iron-component-page": "^4.0.0",
 		"@polymer/iron-demo-helpers": "^3.0.0",
 		"@polymer/iron-test-helpers": "^3.0.0",
