@@ -129,7 +129,7 @@ class CosmozPageRouter extends PolymerElement {
 			/* Ad-hoc routing template file name suffix */
 			fileSuffix: {
 				type: String,
-				value: '.html'
+				value: '.js'
 			},
 			/* `hash` , `hashbang` , `pushstate` or `auto` */
 			mode: {
@@ -350,6 +350,7 @@ class CosmozPageRouter extends PolymerElement {
 				templateId
 			});
 
+		route.hasCustomElement = true;
 		this._activateRoute(route, url);
 	}
 
