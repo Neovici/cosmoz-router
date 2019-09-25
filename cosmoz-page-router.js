@@ -24,29 +24,20 @@ const stopPropagation = e => e.stopPropagation();
 Make sure the `<cosmoz-page-router>` element takes up all the space the views will use.
 
 		<cosmoz-page-router class="fit">
-			<cosmoz-page-route path="/" template-id="start" import="views/start.html">
+			<cosmoz-page-route path="/" template-id="start" import="views/start.js">
 			</cosmoz-page-route>
 		</cosmoz-page-router>
 
 #### View
-		<template id="start" is="dom-bind">
-			<h2>Welcome to the start page</h2>
-			<div>{{ boundValue }}</div>
-		</template>
+		import { PolymerElement, html } from '@polymer/polymer/polymer-element';
 
-		<script type="text/javascript">
-			Cosmoz.TemplateView['start'] = {
-				properties: {
-					boundValue: {
-						type: String,
-						value: 'bound'
-					}
-				},
-				ready: function () {
-					console.log('template loaded!');
-				}
-			};
-		</script>
+		class Start extends PolymerElement {
+			static get template() {
+				return html`<h2>Welcome to the start page</h2>`;
+			}
+		}
+
+		customElements.define('start-page', Start);
 
 `Cosmoz.TemplateView` is an object that will link the template with ID `start`
 to this Polymer object named `start`.
@@ -102,12 +93,10 @@ class CosmozPageRouter extends PolymerElement {
 	constructor() {
 		super();
 		this._currentRoute = null;
-		this._importedUris = null;
 		this._initialized = false;
 		this._previousRoute = null;
 		this._previousUrl = null;
 		this._routesInError = null;
-		this._importLinksListeners = null;
 		this._boundOnNeonAnimationFinish =	this._onNeonAnimationFinish.bind(this);
 		this._boundStateChange = this._stateChange.bind(this);
 	}
@@ -220,9 +209,7 @@ class CosmozPageRouter extends PolymerElement {
 
 	ready() {
 		super.ready();
-		this._importedUris = {};
 		this._routesInError = {};
-		this._importLinksListeners = {};
 		if (!this.manualInit) {
 			microTask.run(() => this.initialize());
 		}
@@ -440,27 +427,13 @@ class CosmozPageRouter extends PolymerElement {
 		this._fireEvent('template-activate', eventDetail, true);
 	}
 
-	_removeImportLinkListeners(importLink) {
-		const listeners = this._importLinksListeners[importLink];
-		if (listeners) {
-			importLink.removeEventListener('load', listeners.load);
-			importLink.removeEventListener('error', listeners.error);
-			this._importLinksListeners[importLink] = null;
-		}
-	}
-
 	// eslint-disable-next-line max-statements, max-lines-per-function
 	_importAndActivate(route, url, eventDetail) {
-		let importLink;
 		const
 			importUri = route.import,
 			importLoadedCallback = () => {
-				if (importLink != null) {
-					importLink.loaded = true;
-					this._removeImportLinkListeners(importLink);
-				}
 				route.imported = true;
-				this._activateImport(route, url, eventDetail, importLink);
+				this._activateImport(route, url, eventDetail/*, importLink*/);
 			},
 			importErrorCallback = e => {
 				const
@@ -468,56 +441,12 @@ class CosmozPageRouter extends PolymerElement {
 						route,
 						errorEvent: e
 					};
-				if (importLink != null) {
-					importLink.notFound = true;
-					this._removeImportLinkListeners(importLink);
-				}
 				this._routesInError[importUri] = importErrorEvent;
 				this._fireEvent('import-error', importErrorEvent);
 			};
 
-		if (importUri.endsWith('.js')) {
-			this._fireEvent('route-loading', eventDetail);
-			import(importUri).catch(importErrorCallback).then(importLoadedCallback);
-			return;
-		}
-		if (this._importedUris === null) {
-			this._importedUris = {};
-		}
-		const isNew = !this._importedUris.hasOwnProperty(route.import);
-		if (isNew) {
-			importLink = document.createElement('link');
-			importLink.setAttribute('rel', 'import');
-			importLink.setAttribute('href', importUri);
-			importLink.setAttribute('async', 'async');
-			importLink.addEventListener('load', importLoadedCallback);
-			importLink.addEventListener('error', importErrorCallback);
-			importLink.loaded = false;
-			this._importLinksListeners[importLink] = {
-				load: importLoadedCallback,
-				error: importErrorCallback
-			};
-
-			document.head.appendChild(importLink);
-			this._importedUris[importUri] = importLink;
-
-			this._fireEvent('route-loading', eventDetail);
-
-		} else {
-			// previously imported. this is an async operation and may not be complete yet.
-			importLink = this._importedUris[importUri];
-			const isUnloaded = !importLink.loaded;
-			if (importLink.notFound) {
-				importErrorCallback(null, route);
-			} else if (isUnloaded) {
-				importLink.addEventListener('load', importLoadedCallback);
-				importLink.addEventListener('error', importErrorCallback);
-
-				this._fireEvent('route-loading', eventDetail);
-			} else {
-				this._activateImport(route, url, eventDetail, importLink);
-			}
-		}
+		this._fireEvent('route-loading', eventDetail);
+		return import(importUri).catch(importErrorCallback).then(importLoadedCallback);
 	}
 
 	_hasCustomElement(elementName) {
@@ -525,33 +454,13 @@ class CosmozPageRouter extends PolymerElement {
 	}
 
 	// eslint-disable-next-line max-statements
-	_activateImport(route, url, eventDetail, importLink) {
-		route.importLink = importLink;
+	_activateImport(route, url, eventDetail) {
 		// make sure the user didn't navigate to a different route while it loaded
 		if (route === this._loadingRoute) {
 
 			if (route.hasCustomElement && this._hasCustomElement(route.templateId)) {
 				this._activateCustomElement(route, url, eventDetail);
-				return;
 			}
-			//NOTE: when polyfilled importLink.import is not a Document but querySelector is available
-			const template = route.templateId && importLink.import.querySelector('#' + route.templateId);
-
-			if (!template) {
-				this._fireEvent('template-not-found', eventDetail);
-				return;
-			}
-
-			if (template.tagName === 'DOM-MODULE') {
-				if (this._hasCustomElement(route.templateId)) {
-					this._activateCustomElement(route, url, eventDetail);
-					return;
-				}
-				this._fireEvent('element-not-found', eventDetail);
-				return;
-			}
-
-			this._activateTemplate(route, url, eventDetail, template);
 		}
 	}
 
