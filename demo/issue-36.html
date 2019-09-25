@@ -6,9 +6,9 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 		<title>cosmoz-page-router Demo</title>
-		<script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-		<script src="/components/web-animations-js/web-animations-next-lite.min.js"></script>
-		<script type="module" src="/components/@polymer/iron-flex-layout/iron-flex-layout.js"></script>
+		<script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+		<script src="/node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
+		<script type="module" src="/node_modules/@polymer/iron-flex-layout/iron-flex-layout.js"></script>
 
 
 		<script type="module" src="../cosmoz-page-router.js"></script>
@@ -51,8 +51,8 @@
 
 			<div id="view">
 				<cosmoz-page-router id="appRouter" manual-init mode="hash" url-prefix="views">
-					<cosmoz-page-route path="/" import="views/home.html" template-id="demo-home"></cosmoz-page-route>
-					<cosmoz-page-route path="/issue-36-view" import="views/issue-36-view.html" template-id="issue-36-view"></cosmoz-page-route>
+					<cosmoz-page-route path="/" import="/demo/views/home.js" has-custom-element template-id="demo-home"></cosmoz-page-route>
+					<cosmoz-page-route path="/issue-36-view" import="/demo/views/issue-36-view.js" has-custom-element template-id="issue-36-view"></cosmoz-page-route>
 				</cosmoz-page-router>
 			</div>
 		</div>
