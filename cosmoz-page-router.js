@@ -1,13 +1,9 @@
 /* eslint-disable max-lines */
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
-import '@polymer/neon-animation/neon-animated-pages.js';
-import '@polymer/neon-animation/animations/fade-in-animation.js';
-import '@polymer/neon-animation/animations/fade-out-animation.js';
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import { microTask } from '@polymer/polymer/lib/utils/async.js';
 import { flush } from '@polymer/polymer/lib/utils/flush.js';
-import { Base } from '@polymer/polymer/polymer-legacy.js';
 
 import './cosmoz-page-route.js';
 import * as utils from './cosmoz-page-router-utilities';
@@ -24,29 +20,20 @@ const stopPropagation = e => e.stopPropagation();
 Make sure the `<cosmoz-page-router>` element takes up all the space the views will use.
 
 		<cosmoz-page-router class="fit">
-			<cosmoz-page-route path="/" template-id="start" import="views/start.html">
+			<cosmoz-page-route path="/" template-id="start" import="views/start.js">
 			</cosmoz-page-route>
 		</cosmoz-page-router>
 
 #### View
-		<template id="start" is="dom-bind">
-			<h2>Welcome to the start page</h2>
-			<div>{{ boundValue }}</div>
-		</template>
+		import { PolymerElement, html } from '@polymer/polymer/polymer-element';
 
-		<script type="text/javascript">
-			Cosmoz.TemplateView['start'] = {
-				properties: {
-					boundValue: {
-						type: String,
-						value: 'bound'
-					}
-				},
-				ready: function () {
-					console.log('template loaded!');
-				}
-			};
-		</script>
+		class Start extends PolymerElement {
+			static get template() {
+				return html`<h2>Welcome to the start page</h2>`;
+			}
+		}
+
+		customElements.define('start-page', Start);
 
 `Cosmoz.TemplateView` is an object that will link the template with ID `start`
 to this Polymer object named `start`.
@@ -91,24 +78,23 @@ class CosmozPageRouter extends PolymerElement {
 			#routes {
 				@apply --layout-fit;
 			}
+			::slotted(:not(.active-route)) {
+				display: none;
+			}
 		</style>
-		<neon-animated-pages id="routes" attr-for-selected="path" on-neon-animation-finish="_onNeonAnimationFinish">
-			<!-- TODO: Remove this when neon-animated-pages is fixed or dropped-->
-			<slot class="iron-selected"></slot>
-		</neon-animated-pages>
+		<div id="routes">
+			<slot></slot>
+		</div>
 `;
 	}
 
 	constructor() {
 		super();
 		this._currentRoute = null;
-		this._importedUris = null;
 		this._initialized = false;
 		this._previousRoute = null;
 		this._previousUrl = null;
 		this._routesInError = null;
-		this._importLinksListeners = null;
-		this._boundOnNeonAnimationFinish =	this._onNeonAnimationFinish.bind(this);
 		this._boundStateChange = this._stateChange.bind(this);
 	}
 	/**
@@ -129,7 +115,7 @@ class CosmozPageRouter extends PolymerElement {
 			/* Ad-hoc routing template file name suffix */
 			fileSuffix: {
 				type: String,
-				value: '.html'
+				value: '.js'
 			},
 			/* `hash` , `hashbang` , `pushstate` or `auto` */
 			mode: {
@@ -163,10 +149,8 @@ class CosmozPageRouter extends PolymerElement {
 		};
 	}
 
-
 	connectedCallback() {
 		super.connectedCallback();
-		this.addEventListener('neon-animation-finish', this._boundOnNeonAnimationFinish);
 		[
 			'template-activate',
 			'template-created',
@@ -176,7 +160,6 @@ class CosmozPageRouter extends PolymerElement {
 
 	disconnectedCallback() {
 		super.disconnectedCallback();
-		this.removeEventListener('neon-animation-finish', this._boundOnNeonAnimationFinish);
 		[
 			'template-activate',
 			'template-created',
@@ -220,9 +203,7 @@ class CosmozPageRouter extends PolymerElement {
 
 	ready() {
 		super.ready();
-		this._importedUris = {};
 		this._routesInError = {};
-		this._importLinksListeners = {};
 		if (!this.manualInit) {
 			microTask.run(() => this.initialize());
 		}
@@ -257,34 +238,10 @@ class CosmozPageRouter extends PolymerElement {
 			}
 		));
 	}
-	/**
-	 * Scroll to the element with id="hash" or name="hash".
-	 *
-	 * @param {string} hash Hash to scroll to.
-	 * @returns {void}
-	 */
-	_scrollToHash(hash) {
-		if (!hash) {
-			return;
-		}
-
-		// wait for the browser's scrolling to finish before we scroll to the hash
-		// ex: http://example.com/#/page1#middle
-		// the browser will scroll to an element with id or name `/page1#middle` when the page finishes loading. if it doesn't exist
-		// it will scroll to the top of the page. let the browser finish the current event loop and scroll to the top of the page
-		// before we scroll to the element with id or name `middle`.
-		setTimeout(() => {
-			const hashElement = document.querySelector('html /deep/ ' + hash) || document.querySelector('html /deep/ [name="' + hash.substring(1) + '"]');
-			if (hashElement && hashElement.scrollIntoView) {
-				hashElement.scrollIntoView(true);
-			}
-		}, 0);
-	}
 
 	// eslint-disable-next-line max-statements
 	_stateChange() {
-		const
-			url = utils.parseUrl(window.location.href, this.mode),
+		const url = utils.parseUrl(window.location.href, this.mode),
 			eventDetail = {
 				path: url.path
 			};
@@ -292,14 +249,16 @@ class CosmozPageRouter extends PolymerElement {
 			route;
 
 		// don't load a new route if only the hash fragment changed
-		if (this._previousUrl &&
-				url.path === this._previousUrl.path &&
-				url.search === this._previousUrl.search &&
-				url.isHashPath === this._previousUrl.isHashPath) {
-			// this._scrollToHash(url.hash);
+		if (
+			this._previousUrl &&
+			url.path === this._previousUrl.path &&
+			url.search === this._previousUrl.search &&
+			url.isHashPath === this._previousUrl.isHashPath
+		) {
 			this._previousUrl = url;
 			return;
 		}
+
 		this._previousUrl = url;
 
 		// fire a state-change event on the app-router and return early if the user called event.preventDefault()
@@ -341,8 +300,7 @@ class CosmozPageRouter extends PolymerElement {
 	}
 
 	_addRouteForCurrentPathAndActivate(importUri, templateId) {
-		const
-			url = utils.parseUrl(window.location.href, this.mode),
+		const url = utils.parseUrl(window.location.href, this.mode),
 			route = this.addRoute({
 				import: importUri,
 				path: url.path,
@@ -359,8 +317,7 @@ class CosmozPageRouter extends PolymerElement {
 	 * @returns {void}
 	 */
 	addRoute(route) {
-		const
-			element = document.createElement('cosmoz-page-route');
+		const element = document.createElement('cosmoz-page-route');
 		element.setAttribute('path', route.path);
 		if (route.persist) {
 			element.setAttribute('persist', '');
@@ -388,7 +345,7 @@ class CosmozPageRouter extends PolymerElement {
 		if (route == null) {
 			return;
 		}
-		this._deactivateRoute(route);
+		route.deactivate();
 		const parent = route.parentNode;
 		if (parent) {
 			parent.removeChild(route);
@@ -439,84 +396,26 @@ class CosmozPageRouter extends PolymerElement {
 		this._fireEvent('template-activate', eventDetail, true);
 	}
 
-	_removeImportLinkListeners(importLink) {
-		const listeners = this._importLinksListeners[importLink];
-		if (listeners) {
-			importLink.removeEventListener('load', listeners.load);
-			importLink.removeEventListener('error', listeners.error);
-			this._importLinksListeners[importLink] = null;
-		}
-	}
-
 	// eslint-disable-next-line max-statements, max-lines-per-function
 	_importAndActivate(route, url, eventDetail) {
-		let importLink;
-		const
-			importUri = route.import,
+		const importUri = route.import,
 			importLoadedCallback = () => {
-				if (importLink != null) {
-					importLink.loaded = true;
-					this._removeImportLinkListeners(importLink);
-				}
 				route.imported = true;
-				this._activateImport(route, url, eventDetail, importLink);
+				this._activateImport(route, url, eventDetail);
 			},
 			importErrorCallback = e => {
-				const
-					importErrorEvent = {
-						route,
-						errorEvent: e
-					};
-				if (importLink != null) {
-					importLink.notFound = true;
-					this._removeImportLinkListeners(importLink);
-				}
+				const importErrorEvent = {
+					route,
+					errorEvent: e
+				};
 				this._routesInError[importUri] = importErrorEvent;
 				this._fireEvent('import-error', importErrorEvent);
 			};
 
-		if (importUri.endsWith('.js')) {
-			this._fireEvent('route-loading', eventDetail);
-			import(importUri).catch(importErrorCallback).then(importLoadedCallback);
-			return;
-		}
-		if (this._importedUris === null) {
-			this._importedUris = {};
-		}
-		const isNew = !this._importedUris.hasOwnProperty(route.import);
-		if (isNew) {
-			importLink = document.createElement('link');
-			importLink.setAttribute('rel', 'import');
-			importLink.setAttribute('href', importUri);
-			importLink.setAttribute('async', 'async');
-			importLink.addEventListener('load', importLoadedCallback);
-			importLink.addEventListener('error', importErrorCallback);
-			importLink.loaded = false;
-			this._importLinksListeners[importLink] = {
-				load: importLoadedCallback,
-				error: importErrorCallback
-			};
-
-			document.head.appendChild(importLink);
-			this._importedUris[importUri] = importLink;
-
-			this._fireEvent('route-loading', eventDetail);
-
-		} else {
-			// previously imported. this is an async operation and may not be complete yet.
-			importLink = this._importedUris[importUri];
-			const isUnloaded = !importLink.loaded;
-			if (importLink.notFound) {
-				importErrorCallback(null, route);
-			} else if (isUnloaded) {
-				importLink.addEventListener('load', importLoadedCallback);
-				importLink.addEventListener('error', importErrorCallback);
-
-				this._fireEvent('route-loading', eventDetail);
-			} else {
-				this._activateImport(route, url, eventDetail, importLink);
-			}
-		}
+		this._fireEvent('route-loading', eventDetail);
+		return import(importUri)
+			.catch(importErrorCallback)
+			.then(importLoadedCallback);
 	}
 
 	_hasCustomElement(elementName) {
@@ -524,39 +423,21 @@ class CosmozPageRouter extends PolymerElement {
 	}
 
 	// eslint-disable-next-line max-statements
-	_activateImport(route, url, eventDetail, importLink) {
-		route.importLink = importLink;
+	_activateImport(route, url, eventDetail) {
 		// make sure the user didn't navigate to a different route while it loaded
-		if (route === this._loadingRoute) {
-
-			if (route.hasCustomElement && this._hasCustomElement(route.templateId)) {
-				this._activateCustomElement(route, url, eventDetail);
-				return;
-			}
-			//NOTE: when polyfilled importLink.import is not a Document but querySelector is available
-			const template = route.templateId && importLink.import.querySelector('#' + route.templateId);
-
-			if (!template) {
-				this._fireEvent('template-not-found', eventDetail);
-				return;
-			}
-
-			if (template.tagName === 'DOM-MODULE') {
-				if (this._hasCustomElement(route.templateId)) {
-					this._activateCustomElement(route, url, eventDetail);
-					return;
-				}
-				this._fireEvent('element-not-found', eventDetail);
-				return;
-			}
-
-			this._activateTemplate(route, url, eventDetail, template);
+		if (route !== this._loadingRoute) {
+			return;
 		}
+
+		if (this._hasCustomElement(route.templateId)) {
+			return this._activateCustomElement(route, url, eventDetail);
+		}
+
+		throw new Error('Could not activate route.');
 	}
 
 	_activateCustomElement(route, url, eventDetail) {
-		const
-			element = document.createElement(route.templateId);
+		const element = document.createElement(route.templateId);
 
 		eventDetail.templateInstance = element;
 		route.templateInstance = element;
@@ -569,60 +450,16 @@ class CosmozPageRouter extends PolymerElement {
 
 		this._fireEvent('template-ready', eventDetail, true);
 
-		if (this._previousRoute && this._previousRoute.classList.contains('neon-animating')) {
-			// When switching fast between routes, previous animation
-			// will be cancelled and neon-animation-finished event won't be raised.
-			// So we need to do the cleanup that is suposed to be done.
-			this._deactivateRoute(this._previousRoute);
-		}
-
 		this._loadingRoute.appendChild(element);
 
 		// FIXME: Change route after element ready()
 		this._changeRoute();
-		this._fireEvent('template-activate', eventDetail, true);
-	}
 
-	_activateTemplate(route, url, eventDetail, template) {
-		const
-			templateInstance = document.importNode(template, true),
-			templateId = route.templateId;
-
-		eventDetail.templateInstance = templateInstance;
-		route.templateInstance = templateInstance;
-
-		const templateViewPrototype = window.Cosmoz.TemplateView[templateId];
-		if (templateViewPrototype) {
-			Base.mixin(templateInstance, templateViewPrototype);
+		if (this._previousRoute) {
+			this._previousRoute.deactivate();
 		}
 
-		this._fireEvent('template-created', eventDetail, true);
-
-		const model = this._createModel(route, url, eventDetail);
-
-		this._setObjectProperties(eventDetail.templateInstance, model);
-
-		this._fireEvent('template-ready', eventDetail, true);
-
-		this._activateTemplateInstance(route, url, eventDetail);
-	}
-
-	_activateTemplateInstance(route, url, eventDetail) {
-		const
-			templateInstance = eventDetail.templateInstance;
-
-
-		templateInstance.addEventListener('dom-change', () => {
-			this._fireEvent('template-activate', eventDetail, true);
-		});
-
-		// Make sure _changeRoute is run for both new and persisted routes
-		templateInstance.addEventListener('template-activate', () => {
-			this._changeRoute();
-		});
-
-		// add the new content
-		this._loadingRoute.appendChild(templateInstance);
+		this._fireEvent('template-activate', eventDetail, true);
 	}
 
 	_changeRoute(oldRoute, newRoute) {
@@ -642,23 +479,20 @@ class CosmozPageRouter extends PolymerElement {
 		this._activeRoute = nRoute;
 		this._loadingRoute = null;
 
+		if (this._previousRoute) {
+			this._previousRoute.classList.remove('active-route');
+		}
+		this._activeRoute.classList.add('active-route');
+
 		if (oRoute) {
 			oRoute.active = false;
 		}
 
 		nRoute.active = true;
-
-		this.shadowRoot.querySelector('#routes').selected = nRoute.path;
-	}
-
-	// Remove the route's content
-	_deactivateRoute(route) {
-		route.deactivate();
 	}
 
 	_createModel(route, url, eventDetail) {
-		const
-			model = {},
+		const model = {},
 			params = utils.routeArguments(
 				route.path,
 				url.path,
@@ -684,12 +518,6 @@ class CosmozPageRouter extends PolymerElement {
 			if (model.hasOwnProperty(property)) {
 				object[property] = model[property];
 			}
-		}
-	}
-
-	_onNeonAnimationFinish() {
-		if (this._previousRoute && !this._previousRoute.active) {
-			this._deactivateRoute(this._previousRoute);
 		}
 	}
 }
