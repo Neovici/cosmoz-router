@@ -5,62 +5,62 @@
 // example routeSegments ['', 'user', ':userId', '**']
 // example urlSegments ['', 'user', '123', 'bio']
 const segmentsMatch = function (routeSegments, routeIndex, urlSegments, urlIndex, pathVariables) {
-	const
-		routeSegment = routeSegments[routeIndex],
-		urlSegment = urlSegments[urlIndex];
+		const
+			routeSegment = routeSegments[routeIndex],
+			urlSegment = urlSegments[urlIndex];
 
-	// if we're at the last route segment and it is a globstar, it will match the rest of the url
-	if (routeSegment === '**' && routeIndex === routeSegments.length - 1) {
-		return true;
-	}
-
-	// we hit the end of the route segments or the url segments
-	if (routeSegment === undefined || urlSegment === undefined) {
-	// return true if we hit the end of both at the same time meaning everything else matched, else return false
-		return routeSegment === urlSegment;
-	}
-
-	// if the current segments match, recursively test the remaining segments
-	if (routeSegment === urlSegment || routeSegment === '*' || routeSegment.charAt(0) === ':') {
-	// store the path variable if we have a pathVariables object
-		if (routeSegment.charAt(0) === ':' && pathVariables !== undefined) {
-			pathVariables[routeSegment.substring(1)] = urlSegments[urlIndex];
+		// if we're at the last route segment and it is a globstar, it will match the rest of the url
+		if (routeSegment === '**' && routeIndex === routeSegments.length - 1) {
+			return true;
 		}
-		return segmentsMatch(routeSegments, routeIndex + 1, urlSegments, urlIndex + 1, pathVariables);
-	}
 
-	// globstars can match zero to many URL segments
-	if (routeSegment === '**') {
-		// test if the remaining route segments match any combination of the remaining url segments
-		for (let i = urlIndex; i < urlSegments.length; i += 1) {
-			if (segmentsMatch(routeSegments, routeIndex + 1, urlSegments, i, pathVariables)) {
-				return true;
+		// we hit the end of the route segments or the url segments
+		if (routeSegment === undefined || urlSegment === undefined) {
+		// return true if we hit the end of both at the same time meaning everything else matched, else return false
+			return routeSegment === urlSegment;
+		}
+
+		// if the current segments match, recursively test the remaining segments
+		if (routeSegment === urlSegment || routeSegment === '*' || routeSegment.charAt(0) === ':') {
+		// store the path variable if we have a pathVariables object
+			if (routeSegment.charAt(0) === ':' && pathVariables !== undefined) {
+				pathVariables[routeSegment.substring(1)] = urlSegments[urlIndex];
+			}
+			return segmentsMatch(routeSegments, routeIndex + 1, urlSegments, urlIndex + 1, pathVariables);
+		}
+
+		// globstars can match zero to many URL segments
+		if (routeSegment === '**') {
+			// test if the remaining route segments match any combination of the remaining url segments
+			for (let i = urlIndex; i < urlSegments.length; i += 1) {
+				if (segmentsMatch(routeSegments, routeIndex + 1, urlSegments, i, pathVariables)) {
+					return true;
+				}
 			}
 		}
-	}
 
-	// all tests failed, the route segments do not match the url segments
-	return false;
-};
-
-// typecast(value) - Typecast the string value to an unescaped string, number, or boolean
-const _typecast = function (value) {
-	// bool
-	if (value === 'true') {
-		return true;
-	}
-	if (value === 'false') {
+		// all tests failed, the route segments do not match the url segments
 		return false;
-	}
+	},
 
-	// number
-	if (!isNaN(value) && value !== '' && value.charAt(0) !== '0') {
-		return +value;
-	}
+	// typecast(value) - Typecast the string value to an unescaped string, number, or boolean
+	_typecast = function (value) {
+		// bool
+		if (value === 'true') {
+			return true;
+		}
+		if (value === 'false') {
+			return false;
+		}
 
-	// string
-	return decodeURIComponent(value);
-};
+		// number
+		if (!isNaN(value) && value !== '' && value.charAt(0) !== '0') {
+			return +value;
+		}
+
+		// string
+		return decodeURIComponent(value);
+	};
 
 
 // @license MIT

@@ -81,6 +81,7 @@
 			test('refresh with force updates _previousUrl as null', () => {
 				router._previousUrl = 'test';
 				router._stateChange = () => {
+					// eslint-disable-next-line no-console
 					console.log('stateChange');
 				};
 				router.refresh(true);
