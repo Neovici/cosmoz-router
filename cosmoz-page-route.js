@@ -87,7 +87,6 @@ class CosmozPageRoute extends mixinBehaviors([
 				nodeToRemove = node;
 				node = node.nextSibling;
 				this.removeChild(nodeToRemove);
-
 			}
 			this.templateInstance = null;
 		}
@@ -107,7 +106,6 @@ customElements.define(CosmozPageRoute.is, CosmozPageRoute);
 		oldRoute: this._activeRoute
 	}} detail
  */
-
 
 /**
  * Fired when model with `params` is injected into the template instance.

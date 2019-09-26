@@ -4,7 +4,6 @@ import '@polymer/iron-flex-layout/iron-flex-layout.js';
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import { microTask } from '@polymer/polymer/lib/utils/async.js';
 import { flush } from '@polymer/polymer/lib/utils/flush.js';
-import { Base } from '@polymer/polymer/polymer-legacy.js';
 
 import './cosmoz-page-route.js';
 import * as utils from './cosmoz-page-router-utilities';
@@ -150,7 +149,6 @@ class CosmozPageRouter extends PolymerElement {
 		};
 	}
 
-
 	connectedCallback() {
 		super.connectedCallback();
 		[
@@ -240,34 +238,10 @@ class CosmozPageRouter extends PolymerElement {
 			}
 		));
 	}
-	/**
-	 * Scroll to the element with id="hash" or name="hash".
-	 *
-	 * @param {string} hash Hash to scroll to.
-	 * @returns {void}
-	 */
-	_scrollToHash(hash) {
-		if (!hash) {
-			return;
-		}
-
-		// wait for the browser's scrolling to finish before we scroll to the hash
-		// ex: http://example.com/#/page1#middle
-		// the browser will scroll to an element with id or name `/page1#middle` when the page finishes loading. if it doesn't exist
-		// it will scroll to the top of the page. let the browser finish the current event loop and scroll to the top of the page
-		// before we scroll to the element with id or name `middle`.
-		setTimeout(() => {
-			const hashElement = document.querySelector('html /deep/ ' + hash) || document.querySelector('html /deep/ [name="' + hash.substring(1) + '"]');
-			if (hashElement && hashElement.scrollIntoView) {
-				hashElement.scrollIntoView(true);
-			}
-		}, 0);
-	}
 
 	// eslint-disable-next-line max-statements
 	_stateChange() {
-		const
-			url = utils.parseUrl(window.location.href, this.mode),
+		const url = utils.parseUrl(window.location.href, this.mode),
 			eventDetail = {
 				path: url.path
 			};
@@ -275,14 +249,16 @@ class CosmozPageRouter extends PolymerElement {
 			route;
 
 		// don't load a new route if only the hash fragment changed
-		if (this._previousUrl &&
-				url.path === this._previousUrl.path &&
-				url.search === this._previousUrl.search &&
-				url.isHashPath === this._previousUrl.isHashPath) {
-			// this._scrollToHash(url.hash);
+		if (
+			this._previousUrl &&
+			url.path === this._previousUrl.path &&
+			url.search === this._previousUrl.search &&
+			url.isHashPath === this._previousUrl.isHashPath
+		) {
 			this._previousUrl = url;
 			return;
 		}
+
 		this._previousUrl = url;
 
 		// fire a state-change event on the app-router and return early if the user called event.preventDefault()
@@ -324,8 +300,7 @@ class CosmozPageRouter extends PolymerElement {
 	}
 
 	_addRouteForCurrentPathAndActivate(importUri, templateId) {
-		const
-			url = utils.parseUrl(window.location.href, this.mode),
+		const url = utils.parseUrl(window.location.href, this.mode),
 			route = this.addRoute({
 				import: importUri,
 				path: url.path,
@@ -343,8 +318,7 @@ class CosmozPageRouter extends PolymerElement {
 	 * @returns {void}
 	 */
 	addRoute(route) {
-		const
-			element = document.createElement('cosmoz-page-route');
+		const element = document.createElement('cosmoz-page-route');
 		element.setAttribute('path', route.path);
 		if (route.persist) {
 			element.setAttribute('persist', '');
@@ -425,24 +399,24 @@ class CosmozPageRouter extends PolymerElement {
 
 	// eslint-disable-next-line max-statements, max-lines-per-function
 	_importAndActivate(route, url, eventDetail) {
-		const
-			importUri = route.import,
+		const importUri = route.import,
 			importLoadedCallback = () => {
 				route.imported = true;
-				this._activateImport(route, url, eventDetail/*, importLink*/);
+				this._activateImport(route, url, eventDetail);
 			},
 			importErrorCallback = e => {
-				const
-					importErrorEvent = {
-						route,
-						errorEvent: e
-					};
+				const importErrorEvent = {
+					route,
+					errorEvent: e
+				};
 				this._routesInError[importUri] = importErrorEvent;
 				this._fireEvent('import-error', importErrorEvent);
 			};
 
 		this._fireEvent('route-loading', eventDetail);
-		return import(importUri).catch(importErrorCallback).then(importLoadedCallback);
+		return import(importUri)
+			.catch(importErrorCallback)
+			.then(importLoadedCallback);
 	}
 
 	_hasCustomElement(elementName) {
@@ -452,17 +426,19 @@ class CosmozPageRouter extends PolymerElement {
 	// eslint-disable-next-line max-statements
 	_activateImport(route, url, eventDetail) {
 		// make sure the user didn't navigate to a different route while it loaded
-		if (route === this._loadingRoute) {
-
-			if (route.hasCustomElement && this._hasCustomElement(route.templateId)) {
-				this._activateCustomElement(route, url, eventDetail);
-			}
+		if (route !== this._loadingRoute) {
+			return;
 		}
+
+		if (this._hasCustomElement(route.templateId)) {
+			return this._activateCustomElement(route, url, eventDetail);
+		}
+
+		throw new Error('Could not activate route.');
 	}
 
 	_activateCustomElement(route, url, eventDetail) {
-		const
-			element = document.createElement(route.templateId);
+		const element = document.createElement(route.templateId);
 
 		eventDetail.templateInstance = element;
 		route.templateInstance = element;
@@ -485,48 +461,6 @@ class CosmozPageRouter extends PolymerElement {
 		}
 
 		this._fireEvent('template-activate', eventDetail, true);
-	}
-
-	_activateTemplate(route, url, eventDetail, template) {
-		const
-			templateInstance = document.importNode(template, true),
-			templateId = route.templateId;
-
-		eventDetail.templateInstance = templateInstance;
-		route.templateInstance = templateInstance;
-
-		const templateViewPrototype = window.Cosmoz.TemplateView[templateId];
-		if (templateViewPrototype) {
-			Base.mixin(templateInstance, templateViewPrototype);
-		}
-
-		this._fireEvent('template-created', eventDetail, true);
-
-		const model = this._createModel(route, url, eventDetail);
-
-		this._setObjectProperties(eventDetail.templateInstance, model);
-
-		this._fireEvent('template-ready', eventDetail, true);
-
-		this._activateTemplateInstance(route, url, eventDetail);
-	}
-
-	_activateTemplateInstance(route, url, eventDetail) {
-		const
-			templateInstance = eventDetail.templateInstance;
-
-
-		templateInstance.addEventListener('dom-change', () => {
-			this._fireEvent('template-activate', eventDetail, true);
-		});
-
-		// Make sure _changeRoute is run for both new and persisted routes
-		templateInstance.addEventListener('template-activate', () => {
-			this._changeRoute();
-		});
-
-		// add the new content
-		this._loadingRoute.appendChild(templateInstance);
 	}
 
 	_changeRoute(oldRoute, newRoute) {
@@ -559,8 +493,7 @@ class CosmozPageRouter extends PolymerElement {
 	}
 
 	_createModel(route, url, eventDetail) {
-		const
-			model = {},
+		const model = {},
 			params = utils.routeArguments(
 				route.path,
 				url.path,
