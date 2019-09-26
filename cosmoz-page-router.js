@@ -308,7 +308,6 @@ class CosmozPageRouter extends PolymerElement {
 				templateId
 			});
 
-		route.hasCustomElement = true;
 		this._activateRoute(route, url);
 	}
 
