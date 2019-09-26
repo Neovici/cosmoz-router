@@ -64,21 +64,6 @@
 				assert.equal(route.templateId, 'view3');
 			});
 
-			test('removeRoute handles undefined', () => {
-				const spy = sinon.spy(router, '_deactivateRoute');
-				router.removeRoute();
-				assert.notCalled(spy);
-				spy.restore();
-			});
-
-			test('removeRoute calls _deactivateRoute', () => {
-				const spy = sinon.spy(router, '_deactivateRoute'),
-					route = router.addRoute(data);
-				router.removeRoute(route);
-				assert.calledOnce(spy);
-				spy.restore();
-			});
-
 			test('removeRoute sets previousUrl to null if resetPrevUrl is true', () => {
 				router._previousUrl = 'test';
 				const route = router.addRoute(data);

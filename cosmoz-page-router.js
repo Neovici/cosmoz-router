@@ -1,8 +1,5 @@
 /* eslint-disable max-lines */
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
-import '@polymer/neon-animation/neon-animated-pages.js';
-import '@polymer/neon-animation/animations/fade-in-animation.js';
-import '@polymer/neon-animation/animations/fade-out-animation.js';
 
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import { microTask } from '@polymer/polymer/lib/utils/async.js';
@@ -82,11 +79,13 @@ class CosmozPageRouter extends PolymerElement {
 			#routes {
 				@apply --layout-fit;
 			}
+			::slotted(:not(.active-route)) {
+				display: none;
+			}
 		</style>
-		<neon-animated-pages id="routes" attr-for-selected="path" on-neon-animation-finish="_onNeonAnimationFinish">
-			<!-- TODO: Remove this when neon-animated-pages is fixed or dropped-->
-			<slot class="iron-selected"></slot>
-		</neon-animated-pages>
+		<div id="routes">
+			<slot></slot>
+		</div>
 `;
 	}
 
@@ -97,7 +96,6 @@ class CosmozPageRouter extends PolymerElement {
 		this._previousRoute = null;
 		this._previousUrl = null;
 		this._routesInError = null;
-		this._boundOnNeonAnimationFinish =	this._onNeonAnimationFinish.bind(this);
 		this._boundStateChange = this._stateChange.bind(this);
 	}
 	/**
@@ -155,7 +153,6 @@ class CosmozPageRouter extends PolymerElement {
 
 	connectedCallback() {
 		super.connectedCallback();
-		this.addEventListener('neon-animation-finish', this._boundOnNeonAnimationFinish);
 		[
 			'template-activate',
 			'template-created',
@@ -165,7 +162,6 @@ class CosmozPageRouter extends PolymerElement {
 
 	disconnectedCallback() {
 		super.disconnectedCallback();
-		this.removeEventListener('neon-animation-finish', this._boundOnNeonAnimationFinish);
 		[
 			'template-activate',
 			'template-created',
@@ -376,7 +372,7 @@ class CosmozPageRouter extends PolymerElement {
 		if (route == null) {
 			return;
 		}
-		this._deactivateRoute(route);
+		route.deactivate();
 		const parent = route.parentNode;
 		if (parent) {
 			parent.removeChild(route);
@@ -479,17 +475,15 @@ class CosmozPageRouter extends PolymerElement {
 
 		this._fireEvent('template-ready', eventDetail, true);
 
-		if (this._previousRoute && this._previousRoute.classList.contains('neon-animating')) {
-			// When switching fast between routes, previous animation
-			// will be cancelled and neon-animation-finished event won't be raised.
-			// So we need to do the cleanup that is suposed to be done.
-			this._deactivateRoute(this._previousRoute);
-		}
-
 		this._loadingRoute.appendChild(element);
 
 		// FIXME: Change route after element ready()
 		this._changeRoute();
+
+		if (this._previousRoute) {
+			this._previousRoute.deactivate();
+		}
+
 		this._fireEvent('template-activate', eventDetail, true);
 	}
 
@@ -552,18 +546,16 @@ class CosmozPageRouter extends PolymerElement {
 		this._activeRoute = nRoute;
 		this._loadingRoute = null;
 
+		if (this._previousRoute) {
+			this._previousRoute.classList.remove('active-route');
+		}
+		this._activeRoute.classList.add('active-route');
+
 		if (oRoute) {
 			oRoute.active = false;
 		}
 
 		nRoute.active = true;
-
-		this.shadowRoot.querySelector('#routes').selected = nRoute.path;
-	}
-
-	// Remove the route's content
-	_deactivateRoute(route) {
-		route.deactivate();
 	}
 
 	_createModel(route, url, eventDetail) {
@@ -594,12 +586,6 @@ class CosmozPageRouter extends PolymerElement {
 			if (model.hasOwnProperty(property)) {
 				object[property] = model[property];
 			}
-		}
-	}
-
-	_onNeonAnimationFinish() {
-		if (this._previousRoute && !this._previousRoute.active) {
-			this._deactivateRoute(this._previousRoute);
 		}
 	}
 }
