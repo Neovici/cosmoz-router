@@ -1,6 +1,6 @@
 {
 	"name": "@neovici/cosmoz-page-router",
-	"version": "3.0.3",
+	"version": "4.0.0",
 	"description": "[![Build Status](https://travis-ci.com/Neovici/cosmoz-page-router.svg?branch=master)](https://travis-ci.com/Neovici/cosmoz-page-router)",
 	"keywords": [
 		"polymer",
