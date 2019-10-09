@@ -1,6 +1,6 @@
 {
 	"name": "@neovici/cosmoz-page-router",
-	"version": "4.0.0",
+	"version": "4.0.1",
 	"description": "A Polymer component to handle client side URL routing and view loading / management",
 	"keywords": [
 		"polymer",
