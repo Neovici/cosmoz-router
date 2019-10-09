@@ -1,0 +1,53 @@
+---
+name: Github CI
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+
+    - name: Install
+      run: npm ci
+
+    - name: Lint commit messages
+      run: npx commitlint --from origin/master --to HEAD
+
+    - name: ESLint
+      run: npx github-actions-eslint-annotator
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Test and report
+      env:
+        CC_TEST_REPORTER_ID: e0a829720254a3290ad709fb6e986879956db83fd864bd395d5389969c7d3e84
+        GIT_BRANCH: ${{ github.ref }}
+        GIT_COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        NEO_CC_URL: https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+        NEO_CC: ./cc-test-reporter
+        SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+        SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+      run: |
+        ([[ -e $NEO_CC ]] || curl -L $NEO_CC_URL > $NEO_CC) && chmod +x $NEO_CC
+        $NEO_CC before-build
+        npm run test $([ -z "$SAUCE_ACCESS_KEY"] && echo "-- --skip-plugin sauce")
+        $NEO_CC after-build --exit-code $?
+
+    - name: Semantic release
+      run: npx semantic-release
+      if: success()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
