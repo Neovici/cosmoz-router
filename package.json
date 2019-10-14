@@ -74,7 +74,7 @@
 		"eslint-plugin-html": "^5.0.0",
 		"eslint-plugin-import": "^2.17.3",
 		"eslint-plugin-mocha": "^5.2.0",
-		"husky": "^3.0.8",
+		"husky": "^3.0.9",
 		"mocha": "^6.2.1",
 		"polymer-cli": "^1.9.9",
 		"semantic-release": "^16.0.0-beta.25",
