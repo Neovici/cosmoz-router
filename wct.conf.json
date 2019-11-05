@@ -37,7 +37,8 @@
 			}, {
 				"browserName": "firefox",
 				"platform": "Windows 10",
-				"version": ""
+				"version": "latest",
+				"seleniumVersion": "3.141.59"
 			}, {
 				"browserName": "safari",
 				"platform": "macOS 10.13",
