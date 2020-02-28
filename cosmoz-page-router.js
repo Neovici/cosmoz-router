@@ -247,8 +247,6 @@ class CosmozPageRouter extends PolymerElement {
 			eventDetail = {
 				path: url.path
 			};
-		let errorEvent,
-			route;
 
 		// don't load a new route if only the hash fragment changed
 		if (
@@ -269,13 +267,13 @@ class CosmozPageRouter extends PolymerElement {
 		}
 
 		if (this._routesInError[url.path]) {
-			errorEvent = this._routesInError[url.path];
+			const errorEvent = this._routesInError[url.path];
 			this._fireEvent('import-error', errorEvent);
 			return;
 		}
 
 		// find the first matching route
-		route = this.firstChild;
+		let route = this.firstChild;
 		while (route) {
 			if (route.tagName === 'COSMOZ-PAGE-ROUTE' && utils.testRoute(route.path, url.path)) {
 				this._activateRoute(route, url);
@@ -320,19 +318,14 @@ class CosmozPageRouter extends PolymerElement {
 	 */
 	addRoute(route) {
 		const element = document.createElement('cosmoz-page-route');
-		element.setAttribute('path', route.path);
-		if (route.persist) {
-			element.setAttribute('persist', '');
-		}
-		element.setAttribute('template-id', route.templateId);
-		element.setAttribute('import', route.import);
+		Object.assign(element, route);
+		console.log(route);
 
 		this._fireEvent('before-add-route', {
 			route: element
 		}, true);
 
 		const newRoute = this.appendChild(element);
-		flush();
 		return newRoute;
 	}
 	/**
@@ -382,7 +375,7 @@ class CosmozPageRouter extends PolymerElement {
 		this._loadingRoute = route;
 
 		// if we're on the same route then update the model but don't replace the page content
-		if (route === this._activeRoute || route.imported && route.persist) {
+		if (route === this._activeRoute || route.imported) {
 			this._updateModelAndActivate(route, url, eventDetail);
 		} else if (route.import) {
 			// import custom element or template
@@ -392,32 +385,27 @@ class CosmozPageRouter extends PolymerElement {
 
 	_updateModelAndActivate(route, url, eventDetail) {
 		const model = this._createModel(route, url, eventDetail);
-
-		eventDetail.templateInstance = route.templateInstance;
 		Object.assign(route.templateInstance, model);
 		this._fireEvent('template-activate', eventDetail, true);
 	}
 
 	// eslint-disable-next-line max-statements, max-lines-per-function
 	_importAndActivate(route, url, eventDetail) {
-		const importUri = route.import,
-			importLoadedCallback = () => {
-				route.imported = true;
-				this._activateImport(route, url, eventDetail);
-			},
-			importErrorCallback = e => {
+		this._fireEvent('route-loading', eventDetail);
+
+		return import(route.import)
+			.catch(e => {
 				const importErrorEvent = {
 					route,
 					errorEvent: e
 				};
-				this._routesInError[importUri] = importErrorEvent;
+				this._routesInError[route.import] = importErrorEvent;
 				this._fireEvent('import-error', importErrorEvent);
-			};
-
-		this._fireEvent('route-loading', eventDetail);
-		return import(importUri)
-			.catch(importErrorCallback)
-			.then(importLoadedCallback);
+			})
+			.then(() => {
+				route.imported = true;
+				this._activateImport(route, url, eventDetail);
+			});
 	}
 
 	_hasCustomElement(elementName) {
@@ -431,20 +419,8 @@ class CosmozPageRouter extends PolymerElement {
 			return;
 		}
 
-		if (this._hasCustomElement(route.templateId)) {
-			return this._activateCustomElement(route, url, eventDetail);
-		}
 
-		throw new Error('Could not activate route.');
-	}
-
-	_activateCustomElement(route, url, eventDetail) {
-		const element = document.createElement(route.templateId);
-
-		eventDetail.templateInstance = element;
-		route.templateInstance = element;
-
-		this._fireEvent('template-created', eventDetail, true);
+		// eventDetail.templateInstance = element;
 
 		const model = this._createModel(route, url, eventDetail);
 
@@ -452,7 +428,7 @@ class CosmozPageRouter extends PolymerElement {
 
 		this._fireEvent('template-ready', eventDetail, true);
 
-		this._loadingRoute.appendChild(element);
+		// this._loadingRoute.appendChild(element);
 
 		// FIXME: Change route after element ready()
 		this._changeRoute();
