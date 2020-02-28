@@ -1,4 +1,6 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element';
+import {
+	PolymerElement, html
+} from '@polymer/polymer/polymer-element';
 import '../../cosmoz-page-location.js';
 
 class Issue36View extends PolymerElement {

@@ -1,7 +1,9 @@
 import '@polymer/iron-location/iron-location';
 import '@polymer/iron-location/iron-query-params';
 
-import { PolymerElement, html } from '@polymer/polymer/polymer-element';
+import {
+	PolymerElement, html
+} from '@polymer/polymer/polymer-element';
 
 /**
 The `cosmoz-page-location` element manages binding to and from the current URL.
@@ -268,7 +270,12 @@ class CosmozPageLocation extends PolymerElement {
 			// some hash params, then we will update the URL with incorrect route hash string
 			// To avoid that, use the actual location
 			route = this._parse(window.decodeURIComponent(window.location.hash.slice(1)));
-			routeHashUri = this._encode({ hashBang: route.hashBang, path: route.path, query: route.query, hash: this.routeHash });
+			routeHashUri = this._encode({
+				hashBang: route.hashBang,
+				path: route.path,
+				query: route.query,
+				hash: this.routeHash
+			});
 		} else {
 			route = this.getRoute();
 			routeHashUri = this._encode(route);
