@@ -202,6 +202,7 @@ export const routeArguments = function (routePath, urlPath, search, isRegExp, ty
 	if (typecast) {
 	// parse the arguments into unescaped strings, numbers, or booleans
 		for (const arg in args) {
+			// eslint-disable-next-line no-prototype-builtins
 			if (args.hasOwnProperty(arg)) {
 				args[arg] = _typecast(args[arg]);
 			}

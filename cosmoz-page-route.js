@@ -1,6 +1,8 @@
 import '@polymer/iron-flex-layout/iron-flex-layout';
 
-import { PolymerElement, html } from '@polymer/polymer/polymer-element';
+import {
+	PolymerElement, html
+} from '@polymer/polymer/polymer-element';
 
 import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-resizable-behavior';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class';
@@ -73,13 +75,12 @@ class CosmozPageRoute extends mixinBehaviors([
 	 * @returns {void}
 	 */
 	deactivate() {
-		let node,
-			nodeToRemove;
+		let node;
 		if (!this.persist) {
 			// remove the route content
 			node = this.firstChild;
 			while (node) {
-				nodeToRemove = node;
+				const nodeToRemove = node;
 				node = node.nextSibling;
 				this.removeChild(nodeToRemove);
 			}

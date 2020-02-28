@@ -39,12 +39,16 @@
 
 	<script type="module">
 		import { flush } from '@polymer/polymer/lib/utils/flush';
-		/* global sinon chai */
 		sinon.assert.expose(chai.assert, { prefix: '' });
 
 		suite('<cosmoz-page-router>', () => {
 			let router;
-			const data = { persist: true, templateId: 'view3', import: '/view3', path: '/view3' };
+			const data = {
+				persist: true,
+				templateId: 'view3',
+				import: '/view3',
+				path: '/view3'
+			};
 
 			setup(() => {
 				router = fixture('basic');
@@ -119,7 +123,12 @@
 
 		suite('<cosmoz-page-router mode="hashbang">', () => {
 			let router;
-			const data = { persist: false, templateId: 'view2', import: '/view2', path: '/view2' };
+			const data = {
+				persist: false,
+				templateId: 'view2',
+				import: '/view2',
+				path: '/view2'
+			};
 
 			setup(() => {
 				router = fixture('hashbang');

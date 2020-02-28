@@ -1,4 +1,6 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element';
+import {
+	PolymerElement, html
+} from '@polymer/polymer/polymer-element';
 
 class DemoHome extends PolymerElement {
 	static get template() {

@@ -1,7 +1,9 @@
 /* eslint-disable max-lines */
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import {
+	PolymerElement, html
+} from '@polymer/polymer/polymer-element.js';
 import { microTask } from '@polymer/polymer/lib/utils/async.js';
 import { flush } from '@polymer/polymer/lib/utils/flush.js';
 
@@ -266,7 +268,7 @@ class CosmozPageRouter extends PolymerElement {
 			return;
 		}
 
-		if (this._routesInError.hasOwnProperty(url.path)) {
+		if (this._routesInError[url.path]) {
 			errorEvent = this._routesInError[url.path];
 			this._fireEvent('import-error', errorEvent);
 			return;
@@ -392,7 +394,7 @@ class CosmozPageRouter extends PolymerElement {
 		const model = this._createModel(route, url, eventDetail);
 
 		eventDetail.templateInstance = route.templateInstance;
-		this._setObjectProperties(route.templateInstance, model);
+		Object.assign(route.templateInstance, model);
 		this._fireEvent('template-activate', eventDetail, true);
 	}
 
@@ -446,7 +448,7 @@ class CosmozPageRouter extends PolymerElement {
 
 		const model = this._createModel(route, url, eventDetail);
 
-		this._setObjectProperties(eventDetail.templateInstance, model);
+		Object.assign(eventDetail.templateInstance, model);
 
 		this._fireEvent('template-ready', eventDetail, true);
 
@@ -510,15 +512,6 @@ class CosmozPageRouter extends PolymerElement {
 		eventDetail.model = model;
 		this._fireEvent('before-data-binding', eventDetail);
 		return eventDetail.model;
-	}
-
-	_setObjectProperties(object, model) {
-		let property;
-		for (property in model) {
-			if (model.hasOwnProperty(property)) {
-				object[property] = model[property];
-			}
-		}
 	}
 }
 

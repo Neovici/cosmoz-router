@@ -107,7 +107,7 @@
 			});
 
 			test('getAppUrl returns app url with query', done => {
-				const parts = location.getAppUrl({ queryKey: 'queryValue'}).split('?');
+				const parts = location.getAppUrl({ queryKey: 'queryValue' }).split('?');
 				assert.equal(parts[parts.length - 1], 'queryKey=queryValue');
 				done();
 			});
