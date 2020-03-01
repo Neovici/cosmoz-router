@@ -22,7 +22,6 @@ class CosmozPageRoute extends LitElement {
 			return;
 		}
 		this.templateInstance = document.createElement(this.templateId);
-		console.log('new render', this.templateId);
 		return html`${ this.templateInstance }`;
 	}
 
@@ -33,48 +32,18 @@ class CosmozPageRoute extends LitElement {
 	 */
 	static get properties() {
 		return {
-			active: Boolean,
-
-			import: {
-				type: String
-			},
-
-			imported: {
-				type: Promise
-			},
-
 			path: {
 				type: String
 			},
-
+			persist: {
+				type: Boolean
+			},
 			templateId: {
-				type: String
+				type: String,
+				attribute: 'template-id'
 			}
 		};
 	}
 }
 
 customElements.define('cosmoz-page-route', CosmozPageRoute);
-
-/**
- * Fired when the template node has been imported and mixed in with its template object.
- * Could be used to inject common template behaviors or properties.
- *
- * @event template-created
- * @param {{
-		path: url.path,
-		route: route,
-		oldRoute: this._activeRoute
-	}} detail
- */
-
-/**
- * Fired when model with `params` is injected into the template instance.
- *
- * @event template-ready
- * @param {{
-		path: url.path,
-		route: route,
-		oldRoute: this._activeRoute
-	}} detail
- */

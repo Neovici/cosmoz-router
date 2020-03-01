@@ -13,10 +13,10 @@ The `cosmoz-page-location` element manages binding to and from the current URL.
 class CosmozPageLocation extends PolymerElement {
 	static get template() {
 		return html`
-		<iron-location url-space-regex="^\$" id="location" path="{{ appPath }}" query="{{ _appQueryString }}" hash="{{ _appHashString }}">
-		</iron-location>
-		<iron-query-params id="params"></iron-query-params>
-	`;
+			<iron-location url-space-regex="^\$" id="location" path="{{ appPath }}" query="{{ _appQueryString }}" hash="{{ _appHashString }}">
+			</iron-location>
+			<iron-query-params id="params"></iron-query-params>
+		`;
 	}
 
 	constructor() {
