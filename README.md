@@ -54,12 +54,7 @@ Example:
 
 ### Install
 
-`bower install --save cosmoz-page-router`
-
-### Add the cosmoz-page-router import
-```html
-<link rel="import" href="bower_components/cosmoz-page-router/cosmoz-page-router.html" />
-```
+TODO
 
 ## Documentation
 
