@@ -1,3 +1,17 @@
+# [5.0.0](https://github.com/neovici/cosmoz-page-router/compare/v4.0.2...v5.0.0) (2020-03-02)
+
+
+### Documentation
+
+* add maintainability/coverage badges ([bd65658](https://github.com/neovici/cosmoz-page-router/commit/bd656580cae7dc6ad0134051f24c7184707e1d8e))
+
+
+### BREAKING CHANGES
+
+* Refactored cosmoz-page-route(r) as LitElements, lots dropped.
+
+Signed-off-by: Patrik Kullman <patrik.kullman@neovici.se>
+
 ## [4.0.2](https://github.com/neovici/cosmoz-page-router/compare/v4.0.1...v4.0.2) (2020-02-28)
 
 
