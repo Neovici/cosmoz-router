@@ -1,38 +1,30 @@
-import '@polymer/iron-flex-layout/iron-flex-layout';
-
 import {
-	PolymerElement, html
-} from '@polymer/polymer/polymer-element';
+	css, html, LitElement
+} from 'lit-element/lit-element.js';
 
-import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-resizable-behavior';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class';
+class CosmozPageRoute extends LitElement {
+	static get styles() {
+		return css`
+			:host {
+				display: block;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				overflow-y: auto;
+			}
+		`;
+	}
 
-class CosmozPageRoute extends mixinBehaviors([
-	IronResizableBehavior
-], PolymerElement) {
-	static get template() {
-		return html`
-	<style>
-		:host {
-			display: block;
-			position: absolute;
-			@apply --layout-fit;
-			overflow-y: auto;
+	render() {
+		if (this.templateId == null) {
+			return;
 		}
-	</style>
-
-	<slot></slot>
-`;
+		this.templateInstance = document.createElement(this.templateId);
+		return html`${ this.templateInstance }`;
 	}
 
-	/**
-	 * Get component name.
-	 *
-	 * @returns {string} Name.
-	 */
-	static get is() {
-		return 'cosmoz-page-route';
-	}
 	/**
 	 * Get component properties.
 	 *
@@ -40,76 +32,18 @@ class CosmozPageRoute extends mixinBehaviors([
 	 */
 	static get properties() {
 		return {
-			active: Boolean,
-
-			import: {
-				type: String
-			},
-
-			imported: {
-				type: Boolean,
-				value: false
-			},
-
 			path: {
 				type: String
 			},
-
 			persist: {
-				type: Boolean,
-				value: false
+				type: Boolean
 			},
-
 			templateId: {
-				type: String
-			},
-
-			templateInstance: {
-				type: Object
+				type: String,
+				attribute: 'template-id'
 			}
 		};
 	}
-	/**
-	 * Remove the route node.
-	 *
-	 * @returns {void}
-	 */
-	deactivate() {
-		let node;
-		if (!this.persist) {
-			// remove the route content
-			node = this.firstChild;
-			while (node) {
-				const nodeToRemove = node;
-				node = node.nextSibling;
-				this.removeChild(nodeToRemove);
-			}
-			this.templateInstance = null;
-		}
-	}
 }
 
-customElements.define(CosmozPageRoute.is, CosmozPageRoute);
-
-/**
- * Fired when the template node has been imported and mixed in with its template object.
- * Could be used to inject common template behaviors or properties.
- *
- * @event template-created
- * @param {{
-		path: url.path,
-		route: route,
-		oldRoute: this._activeRoute
-	}} detail
- */
-
-/**
- * Fired when model with `params` is injected into the template instance.
- *
- * @event template-ready
- * @param {{
-		path: url.path,
-		route: route,
-		oldRoute: this._activeRoute
-	}} detail
- */
+customElements.define('cosmoz-page-route', CosmozPageRoute);

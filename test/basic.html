@@ -55,13 +55,6 @@
 				flush();
 			});
 
-			test('initialize verifies if already initialized', () => {
-				const spy = sinon.spy(router, '_boundStateChange');
-				router.initialize();
-				assert.calledOnce(spy);
-				spy.restore();
-			});
-
 			test('addRoute returns new route', () => {
 				const route = router.addRoute(data);
 				assert.equal(route.path, '/view3');
@@ -135,16 +128,10 @@
 				flush();
 			});
 
-			test('_hasCustomElement returns true for cozmoz-page-router', () => {
-				assert.isTrue(router._hasCustomElement('cosmoz-page-route'));
-				assert.isTrue(router._hasCustomElement('cosmoz-page-router'));
-			});
-
 			test('addRoute returns new route', () => {
 				const route = router.addRoute(data);
 				assert.equal(route.path, '/view2');
 				assert.equal(route.templateId, 'view2');
-				route.deactivate();
 			});
 		});
 		</script>
