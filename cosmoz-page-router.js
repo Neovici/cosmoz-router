@@ -3,7 +3,7 @@ import {
 } from 'lit-html';
 import { until } from 'lit-html/directives/until';
 import {
-	component, useMemo
+	component, useMemo, useEffect
 } from 'haunted';
 import {
 	useRoutes
@@ -21,27 +21,27 @@ const dispatch = (el, type, opts) => el.dispatchEvent(new CustomEvent(type, {
 		mapUrl = hashbang
 	}) {
 		const route = useRoutes(routes, mapUrl),
-			result = useMemo(() => {
-				if (!route) {
-					dispatch(this, 'route-not-found');
-					return Promise.resolve(nothing);
-				}
-				dispatch(this, 'route-loading', { detail: route });
-				return route.handle().then(res => {
-					dispatch(this, 'route-loaded', { detail: route });
-					return res;
-				}).
-					catch(error => {
-						dispatch(this, 'route-error', {
-							detail: {
-								route,
-								error
-							}
-						});
-						return nothing;
-					});
-			}, [route]);
-		return html`${until(result, nothing)}`;
+			result = useMemo(() => route ? Promise.resolve(route.handle()) : undefined, [route]);
+
+		useEffect(() => {
+			if (!result) {
+				dispatch(this, 'route-not-found');
+				return;
+			}
+			dispatch(this, 'route-loading', { detail: route });
+			result
+				.then(() => dispatch(this, 'route-loaded', { detail: route }))
+				.catch(error =>
+					dispatch(this, 'route-error', {
+						detail: {
+							route,
+							error
+						}
+					})
+				);
+
+		}, [result]);
+		return html`${until(Promise.resolve(result).catch(() => nothing), nothing)}`;
 	};
 
 customElements.define('cosmoz-page-router', component(Router));

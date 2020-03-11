@@ -21,9 +21,13 @@
 		"test": "test"
 	},
 	"scripts": {
-		"lint": "eslint --cache --ext .js,.html .",
-		"start": "polymer serve -o",
-		"test": "polymer test"
+		"lint": "eslint --cache --ext .js .",
+		"start": "es-dev-server",
+		"test": "karma start --coverage",
+		"test:watch": "karma start --auto-watch=true --single-run=false",
+		"test:update-snapshots": "karma start --update-snapshots",
+		"test:prune-snapshots": "karma start --prune-snapshots",
+		"test:compatibility": "karma start --compatibility all --auto-watch=true --single-run=false"
 	},
 	"release": {
 		"plugins": [
@@ -60,26 +64,25 @@
 		"@commitlint/config-conventional": "^8.3.4",
 		"@neovici/eslint-config": "^1.2.0",
 		"@neovici/github-actions-eslint-annotator": "^0.4.0",
+		"@open-wc/testing": "^2.5.0",
+		"@open-wc/testing-karma": "^3.3.0",
 		"@polymer/iron-component-page": "^4.0.0",
 		"@polymer/iron-demo-helpers": "^3.0.0",
-		"@polymer/iron-test-helpers": "^3.0.0",
-		"@polymer/test-fixture": "^4.0.2",
 		"@semantic-release/changelog": "^5.0.0",
 		"@semantic-release/git": "^9.0.0",
 		"@webcomponents/webcomponentsjs": "^2.4.2",
 		"babel-eslint": "^10.1.0",
 		"chai": "^4.2.0",
+		"deepmerge": "^4.2.2",
 		"eslint": "^6.8.0",
 		"eslint-plugin-html": "^6.0.0",
-		"eslint-plugin-import": "^2.20.1",
+		"eslint-plugin-import": "^2.20.0",
 		"eslint-plugin-mocha": "^6.3.0",
-		"husky": "^4.2.3",
-		"mocha": "^7.1.0",
-		"polymer-cli": "^1.9.9",
-		"semantic-release": "^17.0.4",
-		"sinon": "^9.0.0",
-		"wct-istanbul": "^0.14.3",
-		"wct-mocha": "^1.0.0",
-		"web-animations-js": "^2.3.1"
+		"husky": "^4.2.0",
+		"karma": "^4.4.0",
+		"karma-firefox-launcher": "^1.3.0",
+		"karma-sauce-launcher": "^2.0.0",
+		"semantic-release": "^17.0.0",
+		"sinon": "^9.0.0"
 	}
 }

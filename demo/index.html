@@ -14,7 +14,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 	<title>cosmoz-page-router Demo</title>
 	<script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-	<script src="/node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
 	<script type="module" src="/cosmoz-page-router.js"></script>
 	<style>
 		#content {
@@ -43,40 +42,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 	</style>
 </head>
-<body unresolved>
+<body>
 	<div id="content">
-		<h1>cz-page-router test</h1>
+		<h1>cosmoz-page-router test</h1>
 		<ul>
 			<li><a href="#!/">/Home</a>
 			<li><a href="#!/view-1">/view-1</a>
 			<li><a href="#!/view-2">/view-2</a>
 			<li><a href="#!/view-3">/view-3 (ad-hoc)</a>
 		</ul>
-
 		<div id="view">
-			<cosmoz-page-router id="appRouter" manual-init mode="hash" url-prefix="/demo/views">
-				<cosmoz-page-route path="/" import="/demo/views/home.js" template-id="demo-home"></cosmoz-page-route>
-				<cosmoz-page-route path="/view-1" import="/demo/views/view-1.js" template-id="view-1"></cosmoz-page-route>
-				<cosmoz-page-route path="/view-2" import="/demo/views/view-2.js" template-id="view-2"></cosmoz-page-route>
-			</cosmoz-page-router>
+			<demo-router />
 		</div>
 	</div>
 	<script type="module">
-		const pageRouter = document.querySelector('cosmoz-page-router');
+		import { html } from 'lit-html';
+		import { component } from 'haunted';
+		import { createElement } from '../lib/use-routes.js';
 
-		pageRouter.addEventListener('import-error', event => {
-			console.log('test-cz-page-router import-error', event);
-		});
-		pageRouter.addEventListener('template-created',	 () => {
-			console.log('test-cz-page-router template-created');
-		});
-		pageRouter.addEventListener('template-ready', () => {
-			console.log('test-cz-page-router template-ready');
-		});
-		pageRouter.addEventListener('template-activate', () => {
-			console.log('test-cz-page-router template-activate');
-		});
-
-		pageRouter.initialize();
+		const routes = [
+			{
+				rule: /^\/$/u,
+				handle: () => import('./views/home.js').then(() => createElement('demo-home'))
+			},
+			{
+				rule: /^\/view-1/u,
+				handle: () => import('./views/view-1.js').then(() => createElement('view-1'))
+			},
+			{
+				rule: /^\/view-2/u,
+				handle: () => import('./views/view-2.js').then(() => createElement('view-2'))
+			}
+		],
+		DemoRouter = () => {
+			return html`<cosmoz-page-router .routes=${routes} />`;
+		};
+		customElements.define('demo-router', component(DemoRouter));
 	</script>
 </body></html>
