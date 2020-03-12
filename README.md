@@ -10,54 +10,70 @@ cosmoz-page-router
 
 ## &lt;cosmoz-page-router&gt;
 
-**cosmoz-page-router** is a Polymer component to handle client side URL routing
+**cosmoz-page-router** is a haunted component to handle client side URL routing
 and view loading / management.
 
-It support ad-hoc routing so no routes need to be defined - any accessed route
-will try to be loaded.
+By default **cosmoz-page-router** listens to `popstate` event
+, reads hash bang ('#!/some/path') into a URL and matches it against the pathname.
 
-It supports named views/templates so templates and the corresponding JavaScript
-code can be bundled/vulcanized.
+## Getting started
 
-## Credits
+### Installing
 
-cosmoz-page-router is based on Erik Ringsmuth's app-router component (https://github.com/erikringsmuth/app-router), licensed under the MIT License.
+Using npm:
+```bash
+npm install --save @neovici/cosmoz-page-router
+```
 
-Major differences with app-router are:
-- requires Polymer 1.0, whereas app-router works with Polymer, X-Tag, and natively.
-- focus on Polymer 1.0 `dom-bind` template views
-- support for _adhoc routing_, i.e. creating a route dynamically when a path is requested
-- experimental support for persisted templates
+### Importing
+
+The **cosmoz-page-router** element can be imported using:
+```javascript
+import '@neovici/cosmoz-page-router/cosmoz-page-router';
+```
 
 ## Usage
 
-Example:
+### Routes
+Routes are defined as an Array of Objects:
+``` javascript
+import { html } from 'lit-html';
+import { creteElement, fromSearch, navigate } from '@neovici/cosmoz-page-router/lib/use-routes';
 
-<!---
+const routes = [
+	{
+		name: 'home', // optional (can be used to identity the route),
+		rule: /^\/$/iu/, // a Regexp used to matched the route,
+		handle: ({
+			url, // the current url ( that matched the route)
+			match, // the result of matching url.pathname against the rule,
+		}) => html`<home />`
+	},
+	{
+		name: 'some-page',
+		rule: /^\/some\-page$/iu,
+		handle: ({ url })=>import('page.js')
+			.then(()=> createElement('some-element', fromSearch(url.search)))
+	},
+	{
+		name: 'redirect',
+		rule: /^\/some\-redirect$/iu,
+		handle: ()=> navigate('#!/', null, {
+			replace: true, // true to use replaceState,false to use pushState,
+			notify: true //true to dispatch a `popstate` event
+		})
+	}
+];
 ```
-<custom-element-demo>
-	<template>
-		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-		<link rel="import" href="../cosmoz-page-router.html">
-		<next-code-block></next-code-block>
-	</template>
-</custom-element-demo>
-```
--->
-```html
-<cosmoz-page-router id="appRouter" manual-init mode="hash" url-prefix="views">
-	<cosmoz-page-route path="/" import="demo/views/home.html" template-id="home"></cosmoz-page-route>
-	<cosmoz-page-route path="/view1" import="demo/views/view1.html" template-id="view1"></cosmoz-page-route>
-	<cosmoz-page-route path="/view2" import="demo/views/view2.html" template-id="view2"></cosmoz-page-route>
-	<!-- <cosmoz-page-route path="/view3" import="demo/views/view3.html" template-id="view3"></cosmoz-page-route> -->
-	<cosmoz-page-route path="/scroll-view" import="demo/views/scroll-view.html" template-id="scroll-view"></cosmoz-page-route>
-</cosmoz-page-router>
+and passed to cosmoz-page-router:
+
+``` javascript
+html`<cosmoz-page-router .routes=${routes} />`;
 ```
 
-### Install
-
-TODO
 
 ## Documentation
 
-See http://neovici.github.io/cosmoz-page-router
+See http://neovici.github.io/cosmoz-page-router (outdated)
+
+TODO
