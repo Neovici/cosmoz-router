@@ -1,3 +1,14 @@
+## [6.0.0](https://github.com/neovici/cosmoz-page-router/compare/v5.0.0...v6.0.0) (2020-03-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* add cosmoz-router haunted implementation
+
+### Features
+
+* add cosmoz-router haunted implementation ([9f04e7f](https://github.com/neovici/cosmoz-page-router/commit/9f04e7f4fbb851417e2998986703f5309e680aa4))
+
 # [5.0.0](https://github.com/neovici/cosmoz-page-router/compare/v4.0.2...v5.0.0) (2020-03-02)
 
 
