@@ -1,3 +1,10 @@
+### [6.0.1](https://github.com/neovici/cosmoz-page-router/compare/v6.0.0...v6.0.1) (2020-03-17)
+
+
+### Bug Fixes
+
+* correct context in history.pushState(replaceState) ([31bcf0d](https://github.com/neovici/cosmoz-page-router/commit/31bcf0dc54de22f5d39a8343684aee507b15a0ac))
+
 ## [6.0.0](https://github.com/neovici/cosmoz-page-router/compare/v5.0.0...v6.0.0) (2020-03-12)
 
 
