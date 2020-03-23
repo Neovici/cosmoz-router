@@ -49,7 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			<li><a href="#!/">/Home</a>
 			<li><a href="#!/view-1">/view-1</a>
 			<li><a href="#!/view-2">/view-2</a>
-			<li><a href="#!/view-3">/view-3 (ad-hoc)</a>
+			<li><a href="#!/view-3">/view-3</a>
 		</ul>
 		<div id="view">
 			<demo-router />
@@ -59,19 +59,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		import { html } from 'lit-html';
 		import { component } from 'haunted';
 		import { createElement } from '../lib/use-routes.js';
+		import { hashbang } from '../lib/match.js';
 
 		const routes = [
 			{
-				rule: /^\/$/u,
+				rule: hashbang(/^\/$/u),
 				handle: () => import('./views/home.js').then(() => createElement('demo-home'))
 			},
 			{
-				rule: /^\/view-1/u,
+				rule: hashbang(/^\/view-1/u),
 				handle: () => import('./views/view-1.js').then(() => createElement('view-1'))
 			},
 			{
-				rule: /^\/view-2/u,
+				rule: hashbang(/^\/view-2/u),
 				handle: () => import('./views/view-2.js').then(() => createElement('view-2'))
+			},
+			{
+				rule: hashbang(/^\/view-3/u),
+				handle: () => import('./views/view-3.js').then(() => createElement('view-3'))
 			}
 		],
 		DemoRouter = () => {
