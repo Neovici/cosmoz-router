@@ -1,3 +1,10 @@
+### [6.0.2](https://github.com/neovici/cosmoz-page-router/compare/v6.0.1...v6.0.2) (2020-03-24)
+
+
+### Bug Fixes
+
+* update deps ([2debffb](https://github.com/neovici/cosmoz-page-router/commit/2debffb73ea02a54bee3c8618ce763505b8e1e30))
+
 ### [6.0.1](https://github.com/neovici/cosmoz-page-router/compare/v6.0.0...v6.0.1) (2020-03-17)
 
 
