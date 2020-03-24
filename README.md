@@ -14,7 +14,7 @@ cosmoz-page-router
 and view loading / management.
 
 By default **cosmoz-page-router** listens to `popstate` event
-, reads hash bang ('#!/some/path') into a URL and matches it against the pathname.
+, gets current location href and matches it against the routes defined.
 
 ## Getting started
 
@@ -38,29 +38,29 @@ import '@neovici/cosmoz-page-router/cosmoz-page-router';
 Routes are defined as an Array of Objects:
 ``` javascript
 import { html } from 'lit-html';
-import { creteElement, fromSearch, navigate } from '@neovici/cosmoz-page-router/lib/use-routes';
+import { creteElement, navigate } from '@neovici/cosmoz-page-router/lib/use-routes';
 
 const routes = [
 	{
 		name: 'home', // optional (can be used to identity the route),
 		rule: /^\/$/iu/, // a Regexp used to matched the route,
 		handle: ({
-			url, // the current url ( that matched the route)
-			match, // the result of matching url.pathname against the rule,
+			url, // the current url string ( that matched the route)
+			match, // the result of matching route against the rule,
 		}) => html`<home />`
 	},
 	{
 		name: 'some-page',
-		rule: /^\/some\-page$/iu,
+		rule: (url) => url.startsWith('/some-page'), // function called with current url string
 		handle: ({ url })=>import('page.js')
-			.then(()=> createElement('some-element', fromSearch(url.search)))
+			.then(()=> createElement('some-element', Object.fromEntries(url.searchParams)))
 	},
 	{
 		name: 'redirect',
 		rule: /^\/some\-redirect$/iu,
 		handle: ()=> navigate('#!/', null, {
 			replace: true, // true to use replaceState,false to use pushState,
-			notify: true //true to dispatch a `popstate` event
+			notify: true // true to dispatch a `popstate` event
 		})
 	}
 ];
