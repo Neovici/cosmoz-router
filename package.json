@@ -66,7 +66,7 @@
 		"@neovici/eslint-config": "^1.2.0",
 		"@neovici/github-actions-eslint-annotator": "^0.4.0",
 		"@open-wc/testing": "^2.5.8",
-		"@open-wc/testing-karma": "^3.3.8",
+		"@open-wc/testing-karma": "^3.3.9",
 		"@polymer/iron-component-page": "^4.0.0",
 		"@polymer/iron-demo-helpers": "^3.0.0",
 		"@semantic-release/changelog": "^5.0.0",
