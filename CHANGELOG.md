@@ -1,3 +1,10 @@
+### [6.0.3](https://github.com/neovici/cosmoz-page-router/compare/v6.0.2...v6.0.3) (2020-03-25)
+
+
+### Bug Fixes
+
+* handles encoded `#` in hash ([#85](https://github.com/neovici/cosmoz-page-router/issues/85)) ([add4812](https://github.com/neovici/cosmoz-page-router/commit/add48121c64228f73db03b177960c474772225c7))
+
 ### [6.0.2](https://github.com/neovici/cosmoz-page-router/compare/v6.0.1...v6.0.2) (2020-03-24)
 
 
