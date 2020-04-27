@@ -65,8 +65,8 @@
 		"@commitlint/config-conventional": "^8.3.4",
 		"@neovici/eslint-config": "^1.2.1",
 		"@neovici/github-actions-eslint-annotator": "^0.4.0",
-		"@open-wc/testing": "^2.5.11",
-		"@open-wc/testing-karma": "^3.3.12",
+		"@open-wc/testing": "^2.5.13",
+		"@open-wc/testing-karma": "^3.3.15",
 		"@polymer/iron-component-page": "^4.0.0",
 		"@polymer/iron-demo-helpers": "^3.0.0",
 		"@semantic-release/changelog": "^5.0.1",
@@ -83,7 +83,7 @@
 		"karma": "^4.4.0",
 		"karma-firefox-launcher": "^1.3.0",
 		"karma-sauce-launcher": "^2.0.0",
-		"semantic-release": "^17.0.6",
+		"semantic-release": "^17.0.7",
 		"sinon": "^9.0.2"
 	}
 }
