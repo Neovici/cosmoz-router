@@ -3,6 +3,7 @@ import {
 } from '@open-wc/testing';
 
 import { microTask } from '@polymer/polymer/lib/utils/async';
+import '../cosmoz-page-location';
 
 /* eslint-disable max-lines-per-function */
 suite('cosmoz-page-location', () => {
@@ -53,10 +54,6 @@ suite('cosmoz-page-location', () => {
 			query: {}
 		}
 	};
-
-	suiteSetup(async () => {
-		await import('../cosmoz-page-location.js');
-	});
 
 	setup(async () => {
 		location = await fixture(html`<cosmoz-page-location />`);
