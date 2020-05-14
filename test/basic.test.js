@@ -20,6 +20,10 @@ suite('cosmoz-page-router', () => {
 			handle: () => import('../demo/views/view-1.js').then(() => createElement('view-1'))
 		},
 		{
+			rule: hashbang(/^\/param-reading-view/u),
+			handle: result => import('../demo/views/param-reading-view.js').then(() => createElement('param-reading-view', Object.fromEntries(result.match.url.searchParams.entries())))
+		},
+		{
 			rule: hashbang(/^\/error/u),
 			handle: () => Promise.reject(new Error('testing'))
 		}
@@ -74,6 +78,14 @@ suite('cosmoz-page-router', () => {
 		const router = fixtureSync(html`<cosmoz-page-router .routes=${routes} />`),
 			{ detail } = await oneEvent(router, 'route-error');
 		assert.equal(detail.error.message, 'testing');
+	});
+
+	test('params', async () => {
+		navigate('#!/param-reading-view?p1=1&p2=2');
+		const router = fixtureSync(html`<cosmoz-page-router .routes=${routes} />`);
+		await oneEvent(router, 'route-loaded');
+		await nextFrame();
+		assert.shadowDom.equal(router.shadowRoot.querySelector('param-reading-view'), 'p1: 1; p2: 2');
 	});
 });
 
