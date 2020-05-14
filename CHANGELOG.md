@@ -1,3 +1,11 @@
+### [6.0.4](https://github.com/neovici/cosmoz-page-router/compare/v6.0.3...v6.0.4) (2020-05-14)
+
+
+### Bug Fixes
+
+* **create-element:** document.createElement breaks useContext ([2b947d8](https://github.com/neovici/cosmoz-page-router/commit/2b947d8c5ea8fa9dfa3cbaaea328b500c620103e))
+* **router:** `until` directive breaks haunted effects ([951e886](https://github.com/neovici/cosmoz-page-router/commit/951e8868c94ef02183ce29b5d4feeb6bce2c1dfe))
+
 ### [6.0.3](https://github.com/neovici/cosmoz-page-router/compare/v6.0.2...v6.0.3) (2020-03-25)
 
 
