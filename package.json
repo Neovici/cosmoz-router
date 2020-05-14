@@ -55,6 +55,7 @@
 		}
 	},
 	"dependencies": {
+		"@neovici/cosmoz-utils": "^3.4.0",
 		"@polymer/iron-location": "^3.0.0",
 		"@polymer/polymer": "^3.3.1",
 		"haunted": "^4.7.0",
