@@ -20,7 +20,7 @@ const Router = function ({
 
 	useRouteEvents(route, result, this);
 
-	return html`${output || nothing}`;
+	return html`${ output || nothing }`;
 };
 
 customElements.define('cosmoz-page-router', component(Router));

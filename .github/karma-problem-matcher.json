@@ -1,0 +1,30 @@
+{
+    "problemMatcher": [{
+        "owner": "karma-eval",
+        "pattern": [{
+            "regexp": "^\\w+\\s\\d+\\.\\d+\\.\\d+\\s\\(\\w+\\s\\d+\\.\\d+\\.\\d+\\)\\sERROR$"
+        }, {
+            "regexp": "^\\s{2}(.*)$",
+            "message": 1
+        }, {
+            "regexp": "^\\s{2}at\\s([^:]*):(\\d+):(\\d+)$",
+            "file": 1,
+            "line": 2,
+            "column": 3
+        }]
+    }, {
+        "owner": "karma-test-error",
+        "pattern": [{
+            "regexp": "^\\w+\\s\\d+\\.\\d+\\.\\d+\\s\\(\\w+\\s\\d+\\.\\d+\\.\\d+\\)\\s(.*)FAILED$",
+            "code": 1
+        }, {
+            "regexp": "^\\t(.*)$",
+            "message": 1
+        }, {
+            "regexp": "^\\t {4}at\\s[^\\s]*\\s\\(([^:]*):(\\d+):(\\d+)\\)$",
+            "file": 1,
+            "line": 2,
+            "column": 3
+        }]
+    }]
+}
