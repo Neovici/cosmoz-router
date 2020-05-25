@@ -1,3 +1,10 @@
+### [6.0.5](https://github.com/neovici/cosmoz-page-router/compare/v6.0.4...v6.0.5) (2020-05-25)
+
+
+### Bug Fixes
+
+* npm packaging, eslint/karma problem matchers, deps upgrade ([9955ae3](https://github.com/neovici/cosmoz-page-router/commit/9955ae342c3df04759264be3bc65d0b6af82ab89))
+
 ### [6.0.4](https://github.com/neovici/cosmoz-page-router/compare/v6.0.3...v6.0.4) (2020-05-14)
 
 
