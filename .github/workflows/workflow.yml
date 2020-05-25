@@ -1,5 +1,6 @@
 ---
 name: Github CI
+
 on:
   pull_request:
     branches:
@@ -7,6 +8,7 @@ on:
   push:
     branches:
       - master
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -26,9 +28,7 @@ jobs:
       run: npx commitlint --from origin/master --to HEAD
 
     - name: ESLint
-      run: npx github-actions-eslint-annotator
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: npm run lint
 
     - name: Test and report
       env:
@@ -42,7 +42,8 @@ jobs:
       run: |
         ([[ -e $NEO_CC ]] || curl -L $NEO_CC_URL > $NEO_CC) && chmod +x $NEO_CC
         $NEO_CC before-build
-        npm run test $([ -z "$SAUCE_ACCESS_KEY"] && echo "-- --skip-plugin sauce")
+        echo "::add-matcher::.github/karma-problem-matcher.json"   
+        npm test
         $NEO_CC after-build --exit-code $?
 
     - name: Semantic release
