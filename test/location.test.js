@@ -88,7 +88,7 @@ suite('cosmoz-page-location', () => {
 
 	test('getAppUrl returns app url with query', () => {
 		const parts = location.getAppUrl({ queryKey: 'queryValue' }).split('?');
-		assert.equal(parts[parts.length - 1], 'queryKey=queryValue');
+		assert.include(parts[parts.length - 1], 'queryKey=queryValue');
 	});
 
 	test('_routeChanged updates _appHashString', () => {
