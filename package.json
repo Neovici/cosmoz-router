@@ -26,12 +26,10 @@
 	],
 	"scripts": {
 		"lint": "eslint --cache --ext .js .",
-		"start": "es-dev-server",
-		"test": "karma start --coverage",
-		"test:watch": "karma start --auto-watch=true --single-run=false",
-		"test:update-snapshots": "karma start --update-snapshots",
-		"test:prune-snapshots": "karma start --prune-snapshots",
-		"test:compatibility": "karma start --compatibility all --auto-watch=true --single-run=false"
+		"lint-tsc": "tsc",
+		"start": "wds",
+		"test": "wtr --coverage",
+		"test:watch": "wtr --watch"
 	},
 	"release": {
 		"plugins": [
@@ -63,31 +61,24 @@
 		"@polymer/iron-location": "^3.0.0",
 		"@polymer/polymer": "^3.4.1",
 		"haunted": "^4.7.0",
-		"lit-html": "^1.2.1"
+		"lit-html": "^1.4.0"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^8.3.5",
-		"@commitlint/config-conventional": "^8.3.4",
+		"@commitlint/cli": "^15.0.0",
+		"@commitlint/config-conventional": "^15.0.0",
 		"@neovici/eslint-config": "^1.2.2",
 		"@open-wc/testing": "^2.5.16",
-		"@open-wc/testing-karma": "^3.3.28",
 		"@polymer/iron-component-page": "^4.0.0",
 		"@polymer/iron-demo-helpers": "^3.0.0",
-		"@semantic-release/changelog": "^5.0.1",
-		"@semantic-release/git": "^9.0.0",
+		"@semantic-release/changelog": "^6.0.0",
+		"@semantic-release/git": "^10.0.0",
+		"@web/dev-server": "^0.1.28",
+		"@web/test-runner": "^0.13.23",
+		"@web/test-runner-selenium": "^0.5.3",
 		"@webcomponents/webcomponentsjs": "^2.4.3",
 		"babel-eslint": "^10.1.0",
-		"chai": "^4.2.0",
-		"deepmerge": "^4.2.2",
-		"eslint": "^6.8.0",
-		"eslint-plugin-html": "^6.0.2",
-		"eslint-plugin-import": "^2.20.2",
-		"eslint-plugin-mocha": "^6.3.0",
 		"husky": "^4.2.5",
-		"karma": "^5.0.9",
-		"karma-firefox-launcher": "^1.3.0",
-		"karma-sauce-launcher": "^2.0.0",
-		"semantic-release": "^17.0.7",
+		"semantic-release": "^18.0.0",
 		"sinon": "^9.0.2"
 	}
 }
