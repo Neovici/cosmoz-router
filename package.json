@@ -30,7 +30,8 @@
 		"start": "wds",
 		"test": "wtr --coverage",
 		"test:watch": "wtr --watch",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"postinstall": "ln -sv ./cfg node_modules/@neovici/eslint-config-cfg"
 	},
 	"release": {
 		"plugins": [
