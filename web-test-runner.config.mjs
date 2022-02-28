@@ -1,10 +1,11 @@
-import { chromeLauncher } from '@web/test-runner';
-import { seleniumLauncher } from '@web/test-runner-selenium';
-import webdriver from 'selenium-webdriver';
-import firefox from 'selenium-webdriver/firefox.js';
+import { playwrightLauncher } from '@web/test-runner-playwright';
 
 export default {
 	nodeResolve: true,
+	browsers: [
+		playwrightLauncher({ product: 'chromium' }),
+		playwrightLauncher({ product: 'firefox' })
+	],
 	coverageConfig: {
 		reportDir: 'coverage',
 		threshold: {
@@ -18,11 +19,4 @@ export default {
 		'**!(node_modules)/*.test.js'
 	],
 	testFramework: { config: { ui: 'tdd' }},
-	browsers: [
-		chromeLauncher(),
-		seleniumLauncher({
-			driverBuilder: new webdriver.Builder().forBrowser('firefox').setFirefoxOptions(new firefox.Options().headless())
-		})
-	]
-
 };
