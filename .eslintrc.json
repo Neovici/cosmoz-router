@@ -1,5 +1,5 @@
 {
-	"extends": "./node_modules/@neovici/cfg/eslint",
+	"extends": "@neovici/cfg/eslint",
 	"globals": {
 		"Cosmoz": "readonly"
 	}
