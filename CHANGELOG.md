@@ -1,3 +1,23 @@
+## [7.0.0](https://github.com/neovici/cosmoz-page-router/compare/v6.0.6...v7.0.0) (2022-03-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove deprecated cosmoz-page-location
+
+### Features
+
+* drop cosmoz-page-location ([462ec49](https://github.com/neovici/cosmoz-page-router/commit/462ec49f19ee84807f4d2d158f422d30c1af2496))
+* **use-hash-param:** implement ([4026c08](https://github.com/neovici/cosmoz-page-router/commit/4026c0817fc410a62a120d1697f5fb7527105635))
+
+
+### Bug Fixes
+
+* lint ([8e34243](https://github.com/neovici/cosmoz-page-router/commit/8e342434e1b4fea618d6bb80b4e2f3aca8916177))
+* re-use test-runner config ([c56e5ae](https://github.com/neovici/cosmoz-page-router/commit/c56e5aeff0351e60f577d079282c775763a46256))
+* test cfg ([cb9536d](https://github.com/neovici/cosmoz-page-router/commit/cb9536d7a5292e44ebab2c153c43115cd2810e31))
+* use hashchange event ([571119d](https://github.com/neovici/cosmoz-page-router/commit/571119ddd2399f924cb54dc0e9b9f207be47e328))
+
 ### [6.0.6](https://github.com/neovici/cosmoz-page-router/compare/v6.0.5...v6.0.6) (2021-12-22)
 
 
