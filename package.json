@@ -29,7 +29,8 @@
 		"lint-tsc": "tsc",
 		"start": "wds",
 		"test": "wtr --coverage",
-		"test:watch": "wtr --watch"
+		"test:watch": "wtr --watch",
+		"prepare": "husky install"
 	},
 	"release": {
 		"plugins": [
@@ -51,34 +52,24 @@
 			"@commitlint/config-conventional"
 		]
 	},
-	"husky": {
-		"hooks": {
-			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-		}
-	},
 	"dependencies": {
-		"@neovici/cosmoz-utils": "^3.4.0",
-		"@polymer/iron-location": "^3.0.0",
-		"@polymer/polymer": "^3.4.1",
+		"@neovici/cosmoz-utils": "^3.25.0",
 		"haunted": "^4.7.0",
 		"lit-html": "^1.4.0"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^15.0.0",
-		"@commitlint/config-conventional": "^15.0.0",
-		"@neovici/eslint-config": "^1.2.2",
+		"@commitlint/cli": "^16.0.0",
+		"@commitlint/config-conventional": "^16.0.0",
+		"@neovici/cfg": "^1.7.0",
 		"@open-wc/testing": "^2.5.16",
-		"@polymer/iron-component-page": "^4.0.0",
 		"@polymer/iron-demo-helpers": "^3.0.0",
 		"@semantic-release/changelog": "^6.0.0",
 		"@semantic-release/git": "^10.0.0",
 		"@web/dev-server": "^0.1.28",
 		"@web/test-runner": "^0.13.23",
-		"@web/test-runner-selenium": "^0.5.3",
 		"@webcomponents/webcomponentsjs": "^2.4.3",
-		"babel-eslint": "^10.1.0",
-		"husky": "^4.2.5",
-		"semantic-release": "^18.0.0",
-		"sinon": "^9.0.2"
+		"husky": "^7.0.0",
+		"semantic-release": "^19.0.0",
+		"sinon": "^13.0.0"
 	}
 }

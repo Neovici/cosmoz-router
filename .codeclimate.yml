@@ -29,14 +29,6 @@ checks:
     enabled: true
 
 plugins:
-  eslint:
-    enabled: true
-    channel: "eslint-5"
-    config:
-      sanitize_batch: false
-      extensions:
-        - .js
-        - .html
   fixme:
     enabled: true
 
