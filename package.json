@@ -30,8 +30,7 @@
 		"start": "wds",
 		"test": "wtr --coverage",
 		"test:watch": "wtr --watch",
-		"prepare": "husky install",
-		"postinstall": "ln -sv ./cfg node_modules/@neovici/eslint-config-cfg"
+		"prepare": "husky install"
 	},
 	"release": {
 		"plugins": [
@@ -68,9 +67,8 @@
 		"@semantic-release/git": "^10.0.0",
 		"@web/dev-server": "^0.1.28",
 		"@web/test-runner": "^0.13.23",
-		"@web/test-runner-playwright": "^0.8.8",
 		"@webcomponents/webcomponentsjs": "^2.4.3",
-		"husky": "^6.0.0",
+		"husky": "^7.0.0",
 		"semantic-release": "^19.0.0",
 		"sinon": "^13.0.0"
 	}
