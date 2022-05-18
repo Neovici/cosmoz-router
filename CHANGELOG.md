@@ -1,3 +1,14 @@
+## [8.0.0](https://github.com/neovici/cosmoz-page-router/compare/v7.0.0...v8.0.0) (2022-05-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **hash-param:** add setter support
+
+### Features
+
+* **hash-param:** add setter support ([2244cd6](https://github.com/neovici/cosmoz-page-router/commit/2244cd65bda8f8f01f7e91afd8bad80961ea565d))
+
 ## [7.0.0](https://github.com/neovici/cosmoz-page-router/compare/v6.0.6...v7.0.0) (2022-03-01)
 
 
