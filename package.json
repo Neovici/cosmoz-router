@@ -58,8 +58,8 @@
 		"lit-html": "^1.4.0"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^16.0.0",
-		"@commitlint/config-conventional": "^16.0.0",
+		"@commitlint/cli": "^17.0.0",
+		"@commitlint/config-conventional": "^17.0.0",
 		"@neovici/cfg": "^1.7.0",
 		"@open-wc/testing": "^2.5.16",
 		"@polymer/iron-demo-helpers": "^3.0.0",
@@ -68,8 +68,8 @@
 		"@web/dev-server": "^0.1.28",
 		"@web/test-runner": "^0.13.23",
 		"@webcomponents/webcomponentsjs": "^2.4.3",
-		"husky": "^7.0.0",
+		"husky": "^8.0.0",
 		"semantic-release": "^19.0.0",
-		"sinon": "^13.0.0"
+		"sinon": "^14.0.0"
 	}
 }
