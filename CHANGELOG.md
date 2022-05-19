@@ -1,3 +1,10 @@
+## [8.1.0](https://github.com/neovici/cosmoz-page-router/compare/v8.0.0...v8.1.0) (2022-05-19)
+
+
+### Features
+
+* update deps ([40d99e8](https://github.com/neovici/cosmoz-page-router/commit/40d99e8ac9b820d8eb03b8fee06ba8f5f514b924))
+
 ## [8.0.0](https://github.com/neovici/cosmoz-page-router/compare/v7.0.0...v8.0.0) (2022-05-18)
 
 
