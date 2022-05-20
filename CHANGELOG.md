@@ -1,3 +1,10 @@
+### [8.1.2](https://github.com/neovici/cosmoz-page-router/compare/v8.1.1...v8.1.2) (2022-05-20)
+
+
+### Bug Fixes
+
+* **use-hash-param:** setState only when changed ([d8e1d5a](https://github.com/neovici/cosmoz-page-router/commit/d8e1d5a5ca35f576080c5aeaf9f2dbd0adabd968))
+
 ### [8.1.1](https://github.com/neovici/cosmoz-page-router/compare/v8.1.0...v8.1.1) (2022-05-19)
 
 
