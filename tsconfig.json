@@ -1,13 +1,11 @@
 {
-  "compilerOptions": {
-    "outDir": "dist",
-    "declaration": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "strict": true,
-    "target": "esnext"
-  },
-  "include": [
-    "src"
-  ]
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"noEmit": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"strict": true,
+		"target": "esnext",
+		"allowJs": true
+	}
 }

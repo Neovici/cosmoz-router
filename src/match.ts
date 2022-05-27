@@ -1,12 +1,15 @@
 /* eslint-disable import/group-exports */
 type SRule = string | RegExp;
-type FnRule = (url: string) => ReturnType<typeof String.prototype.match>;
+interface RuleRet {
+	result: ReturnType<typeof String.prototype.match>;
+	url?: URL;
+}
+type FnRule = (url: string) => RuleRet | null;
 export type Rule = SRule | FnRule;
 
 export interface Route {
 	rule: Rule;
 }
-
 
 export const hashbang = (rule: SRule) => (url: string) => {
 		const origin = document.location.origin,
@@ -26,7 +29,7 @@ export const hashbang = (rule: SRule) => (url: string) => {
 			}
 		);
 	},
-	href = (rule: SRule) => (url: string) => {
+	href = (rule: SRule) => (url: string): RuleRet|null => {
 		const result = url.match(rule);
 		return result && { result };
 	},

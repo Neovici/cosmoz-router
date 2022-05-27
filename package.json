@@ -25,8 +25,8 @@
 		"cosmoz-*.js"
 	],
 	"scripts": {
-		"lint": "eslint --cache --ext .js .",
-		"build": "tsc",
+		"lint": "tsc && eslint --cache .",
+		"build": "tsc -p tsconfig.build.json",
 		"start": "wds",
 		"test": "wtr --coverage",
 		"test:watch": "wtr --watch",
@@ -60,7 +60,7 @@
 	"devDependencies": {
 		"@commitlint/cli": "^17.0.0",
 		"@commitlint/config-conventional": "^17.0.0",
-		"@neovici/cfg": "github:Neovici/cfg#feat/init-typescript-support",
+		"@neovici/cfg": "github:Neovici/cfg#feat/typescript",
 		"@open-wc/testing": "^2.5.16",
 		"@polymer/iron-demo-helpers": "^3.0.0",
 		"@semantic-release/changelog": "^6.0.0",

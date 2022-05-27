@@ -10,7 +10,7 @@ import type { Route as RouteT } from './match';
 
 type MatchedRoute = NonNullable<ReturnType<typeof useRoutes>>;
 
-interface Route<T = unknown> extends RouteT {
+export interface Route<T = unknown> extends RouteT {
 	handle: (r: MatchedRoute) => Promise<T>;
 }
 interface Props {
