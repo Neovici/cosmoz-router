@@ -60,7 +60,7 @@
 	"devDependencies": {
 		"@commitlint/cli": "^17.0.0",
 		"@commitlint/config-conventional": "^17.0.0",
-		"@neovici/cfg": "github:Neovici/cfg#feat/typescript",
+		"@neovici/cfg": "^1.15.0",
 		"@open-wc/testing": "^2.5.16",
 		"@semantic-release/changelog": "^6.0.0",
 		"@semantic-release/git": "^10.0.0",

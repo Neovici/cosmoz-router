@@ -17,17 +17,17 @@ suite('cosmoz-page-router', () => {
 		{
 			rule: /^\/$/u,
 			handle: () =>
-				import('../demo/views/home.js').then(() => createElement('demo-home')),
+				import('../stories/views/home.js').then(() => createElement('demo-home')),
 		},
 		{
 			rule: hashbang(/^\/view-1/u),
 			handle: () =>
-				import('../demo/views/view-1.js').then(() => createElement('view-1')),
+				import('../stories/views/view-1.js').then(() => createElement('view-1')),
 		},
 		{
 			rule: hashbang(/^\/param-reading-view/u),
 			handle: (result) =>
-				import('../demo/views/param-reading-view.js').then(() => {
+				import('../stories/views/param-reading-view.js').then(() => {
 					const entries = result.match.url?.searchParams?.entries(),
 						params = entries ? Object.fromEntries(entries) : {};
 					createElement('param-reading-view', params);
