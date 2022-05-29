@@ -35,6 +35,9 @@ jobs:
     - name: ESLint
       run: npm run lint
 
+    - name: Build
+      run: npm run build
+
     - name: Test and report
       env:
         GIT_BRANCH: ${{ github.ref == 'refs/heads/master' && 'master' || github.ref }}
