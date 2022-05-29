@@ -1,10 +1,10 @@
 /* eslint-disable import/group-exports */
-type SRule = string | RegExp;
-interface RuleRet {
+export type SRule = string | RegExp;
+export interface RuleRet {
 	result: ReturnType<typeof String.prototype.match>;
 	url?: URL;
 }
-type FnRule = (url: string) => RuleRet | null;
+export type FnRule = (url: string) => RuleRet | null;
 export type Rule = SRule | FnRule;
 
 export interface Route {
