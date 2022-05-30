@@ -16,13 +16,12 @@
 	},
 	"license": "Apache-2.0",
 	"author": "",
-	"main": "cosmoz-page-router.js",
+	"main": "dist/index.js",
 	"directories": {
 		"test": "test"
 	},
 	"files": [
-		"lib/",
-		"cosmoz-*.js"
+		"dist/*"
 	],
 	"scripts": {
 		"lint": "tsc && eslint --cache .",
