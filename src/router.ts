@@ -1,6 +1,6 @@
 import { nothing } from 'lit-html';
-import { guard } from 'lit-html/directives/guard';
-import { until } from 'lit-html/directives/until';
+import { guard } from 'lit-html/directives/guard.js';
+import { until } from 'lit-html/directives/until.js';
 import { component, useMemo } from 'haunted';
 
 import { useRoutes } from './use-routes';
