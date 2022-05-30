@@ -1,5 +1,11 @@
-import { useState, useEffect, useMemo, html } from 'haunted';
+import { useState, useEffect, useMemo, html as htm } from 'haunted';
 import { match, Route } from './match';
+
+const html: typeof htm = (arr, ...thru) =>
+	htm(
+		Object.assign(arr, { raw: true }) as unknown as TemplateStringsArray,
+		...thru
+	);
 
 export const documentUrl = () =>
 		window.location.href.replace(window.location.origin, ''),

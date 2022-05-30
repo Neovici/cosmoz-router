@@ -52,15 +52,14 @@
 		]
 	},
 	"dependencies": {
-		"@neovici/cosmoz-utils": "^3.25.0",
-		"haunted": "^4.7.0",
-		"lit-html": "^1.4.0"
+		"haunted": "^5.0.0",
+		"lit-html": "^2.0.0"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^17.0.0",
 		"@commitlint/config-conventional": "^17.0.0",
 		"@neovici/cfg": "^1.15.0",
-		"@open-wc/testing": "^2.5.16",
+		"@open-wc/testing": "^3.1.0",
 		"@semantic-release/changelog": "^6.0.0",
 		"@semantic-release/git": "^10.0.0",
 		"@web/dev-server": "^0.1.28",
