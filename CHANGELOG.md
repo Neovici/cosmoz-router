@@ -1,3 +1,23 @@
+## [9.0.0-beta.1](https://github.com/neovici/cosmoz-page-router/compare/v8.1.2...v9.0.0-beta.1) (2022-06-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* **lit:** upgrade to haunted 5 & lit 2
+
+### Features
+
+* **ci:** exports dist folder ([e27fc18](https://github.com/neovici/cosmoz-page-router/commit/e27fc187fe5f07efd9d8d4683ff7d8c654538c55))
+* init typescript ([7cb5c1c](https://github.com/neovici/cosmoz-page-router/commit/7cb5c1cd679986ce2014ec0d0eef9757982283c8))
+* **lit:** upgrade to haunted 5 & lit 2 ([9f87bd6](https://github.com/neovici/cosmoz-page-router/commit/9f87bd6abe7f662ccbb6ddad6630695e461662a4))
+* typescript init ([84100e6](https://github.com/neovici/cosmoz-page-router/commit/84100e62c6adfa2acc9b538f3416a94f63c03208))
+* **typescript:** convert tests to typescript ([915a415](https://github.com/neovici/cosmoz-page-router/commit/915a4152c276ecc59b6c2375e4c45f6efba129b9))
+
+
+### Bug Fixes
+
+* import paths ([a525324](https://github.com/neovici/cosmoz-page-router/commit/a525324c35a8bc371bd145e76273ec71970d4377))
+
 ### [8.1.2](https://github.com/neovici/cosmoz-page-router/compare/v8.1.1...v8.1.2) (2022-05-20)
 
 
