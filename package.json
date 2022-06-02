@@ -16,17 +16,16 @@
 	},
 	"license": "Apache-2.0",
 	"author": "",
-	"main": "cosmoz-page-router.js",
+	"main": "dist/index.js",
 	"directories": {
 		"test": "test"
 	},
 	"files": [
-		"lib/",
-		"cosmoz-*.js"
+		"dist/*"
 	],
 	"scripts": {
-		"lint": "eslint --cache --ext .js .",
-		"lint-tsc": "tsc",
+		"lint": "tsc && eslint --cache .",
+		"build": "tsc -p tsconfig.build.json",
 		"start": "wds",
 		"test": "wtr --coverage",
 		"test:watch": "wtr --watch",
@@ -53,19 +52,18 @@
 		]
 	},
 	"dependencies": {
-		"@neovici/cosmoz-utils": "^3.25.0",
-		"haunted": "^4.7.0",
-		"lit-html": "^1.4.0"
+		"haunted": "^5.0.0",
+		"lit-html": "^2.0.0"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^17.0.0",
 		"@commitlint/config-conventional": "^17.0.0",
-		"@neovici/cfg": "^1.7.0",
-		"@open-wc/testing": "^2.5.16",
-		"@polymer/iron-demo-helpers": "^3.0.0",
+		"@neovici/cfg": "^1.15.0",
+		"@open-wc/testing": "^3.1.0",
 		"@semantic-release/changelog": "^6.0.0",
 		"@semantic-release/git": "^10.0.0",
 		"@web/dev-server": "^0.1.28",
+		"@web/dev-server-storybook": "^0.5.1",
 		"@web/test-runner": "^0.13.23",
 		"@webcomponents/webcomponentsjs": "^2.4.3",
 		"husky": "^8.0.0",
