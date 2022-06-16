@@ -1,3 +1,10 @@
+## [9.0.0-beta.2](https://github.com/neovici/cosmoz-page-router/compare/v9.0.0-beta.1...v9.0.0-beta.2) (2022-06-16)
+
+
+### Bug Fixes
+
+* **deps:** update ([3e75753](https://github.com/neovici/cosmoz-page-router/commit/3e75753ee53324a4809065b07593e4c731bf0b58))
+
 ## [9.0.0-beta.1](https://github.com/neovici/cosmoz-page-router/compare/v8.1.2...v9.0.0-beta.1) (2022-06-02)
 
 
