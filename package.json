@@ -1,6 +1,6 @@
 {
 	"name": "@neovici/cosmoz-page-router",
-	"version": "9.0.0-beta.2",
+	"version": "9.0.0-beta.3",
 	"description": "A Polymer component to handle client side URL routing and view loading / management",
 	"keywords": [
 		"polymer",
@@ -55,7 +55,6 @@
 		".": "./dist/index.js",
 		"./use-hash-param": "./dist/use-hash-param.js"
 	},
-
 	"dependencies": {
 		"haunted": "^5.0.0",
 		"lit-html": "^2.0.0"
