@@ -51,6 +51,11 @@
 			"@commitlint/config-conventional"
 		]
 	},
+	"exports": {
+		".": "./dist/index.js",
+		"./use-hash-param": "./dist/use-hash-param.js"
+	},
+
 	"dependencies": {
 		"haunted": "^5.0.0",
 		"lit-html": "^2.0.0"
