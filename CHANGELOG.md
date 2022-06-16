@@ -1,3 +1,10 @@
+## [9.0.0-beta.3](https://github.com/neovici/cosmoz-page-router/compare/v9.0.0-beta.2...v9.0.0-beta.3) (2022-06-16)
+
+
+### Bug Fixes
+
+* adjust exports map ([36009db](https://github.com/neovici/cosmoz-page-router/commit/36009db62d9c432fc4cd0c8e4017c8737f7fddde))
+
 ## [9.0.0-beta.2](https://github.com/neovici/cosmoz-page-router/compare/v9.0.0-beta.1...v9.0.0-beta.2) (2022-06-16)
 
 
