@@ -1,3 +1,26 @@
+## [9.0.0](https://github.com/neovici/cosmoz-page-router/compare/v8.1.2...v9.0.0) (2022-06-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* **lit:** upgrade to haunted 5 & lit 2
+
+### Features
+
+* **ci:** exports dist folder ([d5489c2](https://github.com/neovici/cosmoz-page-router/commit/d5489c27f67a19f3e754c159f9b75950e75f21ca))
+* init typescript ([8a677b8](https://github.com/neovici/cosmoz-page-router/commit/8a677b8d93f00b3a2ba0b7c731721fee20ba1831))
+* **lit:** upgrade to haunted 5 & lit 2 ([0169365](https://github.com/neovici/cosmoz-page-router/commit/0169365bb61392ef376500d707184eebf72d609b))
+* typescript init ([25fbfba](https://github.com/neovici/cosmoz-page-router/commit/25fbfbac9b43c855613f33bc1f5625323f9cf7b3))
+* **typescript:** convert tests to typescript ([5eab3e9](https://github.com/neovici/cosmoz-page-router/commit/5eab3e9aeb41bcb821fc9890afcfec5ee951c48d))
+
+
+### Bug Fixes
+
+* adjust exports map ([d9ff93f](https://github.com/neovici/cosmoz-page-router/commit/d9ff93fef25d18089c783aaa3a3b3401004ab4f8))
+* **deps:** update ([9ec8374](https://github.com/neovici/cosmoz-page-router/commit/9ec8374ceee8819e2ef1960eb1d764369f802fed))
+* **deps:** update ([2418f49](https://github.com/neovici/cosmoz-page-router/commit/2418f4997f7d816ceabce04062e9cf2e405bb5ea))
+* import paths ([896a9f0](https://github.com/neovici/cosmoz-page-router/commit/896a9f07f4ce20d9431091681b87e50e5c559f59))
+
 ## [9.0.0-beta.3](https://github.com/neovici/cosmoz-page-router/compare/v9.0.0-beta.2...v9.0.0-beta.3) (2022-06-16)
 
 
