@@ -1,3 +1,14 @@
+## [10.0.0](https://github.com/neovici/cosmoz-router/compare/v9.0.0...v10.0.0) (2022-07-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename module and repo
+
+### Features
+
+* rename ([81d403a](https://github.com/neovici/cosmoz-router/commit/81d403a4fc1a242d76fb6b3986cc4670449bcfa4))
+
 ## [9.0.0](https://github.com/neovici/cosmoz-page-router/compare/v8.1.2...v9.0.0) (2022-06-21)
 
 
