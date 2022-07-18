@@ -1,17 +1,15 @@
-cosmoz-page-router
+cosmoz-router
 ==================
 
-[![Build Status](https://github.com/Neovici/cosmoz-page-router/workflows/Github%20CI/badge.svg)](https://github.com/Neovici/cosmoz-page-router/actions?workflow=Github+CI)
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/Neovici/cosmoz-page-router)
-[![Depfu](https://badges.depfu.com/badges/c887733c2e1b6c70285860279a80fa03/overview.svg)](https://depfu.com/github/Neovici/cosmoz-page-router?project_id=9639)
+[![Build Status](https://github.com/Neovici/cosmoz-router/workflows/Github%20CI/badge.svg)](https://github.com/Neovici/cosmoz-router/actions?workflow=Github+CI)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
-## &lt;cosmoz-page-router&gt;
+## &lt;cosmoz-router&gt;
 
-**cosmoz-page-router** is a haunted component to handle client side URL routing
+**cosmoz-router** is a haunted component to handle client side URL routing
 and view loading / management.
 
-By default **cosmoz-page-router** listens to `popstate` event
+By default **cosmoz-router** listens to `popstate` event
 , gets current location href and matches it against the routes defined.
 
 ## Getting started
@@ -20,14 +18,14 @@ By default **cosmoz-page-router** listens to `popstate` event
 
 Using npm:
 ```bash
-npm install --save @neovici/cosmoz-page-router
+npm install --save @neovici/cosmoz-router
 ```
 
 ### Importing
 
-The **cosmoz-page-router** element can be imported using:
+The **cosmoz-router** element can be imported using:
 ```javascript
-import '@neovici/cosmoz-page-router/cosmoz-page-router';
+import '@neovici/cosmoz-router/cosmoz-page-router';
 ```
 
 ## Usage
@@ -36,7 +34,7 @@ import '@neovici/cosmoz-page-router/cosmoz-page-router';
 Routes are defined as an Array of Objects:
 ``` javascript
 import { html } from 'lit-html';
-import { creteElement, navigate } from '@neovici/cosmoz-page-router/lib/use-routes';
+import { creteElement, navigate } from '@neovici/cosmoz-router/lib/use-routes';
 
 const routes = [
 	{
@@ -63,15 +61,15 @@ const routes = [
 	}
 ];
 ```
-and passed to cosmoz-page-router:
+and passed to cosmoz-router:
 
 ``` javascript
-html`<cosmoz-page-router .routes=${routes} />`;
+html`<cosmoz-router .routes=${routes} />`;
 ```
 
 
 ## Documentation
 
-See http://neovici.github.io/cosmoz-page-router (outdated)
+See http://neovici.github.io/cosmoz-router (outdated)
 
 TODO

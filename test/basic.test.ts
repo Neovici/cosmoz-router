@@ -12,7 +12,7 @@ import { hashbang } from '../src/match';
 import { Route } from '../src/router';
 
 /* eslint-disable max-lines-per-function */
-suite('cosmoz-page-router', () => {
+suite('cosmoz-router', () => {
 	const routes: Route[] = [
 		{
 			rule: /^\/$/u,
