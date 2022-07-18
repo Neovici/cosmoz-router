@@ -61,7 +61,7 @@ const Router = () => `
 			}
 		</style>
 		<div id="content">
-			<h1>cosmoz-page-router test</h1>
+			<h1>cosmoz-router test</h1>
 			<ul>
 				<li><a href="#!/" target="_self">/Home</a></li>
 				<li><a href="#!/view-1" target="_self">/view-1</a></li>

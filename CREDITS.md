@@ -1,6 +1,6 @@
 # Credits
 
-cosmoz-page-router is based on Erik Ringsmuth's app-router component (https://github.com/erikringsmuth/app-router), licensed under the MIT License.
+cosmoz-router is based on Erik Ringsmuth's app-router component (https://github.com/erikringsmuth/app-router), licensed under the MIT License.
 
 The MIT License (MIT)
 
