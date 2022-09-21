@@ -1,3 +1,10 @@
+## [10.0.1](https://github.com/neovici/cosmoz-router/compare/v10.0.0...v10.0.1) (2022-09-21)
+
+
+### Bug Fixes
+
+* **use-route-events:** handle non promise ([335f4a2](https://github.com/neovici/cosmoz-router/commit/335f4a293facc5c0239710a810baa8e5ea0cc0aa))
+
 ## [10.0.0](https://github.com/neovici/cosmoz-router/compare/v9.0.0...v10.0.0) (2022-07-18)
 
 
