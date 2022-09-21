@@ -22,7 +22,7 @@ export const useRouteEvents = <T extends Route, P>(
 			return;
 		}
 		dispatch(el, 'route-loading', { detail: route });
-		result
+		Promise.resolve(result)
 			.then(() => dispatch(el, 'route-loaded', { detail: route }))
 			.catch((error) =>
 				dispatch(el, 'route-error', {
