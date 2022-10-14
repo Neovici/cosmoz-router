@@ -7,7 +7,7 @@ export interface RuleRet {
 export type FnRule = (url: string) => RuleRet | null;
 export type Rule = SRule | FnRule;
 
-export interface Route {
+export interface BaseRoute {
 	rule: Rule;
 }
 
@@ -33,7 +33,7 @@ export const hashbang = (rule: SRule) => (url: string) => {
 		const result = url.match(rule);
 		return result && { result };
 	},
-	match = <T extends Route>(routes: T[], url: string) => {
+	match = <T extends BaseRoute>(routes: T[], url: string) => {
 		for (const route of routes) {
 			const rule = route.rule,
 				match = typeof rule === 'function' ? rule(url) : href(rule)(url);

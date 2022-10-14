@@ -1,5 +1,5 @@
 import { useEffect } from 'haunted';
-import type { Route } from './match';
+import type { BaseRoute } from './match';
 
 const dispatch = (el: HTMLElement, type: string, opts?: object) =>
 	el.dispatchEvent(
@@ -11,10 +11,10 @@ const dispatch = (el: HTMLElement, type: string, opts?: object) =>
 		})
 	);
 
-export const useRouteEvents = <T extends Route, P>(
+export const useRouteEvents = <T extends BaseRoute, P>(
 	el: HTMLElement,
 	route?: T,
-	result?: Promise<P>,
+	result?: PromiseLike<P>,
 ) => {
 	useEffect(() => {
 		if (!result) {
