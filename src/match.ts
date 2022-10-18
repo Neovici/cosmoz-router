@@ -40,6 +40,7 @@ export const hashbang = (rule: SRule) => (url: string) => {
 			if (match) {
 				return {
 					...route,
+					route,
 					match,
 					url,
 				};
