@@ -7,7 +7,8 @@ import {
 } from '@open-wc/testing';
 import { mock } from 'sinon';
 
-import { createElement, navigate, documentUrl } from '../src/use-routes';
+import { navigate, documentUrl } from '../src/use-routes';
+import { createElement, load } from '../src/load';
 import { hashbang } from '../src/match';
 import { Route } from '../src/use-router';
 
@@ -23,10 +24,7 @@ suite('cosmoz-router', () => {
 		},
 		{
 			rule: hashbang(/^\/view-1/u),
-			handle: () =>
-				import('../stories/views/view-1.js').then(() =>
-					createElement('view-1')
-				),
+			handle: load(() => import('../stories/views/view-1.js'), 'view-1'),
 		},
 		{
 			rule: hashbang(/^\/param-reading-view/u),

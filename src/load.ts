@@ -37,17 +37,18 @@ export const createElement = (tag: string, props = {}) => {
 	return html([`<${tag}>`] as unknown as TemplateStringsArray);
 };
 
-export type Pack = <T>(params: Record<string, string>) => PromiseLike<T>;
-
 export const load =
-	(pack: Pack, tag: string | ((u: URL) => string) = tagFromPath) =>
-	<T extends { match: RuleRet }>({ match }: T) => {
+	<T>(
+		pack: (params: Record<string, string | number>) => T,
+		tag: string | ((u: URL) => string) = tagFromPath
+	) =>
+	<P extends { match: RuleRet }>({ match }: P) => {
 		const url = match.url;
 		const params = {
 			...match.result?.groups,
-			...Object.fromEntries(url?.searchParams ?? []),
+			...Object.fromEntries(url.searchParams ?? []),
 		};
-		return pack(params).then(
+		return Promise.resolve(pack(params)).then(
 			() =>
 				html`${createElement(typeof tag === 'function' ? tag(url) : tag, {
 					params,
