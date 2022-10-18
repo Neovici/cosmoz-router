@@ -1,3 +1,16 @@
+## [10.4.0](https://github.com/neovici/cosmoz-router/compare/v10.3.0...v10.4.0) (2022-10-18)
+
+
+### Features
+
+* add dynamic import load helper ([d111dfb](https://github.com/neovici/cosmoz-router/commit/d111dfb91dba9fd5c7fb729ae3573920b8cb52a8))
+* add test ([bc84e69](https://github.com/neovici/cosmoz-router/commit/bc84e696dcc9819379a9a8c8c18a11332176dde9))
+
+
+### Bug Fixes
+
+* template error createElement ([8911ebd](https://github.com/neovici/cosmoz-router/commit/8911ebd50cc457ef4adc801e259c20a9ec81f1da))
+
 ## [10.3.0](https://github.com/neovici/cosmoz-router/compare/v10.2.0...v10.3.0) (2022-10-18)
 
 
