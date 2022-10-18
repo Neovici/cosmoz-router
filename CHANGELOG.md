@@ -1,3 +1,10 @@
+## [10.2.0](https://github.com/neovici/cosmoz-router/compare/v10.1.0...v10.2.0) (2022-10-18)
+
+
+### Features
+
+* **use-router:** adjust Route handle type def ([4dfc6d1](https://github.com/neovici/cosmoz-router/commit/4dfc6d1d227e878bec3f5588186005221c0d9cb6))
+
 ## [10.1.0](https://github.com/neovici/cosmoz-router/compare/v10.0.1...v10.1.0) (2022-10-18)
 
 
