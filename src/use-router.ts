@@ -6,7 +6,7 @@ import type { BaseRoute } from './match';
 export type MatchedRoute = NonNullable<ReturnType<typeof useRoutes>>;
 
 export interface Route<T = unknown> extends BaseRoute {
-	handle: (r: MatchedRoute) => PromiseLike<T>;
+	handle: (r: MatchedRoute) => T;
 }
 
 export const useRouter = <T>(routes: Route<T>[]) => {

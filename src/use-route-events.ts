@@ -14,7 +14,7 @@ const dispatch = (el: HTMLElement, type: string, opts?: object) =>
 export const useRouteEvents = <T extends BaseRoute, P>(
 	el: HTMLElement,
 	route?: T,
-	result?: PromiseLike<P>,
+	result?:  P
 ) => {
 	useEffect(() => {
 		if (!result) {
