@@ -48,10 +48,9 @@ export const load =
 			...match.result?.groups,
 			...Object.fromEntries(url.searchParams ?? []),
 		};
-		return Promise.resolve(pack(params)).then(
-			() =>
-				html`${createElement(typeof tag === 'function' ? tag(url) : tag, {
-					params,
-				})}`
+		return Promise.resolve(pack(params)).then(() =>
+			createElement(typeof tag === 'function' ? tag(url) : tag, {
+				params,
+			})
 		);
 	};
