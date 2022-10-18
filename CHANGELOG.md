@@ -1,3 +1,10 @@
+## [10.1.0](https://github.com/neovici/cosmoz-router/compare/v10.0.1...v10.1.0) (2022-10-18)
+
+
+### Features
+
+* add use-router ([78fd1ae](https://github.com/neovici/cosmoz-router/commit/78fd1ae496aeda4fc0d84b29fac34ce338f07ec0))
+
 ## [10.0.1](https://github.com/neovici/cosmoz-router/compare/v10.0.0...v10.0.1) (2022-09-21)
 
 
