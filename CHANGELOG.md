@@ -1,3 +1,10 @@
+## [10.3.0](https://github.com/neovici/cosmoz-router/compare/v10.2.0...v10.3.0) (2022-10-18)
+
+
+### Features
+
+* **match:** access original route object ([7b85ec5](https://github.com/neovici/cosmoz-router/commit/7b85ec5a6bb1fdd3f5e9cb759d446530b2141f39))
+
 ## [10.2.0](https://github.com/neovici/cosmoz-router/compare/v10.1.0...v10.2.0) (2022-10-18)
 
 
