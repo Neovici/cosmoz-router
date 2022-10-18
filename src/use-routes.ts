@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, html as htm } from 'haunted';
-import { match, Route } from './match';
+import { match, BaseRoute } from './match';
 
 const html: typeof htm = (arr, ...thru) =>
 	htm(
@@ -46,7 +46,7 @@ export const documentUrl = () =>
 
 		return url;
 	},
-	useRoutes = <T extends Route>(routes: T[]) => {
+	useRoutes = <T extends BaseRoute>(routes: T[]) => {
 		const url = useUrl();
 		return useMemo(() => match(routes, url), [routes, url]);
 	},

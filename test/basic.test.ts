@@ -9,7 +9,7 @@ import { mock } from 'sinon';
 
 import { createElement, navigate, documentUrl } from '../src/use-routes';
 import { hashbang } from '../src/match';
-import { Route } from '../src/router';
+import { Route } from '../src/use-router';
 
 /* eslint-disable max-lines-per-function */
 suite('cosmoz-router', () => {
