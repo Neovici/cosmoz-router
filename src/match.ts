@@ -2,7 +2,7 @@
 export type SRule = string | RegExp;
 export interface RuleRet {
 	result: ReturnType<typeof String.prototype.match>;
-	url?: URL;
+	url: URL;
 }
 export type FnRule = (url: string) => RuleRet | null;
 export type Rule = SRule | FnRule;
@@ -29,10 +29,12 @@ export const hashbang = (rule: SRule) => (url: string) => {
 			}
 		);
 	},
-	href = (rule: SRule) => (url: string): RuleRet|null => {
-		const result = url.match(rule);
-		return result && { result };
-	},
+	href =
+		(rule: SRule) =>
+		(url: string): RuleRet | null => {
+			const result = url.match(rule);
+			return result && { result, url: new URL(url, document.location.origin) };
+		},
 	match = <T extends BaseRoute>(routes: T[], url: string) => {
 		for (const route of routes) {
 			const rule = route.rule,
