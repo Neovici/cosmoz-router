@@ -1,3 +1,10 @@
+## [10.5.0](https://github.com/neovici/cosmoz-router/compare/v10.4.0...v10.5.0) (2023-01-19)
+
+
+### Features
+
+* **load:** set route property on matched elemetn ([6b92649](https://github.com/neovici/cosmoz-router/commit/6b926491db59961ecee7273be38a5d3ea33bad60))
+
 ## [10.4.0](https://github.com/neovici/cosmoz-router/compare/v10.3.0...v10.4.0) (2022-10-18)
 
 
