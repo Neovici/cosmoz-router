@@ -1,5 +1,5 @@
 import { html as htm } from 'haunted';
-import { RuleRet } from './match';
+import { RuleRet, BaseRoute } from './match';
 
 const html: typeof htm = (arr, ...thru) =>
 	htm(
@@ -42,7 +42,7 @@ export const load =
 		pack: (params: Record<string, string | number>) => T,
 		tag: string | ((u: URL) => string) = tagFromPath
 	) =>
-	<P extends { match: RuleRet }>({ match }: P) => {
+	<P extends { match: RuleRet; route: BaseRoute }>({ match, route }: P) => {
 		const url = match.url;
 		const params = {
 			...match.result?.groups,
@@ -51,6 +51,7 @@ export const load =
 		return Promise.resolve(pack(params)).then(() =>
 			createElement(typeof tag === 'function' ? tag(url) : tag, {
 				params,
+				route,
 			})
 		);
 	};
