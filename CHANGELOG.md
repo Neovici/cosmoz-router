@@ -1,3 +1,10 @@
+## [10.6.0](https://github.com/neovici/cosmoz-router/compare/v10.5.0...v10.6.0) (2023-11-02)
+
+
+### Features
+
+* update deps & workflow ([f709386](https://github.com/neovici/cosmoz-router/commit/f70938655e6500075f5c41ef3dab5925a07d585d))
+
 ## [10.5.0](https://github.com/neovici/cosmoz-router/compare/v10.4.0...v10.5.0) (2023-01-19)
 
 
