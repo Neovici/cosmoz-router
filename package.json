@@ -60,18 +60,18 @@
 		"lit-html": "^2.0.0"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^17.0.0",
-		"@commitlint/config-conventional": "^17.0.0",
+		"@commitlint/cli": "^18.0.0",
+		"@commitlint/config-conventional": "^18.0.0",
 		"@neovici/cfg": "^1.15.0",
 		"@open-wc/testing": "^3.1.0",
 		"@semantic-release/changelog": "^6.0.0",
 		"@semantic-release/git": "^10.0.0",
-		"@web/dev-server": "^0.1.0",
-		"@web/dev-server-storybook": "^0.5.0",
-		"@web/test-runner": "^0.14.0",
-		"@webcomponents/webcomponentsjs": "^2.4.0",
+		"@types/mocha": "^10.0.3",
+		"@web/dev-server": "^0.4.0",
+		"@web/dev-server-storybook": "^1.0.0",
+		"@web/test-runner": "^0.18.0",
 		"husky": "^8.0.0",
-		"semantic-release": "^19.0.0",
-		"sinon": "^14.0.0"
+		"semantic-release": "^22.0.0",
+		"sinon": "^17.0.0"
 	}
 }
