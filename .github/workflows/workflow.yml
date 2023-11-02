@@ -14,4 +14,4 @@ on:
 jobs:
   build:
     uses: Neovici/cfg/.github/workflows/forge.yml@master
-    secrets: i
+    secrets: inherit
