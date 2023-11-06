@@ -1,3 +1,10 @@
+## [10.7.0](https://github.com/neovici/cosmoz-router/compare/v10.6.0...v10.7.0) (2023-11-06)
+
+
+### Features
+
+* **use-hash-param:** adjust return type ([c62226e](https://github.com/neovici/cosmoz-router/commit/c62226e1ccabb4d225f8185c6d6e37a1463ce1ab))
+
 ## [10.6.0](https://github.com/neovici/cosmoz-router/compare/v10.5.0...v10.6.0) (2023-11-02)
 
 
