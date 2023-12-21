@@ -9,7 +9,9 @@ export interface Route<T = unknown> extends BaseRoute {
 	handle: (r: MatchedRoute) => T;
 }
 
-export const useRouter = <T>(routes: Route<T>[]) => {
+export const useRouter = <R = unknown, T extends Route<R> = Route<R>>(
+	routes: T[],
+) => {
 	const route = useRoutes(routes);
 
 	return {
