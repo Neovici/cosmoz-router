@@ -1,3 +1,10 @@
+## [10.8.0](https://github.com/neovici/cosmoz-router/compare/v10.7.0...v10.8.0) (2023-12-21)
+
+
+### Features
+
+* **router:** improve type def ([99f76ed](https://github.com/neovici/cosmoz-router/commit/99f76ed09aa2401a481d97b058b75526dfe83162))
+
 ## [10.7.0](https://github.com/neovici/cosmoz-router/compare/v10.6.0...v10.7.0) (2023-11-06)
 
 
