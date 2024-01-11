@@ -1,3 +1,14 @@
+## [11.0.0](https://github.com/neovici/cosmoz-router/compare/v10.8.0...v11.0.0) (2024-01-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* Upgrade to @pionjs/pion
+
+### Features
+
+* update to pion ([a9b4e40](https://github.com/neovici/cosmoz-router/commit/a9b4e400ad479c4e85dc35a4e54b72d23c4543f5))
+
 ## [10.8.0](https://github.com/neovici/cosmoz-router/compare/v10.7.0...v10.8.0) (2023-12-21)
 
 
