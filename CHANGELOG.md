@@ -1,3 +1,10 @@
+## [11.2.0](https://github.com/neovici/cosmoz-router/compare/v11.1.0...v11.2.0) (2024-01-11)
+
+
+### Features
+
+* update exported type def ([158ce6d](https://github.com/neovici/cosmoz-router/commit/158ce6de49e88c7a96df72c5aad2d4b7ca3a8550))
+
 ## [11.1.0](https://github.com/neovici/cosmoz-router/compare/v11.0.0...v11.1.0) (2024-01-11)
 
 
