@@ -1,4 +1,4 @@
-import { useEffect } from 'haunted';
+import { useEffect } from '@pionjs/pion';
 import type { BaseRoute } from './match';
 
 const dispatch = (el: HTMLElement, type: string, opts?: object) =>

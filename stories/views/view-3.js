@@ -1,4 +1,4 @@
-import { html, component, useState, useEffect } from 'haunted';
+import { html, component, useState, useEffect } from '@pionjs/pion';
 
 customElements.define(
 	'view-3',

@@ -1,4 +1,4 @@
-import { html, component } from 'haunted';
+import { html, component } from '@pionjs/pion';
 import { hashbang, createElement } from '../src/index.ts';
 
 export default {

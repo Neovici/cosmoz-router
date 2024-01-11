@@ -1,4 +1,4 @@
-import { html as htm } from 'haunted';
+import { html as htm } from '@pionjs/pion';
 import { RuleRet, BaseRoute } from './match';
 
 const html: typeof htm = (arr, ...thru) =>

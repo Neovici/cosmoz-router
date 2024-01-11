@@ -1,4 +1,4 @@
-import { html, component } from 'haunted';
+import { html, component } from '@pionjs/pion';
 
 customElements.define(
 	'demo-home',
