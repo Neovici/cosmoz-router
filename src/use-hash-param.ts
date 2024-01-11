@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'haunted';
+import { useState, useEffect, useMemo, useRef } from '@pionjs/pion';
 
 const hashUrl = () =>
 		new URL(
