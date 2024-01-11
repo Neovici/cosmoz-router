@@ -1,5 +1,6 @@
 import { nothing } from 'lit-html';
-import { guard } from 'lit-html/directives/guard.js';
+import type { DirectiveResult } from 'lit-html/directive.js';
+import { guard, GuardDirective } from 'lit-html/directives/guard.js';
 import { until } from 'lit-html/directives/until.js';
 import { component } from '@pionjs/pion';
 
@@ -11,7 +12,7 @@ interface Props {
 }
 interface RouterT extends HTMLElement, Props {}
 
-const Router = (host: RouterT) => {
+const Router = (host: RouterT): DirectiveResult<typeof GuardDirective> => {
 	const routes: Route[] = host.routes,
 		{ route, result } = useRouter(routes);
 
@@ -20,8 +21,8 @@ const Router = (host: RouterT) => {
 	return guard([result], () =>
 		until(
 			Promise.resolve(result).catch(() => nothing),
-			nothing
-		)
+			nothing,
+		),
 	);
 };
 
