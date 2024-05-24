@@ -19,7 +19,7 @@ suite('cosmoz-router', () => {
 			rule: /^\/$/u,
 			handle: () =>
 				import('../stories/views/home.js').then(() =>
-					createElement('demo-home')
+					createElement('demo-home'),
 				),
 		},
 		{
@@ -33,7 +33,7 @@ suite('cosmoz-router', () => {
 					const entries = result.match.url?.searchParams?.entries();
 					return createElement(
 						'param-reading-view',
-						entries ? Object.fromEntries(entries) : {}
+						entries ? Object.fromEntries(entries) : {},
 					);
 				}),
 		},
@@ -53,7 +53,7 @@ suite('cosmoz-router', () => {
 	test('renders home', async () => {
 		navigate('/');
 		const router = fixtureSync(html`<cosmoz-router .routes=${routes} />`);
-		await oneEvent(router, 'route-loaded', false);
+		await oneEvent(router, 'route-loaded');
 		await nextFrame();
 		assert.shadowDom.equal(router, '<demo-home></demo-home>');
 	});
@@ -61,7 +61,7 @@ suite('cosmoz-router', () => {
 	test('renders view-1', async () => {
 		navigate('#!/view-1');
 		const router = fixtureSync(html`<cosmoz-router .routes=${routes} />`);
-		await oneEvent(router, 'route-loaded', false);
+		await oneEvent(router, 'route-loaded');
 		await nextFrame();
 		assert.shadowDom.equal(router, '<view-1></view-1>');
 	});
@@ -69,7 +69,7 @@ suite('cosmoz-router', () => {
 	test('renders not-found', async () => {
 		navigate('#/not-found');
 		const router = fixtureSync(html`<cosmoz-router .routes=${routes} />`);
-		await oneEvent(router, 'route-not-found', false);
+		await oneEvent(router, 'route-not-found');
 		await nextFrame();
 		assert.shadowDom.equal(router, '');
 	});
@@ -77,12 +77,12 @@ suite('cosmoz-router', () => {
 	test('renders home, then view-1', async () => {
 		navigate('/');
 		const router = fixtureSync(html`<cosmoz-router .routes=${routes} />`);
-		await oneEvent(router, 'route-loaded', false);
+		await oneEvent(router, 'route-loaded');
 		await nextFrame();
 		assert.shadowDom.equal(router, '<demo-home></demo-home>');
 
 		navigate('#!/view-1');
-		await oneEvent(router, 'route-loaded', false);
+		await oneEvent(router, 'route-loaded');
 		await nextFrame();
 		assert.shadowDom.equal(router, '<view-1></view-1>');
 	});
@@ -90,18 +90,18 @@ suite('cosmoz-router', () => {
 	test('error', async () => {
 		navigate('#!/error');
 		const router = fixtureSync(html`<cosmoz-router .routes=${routes} />`),
-			{ detail } = await oneEvent(router, 'route-error', false);
+			{ detail } = await oneEvent(router, 'route-error');
 		assert.equal(detail.error.message, 'testing');
 	});
 
 	test('params', async () => {
 		navigate('#!/param-reading-view?p1=1&p2=2');
 		const router = fixtureSync(html`<cosmoz-router .routes=${routes} />`);
-		await oneEvent(router, 'route-loaded', false);
+		await oneEvent(router, 'route-loaded');
 		await nextFrame();
 		assert.shadowDom.equal(
 			router.shadowRoot?.querySelector('param-reading-view'),
-			'p1: 1; p2: 2'
+			'p1: 1; p2: 2',
 		);
 	});
 });
