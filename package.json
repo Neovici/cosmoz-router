@@ -70,7 +70,7 @@
 		"@web/dev-server-storybook": "^2.0.0",
 		"@web/test-runner": "^0.18.0",
 		"husky": "^9.0.0",
-		"semantic-release": "^23.0.0",
+		"semantic-release": "^24.0.0",
 		"sinon": "^18.0.0"
 	}
 }
