@@ -8,13 +8,13 @@ const dispatch = (el: HTMLElement, type: string, opts?: object) =>
 			cancelable: false,
 			composed: true,
 			...opts,
-		})
+		}),
 	);
 
 export const useRouteEvents = <T extends BaseRoute, P>(
 	el: HTMLElement,
 	route?: T,
-	result?:  P
+	result?: P,
 ) => {
 	useEffect(() => {
 		if (!result) {
@@ -30,7 +30,7 @@ export const useRouteEvents = <T extends BaseRoute, P>(
 						route,
 						error,
 					},
-				})
+				}),
 			);
 	}, [result]);
 };

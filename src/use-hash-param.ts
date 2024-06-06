@@ -63,7 +63,7 @@ export const useHashParam = (hashParam?: string) => {
 				? (v: string | null) => {
 						setParam(v);
 						history.pushState({}, '', link(hashParam, v));
-				  }
+					}
 				: setParam,
 		[hashParam],
 	);

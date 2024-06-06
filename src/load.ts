@@ -1,10 +1,10 @@
 import { html as htm } from '@pionjs/pion';
-import { RuleRet, BaseRoute } from './match';
+import { Match, BaseRoute } from './match';
 
 const html: typeof htm = (arr, ...thru) =>
 	htm(
 		Object.assign(arr, { raw: true }) as unknown as TemplateStringsArray,
-		...thru
+		...thru,
 	);
 export const tagFromPath = ({ pathname }: URL) =>
 	pathname.substring(1).replace(/\//gu, '-');
@@ -30,7 +30,7 @@ export const createElement = (tag: string, props = {}) => {
 				...strings.slice(1),
 				'>',
 			] as unknown as TemplateStringsArray,
-			...Object.values(props)
+			...Object.values(props),
 		);
 	}
 
@@ -40,9 +40,9 @@ export const createElement = (tag: string, props = {}) => {
 export const load =
 	<T>(
 		pack: (params: Record<string, string | number>) => T,
-		tag: string | ((u: URL) => string) = tagFromPath
+		tag: string | ((u: URL) => string) = tagFromPath,
 	) =>
-	<P extends { match: RuleRet; route: BaseRoute }>({ match, route }: P) => {
+	<P extends { match: Match; route: BaseRoute }>({ match, route }: P) => {
 		const url = match.url;
 		const params = {
 			...match.result?.groups,
@@ -52,6 +52,6 @@ export const load =
 			createElement(typeof tag === 'function' ? tag(url) : tag, {
 				params,
 				route,
-			})
+			}),
 		);
 	};

@@ -1,10 +1,10 @@
 /* eslint-disable import/group-exports */
 export type SRule = string | RegExp;
-export interface RuleRet {
+export interface Match {
 	result: ReturnType<typeof String.prototype.match>;
 	url: URL;
 }
-export type FnRule = (url: string) => RuleRet | null;
+export type FnRule = (url: string) => Match | null;
 export type Rule = SRule | FnRule;
 
 export interface BaseRoute {
@@ -30,7 +30,7 @@ export const hashbang = (rule: SRule) => (url: string) => {
 
 export const href =
 	(rule: SRule) =>
-	(url: string): RuleRet | null => {
+	(url: string): Match | null => {
 		const result = url.match(rule);
 		return result && { result, url: new URL(url, document.location.origin) };
 	};

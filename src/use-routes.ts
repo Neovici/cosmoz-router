@@ -23,21 +23,21 @@ export const useRoutes = <T extends BaseRoute>(routes: T[]) => {
 export const navigate = (
 	url: string,
 	state = null,
-	{ notify = true, replace = true } = {}
+	{ notify = true, replace = true } = {},
 ) => {
 	(replace ? history.replaceState : history.pushState).call(
 		history,
 		state,
 		'',
-		url
+		url,
 	);
 	if (notify) {
 		queueMicrotask(() =>
 			window.dispatchEvent(
 				new CustomEvent('popstate', {
 					bubbles: false,
-				})
-			)
+				}),
+			),
 		);
 	}
 };
