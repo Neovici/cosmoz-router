@@ -28,7 +28,7 @@ export const createElement = (tag: string, props = {}) => {
 			[
 				`<${tag}${strings[0]}`,
 				...strings.slice(1),
-				'>',
+				`></${tag}>`,
 			] as unknown as TemplateStringsArray,
 			...Object.values(props),
 		);
