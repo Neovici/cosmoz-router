@@ -46,11 +46,6 @@
 	"publishConfig": {
 		"access": "public"
 	},
-	"commitlint": {
-		"extends": [
-			"@commitlint/config-conventional"
-		]
-	},
 	"exports": {
 		".": "./dist/index.js",
 		"./use-hash-param": "./dist/use-hash-param.js"
