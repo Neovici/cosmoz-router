@@ -1,3 +1,10 @@
+## [11.2.2](https://github.com/neovici/cosmoz-router/compare/v11.2.1...v11.2.2) (2025-03-25)
+
+
+### Bug Fixes
+
+* commitlint ([4a0a9c5](https://github.com/neovici/cosmoz-router/commit/4a0a9c552bbfc4396964ca268b7f290933c808c9))
+
 ## [11.2.1](https://github.com/neovici/cosmoz-router/compare/v11.2.0...v11.2.1) (2025-03-25)
 
 
