@@ -1,0 +1,16 @@
+name: Deploy PR previews
+concurrency: preview-${{ github.ref }}
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  storybook:
+    uses: Neovici/cfg/.github/workflows/preview.yml@master
+    secrets: inherit
