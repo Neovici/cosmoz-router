@@ -1,71 +1,72 @@
 {
-	"name": "@neovici/cosmoz-router",
-	"version": "11.2.2",
-	"description": "A Polymer component to handle client side URL routing and view loading / management",
-	"keywords": [
-		"polymer",
-		"web-components"
-	],
-	"homepage": "https://github.com/neovici/cosmoz-router#readme",
-	"bugs": {
-		"url": "https://github.com/neovici/cosmoz-router/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/neovici/cosmoz-router.git"
-	},
-	"license": "Apache-2.0",
-	"author": "",
-	"main": "dist/index.js",
-	"directories": {
-		"test": "test"
-	},
-	"files": [
-		"dist/*"
-	],
-	"scripts": {
-		"lint": "tsc && eslint --cache .",
-		"build": "tsc -p tsconfig.build.json",
-		"start": "wds",
-		"test": "wtr --coverage",
-		"test:watch": "wtr --watch",
-		"prepare": "husky"
-	},
-	"release": {
-		"plugins": [
-			"@semantic-release/commit-analyzer",
-			"@semantic-release/release-notes-generator",
-			"@semantic-release/changelog",
-			"@semantic-release/github",
-			"@semantic-release/npm",
-			"@semantic-release/git"
-		],
-		"branch": "master",
-		"preset": "conventionalcommits"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"exports": {
-		".": "./dist/index.js",
-		"./use-hash-param": "./dist/use-hash-param.js"
-	},
-	"dependencies": {
-		"@pionjs/pion": "^2.0.0"
-	},
-	"devDependencies": {
-		"@commitlint/cli": "^19.0.0",
-		"@commitlint/config-conventional": "^19.0.0",
-		"@neovici/cfg": "^1.15.0",
-		"@open-wc/testing": "^4.0.0",
-		"@semantic-release/changelog": "^6.0.0",
-		"@semantic-release/git": "^10.0.0",
-		"@types/mocha": "^10.0.3",
-		"@web/dev-server": "^0.4.0",
-		"@web/dev-server-storybook": "^2.0.0",
-		"@web/test-runner": "^0.18.0",
-		"husky": "^9.0.0",
-		"semantic-release": "^23.0.0",
-		"sinon": "^18.0.0"
-	}
+  "name": "@neovici/cosmoz-router",
+  "version": "11.2.2",
+  "description": "A Polymer component to handle client side URL routing and view loading / management",
+  "keywords": [
+    "polymer",
+    "web-components"
+  ],
+  "homepage": "https://github.com/neovici/cosmoz-router#readme",
+  "bugs": {
+    "url": "https://github.com/neovici/cosmoz-router/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neovici/cosmoz-router.git"
+  },
+  "license": "Apache-2.0",
+  "author": "",
+  "main": "dist/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "scripts": {
+    "lint": "tsc && eslint --cache .",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "wds",
+    "storybook:build": "storybook build",
+    "test": "wtr --coverage",
+    "test:watch": "wtr --watch",
+    "prepare": "husky"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/github",
+      "@semantic-release/npm",
+      "@semantic-release/git"
+    ],
+    "branch": "master",
+    "preset": "conventionalcommits"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./use-hash-param": "./dist/use-hash-param.js"
+  },
+  "dependencies": {
+    "@pionjs/pion": "^2.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
+    "@neovici/cfg": "^1.15.0",
+    "@open-wc/testing": "^4.0.0",
+    "@semantic-release/changelog": "^6.0.0",
+    "@semantic-release/git": "^10.0.0",
+    "@types/mocha": "^10.0.3",
+    "@web/dev-server": "^0.4.0",
+    "@web/dev-server-storybook": "^2.0.0",
+    "@web/test-runner": "^0.18.0",
+    "husky": "^9.0.0",
+    "semantic-release": "^23.0.0",
+    "sinon": "^18.0.0"
+  }
 }
