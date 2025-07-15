@@ -1,3 +1,10 @@
+## [11.2.3](https://github.com/neovici/cosmoz-router/compare/v11.2.2...v11.2.3) (2025-07-15)
+
+
+### Bug Fixes
+
+* **ci:** new auto approve merge workflow ([57d9bba](https://github.com/neovici/cosmoz-router/commit/57d9bba0fbd4205db09b3df57bf8806a6f16b9d5))
+
 ## [11.2.2](https://github.com/neovici/cosmoz-router/compare/v11.2.1...v11.2.2) (2025-03-25)
 
 
