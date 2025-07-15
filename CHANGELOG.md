@@ -1,3 +1,10 @@
+## [11.2.4](https://github.com/neovici/cosmoz-router/compare/v11.2.3...v11.2.4) (2025-07-15)
+
+
+### Bug Fixes
+
+* **ci:** run on ubuntu lastest ([63ae133](https://github.com/neovici/cosmoz-router/commit/63ae133f2fb87cd56619de41cabe2ee81c8b7654))
+
 ## [11.2.3](https://github.com/neovici/cosmoz-router/compare/v11.2.2...v11.2.3) (2025-07-15)
 
 
