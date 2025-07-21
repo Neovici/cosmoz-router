@@ -12,7 +12,7 @@ export default [
 			}
 		},
 		rules: {
-			'max-lines-per-function': 0,
+			'no-console': 'off',
 			'import/group-exports': 0,
 			'mocha/no-global-tests': 'off',
 			'mocha/max-top-level-suites': 'off',
