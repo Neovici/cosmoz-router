@@ -1,3 +1,10 @@
+## [11.2.5](https://github.com/neovici/cosmoz-router/compare/v11.2.4...v11.2.5) (2025-07-21)
+
+
+### Bug Fixes
+
+* eslint errors ([12ec9e5](https://github.com/neovici/cosmoz-router/commit/12ec9e52ebbd4f677f7fb883f32bc511765acd16))
+
 ## [11.2.4](https://github.com/neovici/cosmoz-router/compare/v11.2.3...v11.2.4) (2025-07-15)
 
 
