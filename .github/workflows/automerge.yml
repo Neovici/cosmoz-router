@@ -1,0 +1,9 @@
+name: Auto-Approve and Auto-Merge PRs
+
+on:
+  workflow_call:
+
+jobs:
+  auto-approve-merge-dependabot:
+    uses: Neovici/cfg/.github/workflows/automerge.yml@master
+    secrets: inherit
