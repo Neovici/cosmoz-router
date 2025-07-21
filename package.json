@@ -64,11 +64,10 @@
     "@open-wc/testing": "^4.0.0",
     "@semantic-release/changelog": "^6.0.0",
     "@semantic-release/git": "^10.0.0",
-    "@storybook/addon-essentials": "^8.6.14",
-    "@storybook/addon-links": "^7.6.19",
-    "@storybook/builder-vite": "9.0.17",
+		"@storybook/addon-links": "^8.6.4",
+    "@storybook/builder-vite": "^8.6.4",
     "@storybook/storybook-deployer": "^2.8.16",
-    "@storybook/web-components": "9.0.17",
+    "@storybook/web-components": "^8.6.4",
     "@types/mocha": "^10.0.3",
     "@web/dev-server": "^0.4.0",
     "@web/dev-server-storybook": "^2.0.0",
@@ -79,6 +78,6 @@
     "rollup-plugin-esbuild": "^6.1.1",
     "semantic-release": "^23.0.0",
     "sinon": "^18.0.0",
-    "storybook": "^9.0.17"
+    "storybook": "^8.6.4"
   }
 }
