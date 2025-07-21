@@ -1,3 +1,10 @@
+## [11.2.7](https://github.com/neovici/cosmoz-router/compare/v11.2.6...v11.2.7) (2025-07-21)
+
+
+### Bug Fixes
+
+* rename automerge workflow ([44f6d37](https://github.com/neovici/cosmoz-router/commit/44f6d370893e0a8c6a4d400798e1354a8c87e862))
+
 ## [11.2.6](https://github.com/neovici/cosmoz-router/compare/v11.2.5...v11.2.6) (2025-07-21)
 
 
