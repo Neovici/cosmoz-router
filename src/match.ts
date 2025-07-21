@@ -1,4 +1,3 @@
-/* eslint-disable import/group-exports */
 export type SRule = string | RegExp;
 export interface RuleRet {
 	result: ReturnType<typeof String.prototype.match>;
