@@ -12,41 +12,41 @@ import { createElement, load } from '../src/load';
 import { hashbang } from '../src/match';
 import { Route } from '../src/use-router';
 
-/* eslint-disable max-lines-per-function */
 suite('cosmoz-router', () => {
-	const routes: Route[] = [
-		{
-			rule: /^\/$/u,
-			handle: () =>
-				import('../stories/views/home.js').then(() =>
-					createElement('demo-home'),
-				),
-		},
-		{
-			rule: hashbang(/^\/view-1/u),
-			handle: load(() => import('../stories/views/view-1.js'), 'view-1'),
-		},
-		{
-			rule: hashbang(/^\/param-reading-view/u),
-			handle: (result) =>
-				import('../stories/views/param-reading-view.js').then(() => {
-					const entries = result.match.url?.searchParams?.entries();
-					return createElement(
-						'param-reading-view',
-						entries ? Object.fromEntries(entries) : {},
-					);
-				}),
-		},
-		{
-			rule: hashbang(/^\/error/u),
-			handle: () => Promise.reject(new Error('testing')),
-		},
-	];
+	let routes: Route[];
 	let url: string;
 
 	suiteSetup(async () => {
 		url = documentUrl();
 		await import('../src/router');
+		routes = [
+			{
+				rule: /^\/$/u,
+				handle: () =>
+					import('../stories/views/home.js').then(() =>
+						createElement('demo-home'),
+					),
+			},
+			{
+				rule: hashbang(/^\/view-1/u),
+				handle: load(() => import('../stories/views/view-1.js'), 'view-1'),
+			},
+			{
+				rule: hashbang(/^\/param-reading-view/u),
+				handle: (result) =>
+					import('../stories/views/param-reading-view.js').then(() => {
+						const entries = result.match.url?.searchParams?.entries();
+						return createElement(
+							'param-reading-view',
+							entries ? Object.fromEntries(entries) : {},
+						);
+					}),
+			},
+			{
+				rule: hashbang(/^\/error/u),
+				handle: () => Promise.reject(new Error('testing')),
+			},
+		];
 	});
 	suiteTeardown(() => navigate(url, null, { notify: false }));
 

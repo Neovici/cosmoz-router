@@ -1,7 +1,7 @@
 import { nothing } from 'lit-html';
 import { guard } from 'lit-html/directives/guard.js';
 import { until } from 'lit-html/directives/until.js';
-import { component } from '@pionjs/pion';
+	import { component } from '@pionjs/pion';
 
 import { useRouter, Route } from './use-router';
 import { useRouteEvents } from './use-route-events';
