@@ -1,7 +1,8 @@
-name: Auto-Approve and Auto-Merge PRs
+name: Auto Approve and Merge PRs
 
 on:
-  workflow_call:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
 
 jobs:
   auto-approve-merge-dependabot:
