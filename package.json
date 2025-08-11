@@ -73,7 +73,7 @@
     "@web/dev-server-storybook": "^2.0.0",
     "@web/storybook-builder": "^0.2.2",
     "@web/storybook-framework-web-components": "^0.2.1",
-    "@web/test-runner": "^0.18.0",
+    "@web/test-runner": "^0.20.2",
     "husky": "^9.0.0",
     "rollup-plugin-esbuild": "^6.1.1",
     "semantic-release": "^24.2.7",
