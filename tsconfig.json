@@ -1,6 +1,6 @@
 {
-  "baseUrl": ".",
   "compilerOptions": {
+		"baseUrl": ".",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "module": "esnext",
@@ -8,7 +8,12 @@
     "noEmit": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "esnext"
+    "target": "esnext",
+		"paths": {
+			"@neovici/cosmoz-router/*": [
+				"./node_modules/@neovici/cosmoz-router/dist/*"
+			]
+		}
   },
   "exclude": [
     "node_modules/**/*",
@@ -19,10 +24,5 @@
   ],
   "include": [
     "src/*.ts"
-  ],
-  "paths": {
-    "@neovici/cosmoz-router/*": [
-      "./node_modules/@neovici/cosmoz-router/dist/*"
-    ]
-  }
+  ]
 }
