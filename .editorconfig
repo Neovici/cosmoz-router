@@ -11,3 +11,6 @@ insert_final_newline = true
 
 [*.yml]
 indent_style = space
+
+[*.json]
+indent_style = space
