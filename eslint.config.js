@@ -8,8 +8,8 @@ export default [
 	{
 		languageOptions: {
 			globals: {
-				Cosmoz: 'readonly'
-			}
+				Cosmoz: 'readonly',
+			},
 		},
 		rules: {
 			'no-console': 'off',
