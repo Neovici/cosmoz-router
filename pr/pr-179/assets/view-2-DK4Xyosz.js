@@ -1,0 +1,8 @@
+import{c as s,u as i,a as u}from"./cosmoz-router.stories-BLQ8eq5T.js";import{x as o}from"./iframe-5LBLVpLw.js";customElements.define("view-2",s(()=>{const[t,n]=i(0);return u(()=>{console.log("I've been activated !")},[]),o`
+			<h2>Welcome to the test view 2</h2>
+			<div>count = <span>${t}</span>.</div>
+			<ul>
+				${Array(t).fill(1).map((e,c)=>o`<li>${c}</li>`)}
+			</ul>
+			<button @click=${()=>n(e=>e+1)}>increase count</button>
+		`}));
