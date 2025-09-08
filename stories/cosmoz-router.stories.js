@@ -1,5 +1,5 @@
 import { html, component } from '@pionjs/pion';
-import { hashbang, createElement } from '../src/index.ts';
+import { hashbang, createElement } from '../src';
 
 export default {
 	title: 'Cosmoz Router',
@@ -31,7 +31,7 @@ customElements.define(
 			},
 		];
 		return html`<cosmoz-router .routes=${routes} />`;
-	})
+	}),
 );
 
 const Router = () => `
