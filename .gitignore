@@ -5,3 +5,4 @@ debug.log
 yarn-error.log
 .eslintcache
 .DS_Store
+storybook-static
