@@ -60,7 +60,7 @@
     "lit-html": "^3.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.0.0",
+    "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^19.0.0",
     "@neovici/cfg": "^2.0.0",
     "@open-wc/testing": "^4.0.0",
