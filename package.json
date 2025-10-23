@@ -73,7 +73,7 @@
     "http-server": "^14.1.1",
     "husky": "^9.0.0",
     "rollup-plugin-esbuild": "^6.1.1",
-    "semantic-release": "^24.2.9",
+    "semantic-release": "^25.0.1",
     "sinon": "^21.0.0",
     "storybook": "^9.1.5"
   }
