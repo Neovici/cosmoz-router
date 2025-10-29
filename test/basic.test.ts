@@ -48,6 +48,7 @@ suite('cosmoz-router', () => {
 			},
 		];
 	});
+	
 	suiteTeardown(() => navigate(url, null, { notify: false }));
 
 	test('renders home', async () => {
