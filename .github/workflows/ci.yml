@@ -1,15 +1,18 @@
----
-name: Github CI
-
+name: CI
 on:
   pull_request:
     branches:
       - master
-      - beta
   push:
     branches:
-      - master
       - beta
+      - master
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
 
 jobs:
   build:
