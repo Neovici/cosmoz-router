@@ -7,13 +7,13 @@
     "web-components"
   ],
   "type": "module",
-  "homepage": "https://github.com/neovici/cosmoz-router#readme",
+  "homepage": "https://github.com/Neovici/cosmoz-router#readme",
   "bugs": {
-    "url": "https://github.com/neovici/cosmoz-router/issues"
+    "url": "https://github.com/Neovici/cosmoz-router/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/neovici/cosmoz-router.git"
+    "url": "git+https://github.com/Neovici/cosmoz-router.git"
   },
   "license": "Apache-2.0",
   "author": "",
