@@ -1,0 +1,5 @@
+{
+	"*.{js,ts,mjs,cjs}": ["eslint --cache --fix"],
+	"*.{js,ts,json,css,md}": ["prettier --write"],
+	"package-lock.json": ["check-duplicate-components"]
+}

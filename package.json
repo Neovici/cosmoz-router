@@ -26,6 +26,7 @@
   ],
   "scripts": {
     "lint": "tsc && eslint --cache .",
+    "check:duplicates": "check-duplicate-components",
     "build": "tsc -p tsconfig.build.json",
     "start": "wds",
     "storybook:start": "storybook dev -p 8000",
@@ -62,7 +63,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
-    "@neovici/cfg": "^2.0.0",
+    "@neovici/cfg": "^2.8.0",
     "@open-wc/testing": "^4.0.0",
     "@semantic-release/changelog": "^6.0.0",
     "@semantic-release/git": "^10.0.0",
@@ -72,6 +73,7 @@
     "@web/test-runner": "^0.20.2",
     "http-server": "^14.1.1",
     "husky": "^9.0.0",
+    "lint-staged": "^16.2.7",
     "rollup-plugin-esbuild": "^6.1.1",
     "semantic-release": "^25.0.1",
     "sinon": "^21.0.0",
