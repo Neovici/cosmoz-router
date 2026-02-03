@@ -1,0 +1,12 @@
+name: Storybook
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  storybook:
+    uses: Neovici/cfg/.github/workflows/story.yml@master
+    secrets: inherit
