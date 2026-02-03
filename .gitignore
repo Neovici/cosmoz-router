@@ -1,8 +1,7 @@
 node_modules/
-coverage/
 dist/
-debug.log
-yarn-error.log
+coverage/
 .eslintcache
+*.log
 .DS_Store
-storybook-static
+storybook-static/
