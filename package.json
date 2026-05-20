@@ -35,19 +35,8 @@
     "storybook:preview": "npm run storybook:build && http-server ./storybook-static/ --silent",
     "test": "wtr --coverage",
     "test:watch": "wtr --watch",
-    "prepare": "husky"
-  },
-  "release": {
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/changelog",
-      "@semantic-release/github",
-      "@semantic-release/npm",
-      "@semantic-release/git"
-    ],
-    "branch": "master",
-    "preset": "conventionalcommits"
+    "prepare": "husky",
+    "changeset": "changeset"
   },
   "publishConfig": {
     "access": "public"
@@ -62,12 +51,11 @@
     "lit-html": "^3.0.0"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.31.0",
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@neovici/cfg": "^2.8.0",
     "@open-wc/testing": "^4.0.0",
-    "@semantic-release/changelog": "^6.0.0",
-    "@semantic-release/git": "^10.0.0",
     "@storybook/web-components-vite": "^10.0.0",
     "@types/mocha": "^10.0.3",
     "@web/dev-server": "^0.4.0",
@@ -76,11 +64,7 @@
     "husky": "^9.0.0",
     "lint-staged": "^16.2.7",
     "rollup-plugin-esbuild": "^6.1.1",
-    "semantic-release": "^25.0.1",
     "sinon": "^21.0.0",
     "storybook": "^10.0.0"
-  },
-  "overrides": {
-    "conventional-changelog-conventionalcommits": ">= 8.0.0"
   }
 }
