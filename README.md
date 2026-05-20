@@ -1,8 +1,7 @@
-cosmoz-router
-==================
+# cosmoz-router
 
 [![Build Status](https://github.com/Neovici/cosmoz-router/workflows/Github%20CI/badge.svg)](https://github.com/Neovici/cosmoz-router/actions?workflow=Github+CI)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![changesets](https://img.shields.io/badge/%F0%9F%93%A6-%F0%9F%9A%80-changesets-e10079.svg)](https://github.com/changesets/changesets)
 
 ## &lt;cosmoz-router&gt;
 
@@ -17,6 +16,7 @@ By default **cosmoz-router** listens to `popstate` event
 ### Installing
 
 Using npm:
+
 ```bash
 npm install --save @neovici/cosmoz-router
 ```
@@ -24,6 +24,7 @@ npm install --save @neovici/cosmoz-router
 ### Importing
 
 The **cosmoz-router** element can be imported using:
+
 ```javascript
 import '@neovici/cosmoz-router/cosmoz-page-router';
 ```
@@ -31,8 +32,10 @@ import '@neovici/cosmoz-router/cosmoz-page-router';
 ## Usage
 
 ### Routes
+
 Routes are defined as an Array of Objects:
-``` javascript
+
+```javascript
 import { html } from 'lit-html';
 import { creteElement, navigate } from '@neovici/cosmoz-router/lib/use-routes';
 
@@ -61,15 +64,24 @@ const routes = [
 	}
 ];
 ```
+
 and passed to cosmoz-router:
 
-``` javascript
+```javascript
 html`<cosmoz-router .routes=${routes} />`;
 ```
-
 
 ## Documentation
 
 See http://neovici.github.io/cosmoz-router (outdated)
 
 TODO
+
+## Releasing
+
+This project uses [Changesets](https://github.com/changesets/changesets) for versioning and publishing.
+
+1. When making changes, run `npx changeset` to create a changeset entry describing your changes.
+2. Commit the generated `.changeset/*.md` file alongside your code changes.
+3. When the PR merges to `master`, the [Changesets Action](https://github.com/changesets/action) creates or updates a "Version Packages" PR.
+4. Merging the "Version Packages" PR bumps the version, updates `CHANGELOG.md`, creates a git tag, and publishes to npm.

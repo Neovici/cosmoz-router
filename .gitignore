@@ -5,3 +5,5 @@ coverage/
 *.log
 .DS_Store
 storybook-static/
+/.envrc
+/.npmrc
