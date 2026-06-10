@@ -62,7 +62,7 @@
     "@web/test-runner": "^0.20.2",
     "http-server": "^14.1.1",
     "husky": "^9.0.0",
-    "lint-staged": "^16.2.7",
+    "lint-staged": "^17.0.7",
     "rollup-plugin-esbuild": "^6.1.1",
     "sinon": "^21.0.0",
     "storybook": "^10.0.0"
