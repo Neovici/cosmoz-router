@@ -7,3 +7,8 @@ coverage/
 storybook-static/
 /.envrc
 /.npmrc
+
+# Codecov uploader artifacts
+codecov
+codecov.SHA256SUM
+codecov.SHA256SUM.sig
