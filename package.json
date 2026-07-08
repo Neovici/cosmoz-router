@@ -58,7 +58,7 @@
     "@open-wc/testing": "^4.0.0",
     "@storybook/web-components-vite": "^10.0.0",
     "@types/mocha": "^10.0.3",
-    "@web/dev-server": "^0.4.0",
+    "@web/dev-server": "^1.0.0",
     "@web/test-runner": "^0.20.2",
     "http-server": "^14.1.1",
     "husky": "^9.0.0",
