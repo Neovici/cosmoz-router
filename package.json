@@ -55,7 +55,7 @@
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.1",
     "@neovici/cfg": "^2.8.0",
-    "@open-wc/testing": "^4.0.0",
+    "@open-wc/testing": "^5.0.0",
     "@storybook/web-components-vite": "^10.0.0",
     "@types/mocha": "^10.0.3",
     "@web/dev-server": "^1.0.0",
