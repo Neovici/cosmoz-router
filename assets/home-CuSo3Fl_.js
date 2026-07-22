@@ -1,0 +1,1 @@
+import{d as e,s as t}from"./iframe-CKebBXYU.js";import{n,t as r}from"./haunted-0i2ATdOT.js";e((()=>{r(),customElements.define(`demo-home`,n(()=>t` <h2>Welcome to the home page</h2> `))}))();
