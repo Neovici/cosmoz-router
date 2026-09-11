@@ -10,7 +10,7 @@ import { mock } from 'sinon';
 import { createElement, load } from '../src/load';
 import { hashbang } from '../src/match';
 import { Route } from '../src/use-router';
-import { documentUrl, ignoreNextPopState, navigate } from '../src/use-routes';
+import { documentUrl, go, navigate } from '../src/use-routes';
 
 suite('cosmoz-router', () => {
 	let routes: Route[];
@@ -144,19 +144,21 @@ suite('use-routes', () => {
 		historyMock.restore();
 	});
 
-	test('ignores one matching popstate', async () => {
+	test('traverses without notifying routers', async () => {
 		navigate('/');
 		const router = fixtureSync(html`<cosmoz-router .routes=${routes} />`);
 		await oneEvent(router, 'route-loaded');
 		await nextFrame();
 
-		navigate('#!/view-1', { overlay: true }, { notify: false });
-		ignoreNextPopState((event) => event.state?.overlay === true);
-		window.dispatchEvent(
-			new PopStateEvent('popstate', { state: { overlay: true } }),
-		);
+		navigate('#!/view-1', null, { notify: false });
+		const historyMock = mock(history);
+		historyMock.expects('go').withArgs(-1);
+		go(-1, { notify: false });
+		window.dispatchEvent(new PopStateEvent('popstate'));
 		await nextFrame();
 		assert.shadowDom.equal(router, '<demo-home></demo-home>');
+		historyMock.verify();
+		historyMock.restore();
 
 		window.dispatchEvent(new PopStateEvent('popstate'));
 		await oneEvent(router, 'route-loaded');
@@ -164,18 +166,21 @@ suite('use-routes', () => {
 		assert.shadowDom.equal(router, '<view-1></view-1>');
 	});
 
-	test('cancels an ignored popstate', async () => {
+	test('traverses and notifies routers by default', async () => {
 		navigate('/');
 		const router = fixtureSync(html`<cosmoz-router .routes=${routes} />`);
 		await oneEvent(router, 'route-loaded');
 		await nextFrame();
 
 		navigate('#!/view-1', null, { notify: false });
-		const cancel = ignoreNextPopState();
-		cancel();
+		const historyMock = mock(history);
+		historyMock.expects('go').withArgs(-1);
+		go(-1);
 		window.dispatchEvent(new PopStateEvent('popstate'));
 		await oneEvent(router, 'route-loaded');
 		await nextFrame();
 		assert.shadowDom.equal(router, '<view-1></view-1>');
+		historyMock.verify();
+		historyMock.restore();
 	});
 });

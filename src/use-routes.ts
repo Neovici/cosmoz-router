@@ -1,29 +1,18 @@
 import { useEffect, useMemo, useState } from '@pionjs/pion';
 import { BaseRoute, match } from './match';
 
-type PopStatePredicate = (event: PopStateEvent) => boolean;
-
-let ignoredPopState: PopStatePredicate | undefined;
+let ignoreNextPopState = false;
 const ignoredEvents = new WeakSet<PopStateEvent>();
 
 window.addEventListener(
 	'popstate',
 	(event) => {
-		if (!ignoredPopState?.(event)) return;
+		if (!ignoreNextPopState) return;
 		ignoredEvents.add(event);
-		ignoredPopState = undefined;
+		ignoreNextPopState = false;
 	},
 	true,
 );
-
-export const ignoreNextPopState = (
-	predicate: PopStatePredicate = () => true,
-) => {
-	ignoredPopState = predicate;
-	return () => {
-		if (ignoredPopState === predicate) ignoredPopState = undefined;
-	};
-};
 
 export const documentUrl = () =>
 	window.location.href.replace(window.location.origin, '');
@@ -67,4 +56,9 @@ export const navigate = (
 			),
 		);
 	}
+};
+
+export const go = (delta: number, { notify = true } = {}) => {
+	ignoreNextPopState = !notify;
+	history.go(delta);
 };
