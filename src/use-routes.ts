@@ -2,14 +2,17 @@ import { useEffect, useMemo, useState } from '@pionjs/pion';
 import { BaseRoute, match } from './match';
 
 let ignoreNextPopState = false;
-const ignoredEvents = new WeakSet<PopStateEvent>();
+let ignoredEvent: PopStateEvent | undefined;
 
 window.addEventListener(
 	'popstate',
 	(event) => {
 		if (!ignoreNextPopState) return;
-		ignoredEvents.add(event);
 		ignoreNextPopState = false;
+		ignoredEvent = event;
+		queueMicrotask(() => {
+			if (ignoredEvent === event) ignoredEvent = undefined;
+		});
 	},
 	true,
 );
@@ -21,7 +24,7 @@ export const useUrl = () => {
 	const [url, setUrl] = useState(documentUrl);
 	useEffect(() => {
 		const onPopState = (event: PopStateEvent) => {
-			if (ignoredEvents.has(event)) return;
+			if (ignoredEvent === event) return;
 			setUrl(documentUrl);
 		};
 		window.addEventListener('popstate', onPopState);
