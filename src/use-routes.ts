@@ -1,5 +1,29 @@
-import { useState, useEffect, useMemo } from '@pionjs/pion';
-import { match, BaseRoute } from './match';
+import { useEffect, useMemo, useState } from '@pionjs/pion';
+import { BaseRoute, match } from './match';
+
+type PopStatePredicate = (event: PopStateEvent) => boolean;
+
+let ignoredPopState: PopStatePredicate | undefined;
+const ignoredEvents = new WeakSet<PopStateEvent>();
+
+window.addEventListener(
+	'popstate',
+	(event) => {
+		if (!ignoredPopState?.(event)) return;
+		ignoredEvents.add(event);
+		ignoredPopState = undefined;
+	},
+	true,
+);
+
+export const ignoreNextPopState = (
+	predicate: PopStatePredicate = () => true,
+) => {
+	ignoredPopState = predicate;
+	return () => {
+		if (ignoredPopState === predicate) ignoredPopState = undefined;
+	};
+};
 
 export const documentUrl = () =>
 	window.location.href.replace(window.location.origin, '');
@@ -7,7 +31,10 @@ export const documentUrl = () =>
 export const useUrl = () => {
 	const [url, setUrl] = useState(documentUrl);
 	useEffect(() => {
-		const onPopState = () => setUrl(documentUrl);
+		const onPopState = (event: PopStateEvent) => {
+			if (ignoredEvents.has(event)) return;
+			setUrl(documentUrl);
+		};
 		window.addEventListener('popstate', onPopState);
 		return () => window.removeEventListener('popstate', onPopState);
 	}, [setUrl]);
@@ -22,22 +49,22 @@ export const useRoutes = <T extends BaseRoute>(routes: T[]) => {
 
 export const navigate = (
 	url: string,
-	state = null,
-	{ notify = true, replace = true } = {}
+	state: unknown = null,
+	{ notify = true, replace = true } = {},
 ) => {
 	(replace ? history.replaceState : history.pushState).call(
 		history,
 		state,
 		'',
-		url
+		url,
 	);
 	if (notify) {
 		queueMicrotask(() =>
 			window.dispatchEvent(
 				new CustomEvent('popstate', {
 					bubbles: false,
-				})
-			)
+				}),
+			),
 		);
 	}
 };

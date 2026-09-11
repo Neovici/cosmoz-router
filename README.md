@@ -71,6 +71,23 @@ and passed to cosmoz-router:
 html`<cosmoz-router .routes=${routes} />`;
 ```
 
+### Ignoring a history traversal
+
+Use `ignoreNextPopState()` before a history traversal that should update the
+browser URL without updating mounted routers. The optional predicate limits
+which `popstate` event is ignored. The returned function cancels the pending
+ignore operation.
+
+```js
+const cancel = ignoreNextPopState(
+	(event) => event.state?.overlayReturn === true,
+);
+
+history.back();
+
+// Call cancel() if the traversal is abandoned.
+```
+
 ## Documentation
 
 See http://neovici.github.io/cosmoz-router (outdated)

@@ -1,16 +1,16 @@
 import {
 	assert,
-	html,
 	fixtureSync,
-	oneEvent,
+	html,
 	nextFrame,
+	oneEvent,
 } from '@open-wc/testing';
 import { mock } from 'sinon';
 
-import { navigate, documentUrl } from '../src/use-routes';
 import { createElement, load } from '../src/load';
 import { hashbang } from '../src/match';
 import { Route } from '../src/use-router';
+import { documentUrl, ignoreNextPopState, navigate } from '../src/use-routes';
 
 suite('cosmoz-router', () => {
 	let routes: Route[];
@@ -48,7 +48,7 @@ suite('cosmoz-router', () => {
 			},
 		];
 	});
-	
+
 	suiteTeardown(() => navigate(url, null, { notify: false }));
 
 	test('renders home', async () => {
@@ -108,6 +108,21 @@ suite('cosmoz-router', () => {
 });
 
 suite('use-routes', () => {
+	let routes: Route[];
+
+	setup(() => {
+		routes = [
+			{
+				rule: /^\/$/u,
+				handle: () => createElement('demo-home'),
+			},
+			{
+				rule: hashbang(/^\/view-1/u),
+				handle: () => createElement('view-1'),
+			},
+		];
+	});
+
 	test('createElement', () => {
 		assert.throws(() => createElement('definetly-undefined'));
 	});
@@ -127,5 +142,40 @@ suite('use-routes', () => {
 		assert(pushState.withArgs(null, '', '/das'));
 
 		historyMock.restore();
+	});
+
+	test('ignores one matching popstate', async () => {
+		navigate('/');
+		const router = fixtureSync(html`<cosmoz-router .routes=${routes} />`);
+		await oneEvent(router, 'route-loaded');
+		await nextFrame();
+
+		navigate('#!/view-1', { overlay: true }, { notify: false });
+		ignoreNextPopState((event) => event.state?.overlay === true);
+		window.dispatchEvent(
+			new PopStateEvent('popstate', { state: { overlay: true } }),
+		);
+		await nextFrame();
+		assert.shadowDom.equal(router, '<demo-home></demo-home>');
+
+		window.dispatchEvent(new PopStateEvent('popstate'));
+		await oneEvent(router, 'route-loaded');
+		await nextFrame();
+		assert.shadowDom.equal(router, '<view-1></view-1>');
+	});
+
+	test('cancels an ignored popstate', async () => {
+		navigate('/');
+		const router = fixtureSync(html`<cosmoz-router .routes=${routes} />`);
+		await oneEvent(router, 'route-loaded');
+		await nextFrame();
+
+		navigate('#!/view-1', null, { notify: false });
+		const cancel = ignoreNextPopState();
+		cancel();
+		window.dispatchEvent(new PopStateEvent('popstate'));
+		await oneEvent(router, 'route-loaded');
+		await nextFrame();
+		assert.shadowDom.equal(router, '<view-1></view-1>');
 	});
 });
