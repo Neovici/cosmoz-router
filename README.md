@@ -75,6 +75,8 @@ html`<cosmoz-router .routes=${routes} />`;
 
 Use `go(delta, { notify: false })` when a history traversal should update the
 browser URL and `useUrl()` consumers without updating mounted route matches.
+`useRoutedUrl()` exposes both the current `url` and the `routedUrl` used for
+matching.
 
 ```js
 go(-1, { notify: false });

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from '@pionjs/pion';
+import { useEffect, useMemo, useState } from '@pionjs/pion';
 import { BaseRoute, match } from './match';
 
 let ignoreNextPopState = false;
@@ -17,33 +17,41 @@ window.addEventListener(
 export const documentUrl = () =>
 	window.location.href.replace(window.location.origin, '');
 
-const useUrlChange = () => {
-	const [change, setChange] = useState(() => ({
-		url: documentUrl(),
-		notify: true,
-	}));
+export const useUrl = () => {
+	const [url, setUrl] = useState(documentUrl);
 	useEffect(() => {
-		const onPopState = (event: PopStateEvent) => {
-			setChange({
-				url: documentUrl(),
-				notify: !ignoredEvents.has(event),
-			});
-		};
+		const onPopState = () => setUrl(documentUrl);
 		window.addEventListener('popstate', onPopState);
 		return () => window.removeEventListener('popstate', onPopState);
-	}, [setChange]);
+	}, [setUrl]);
 
-	return change;
+	return url;
 };
 
-export const useUrl = () => useUrlChange().url;
+export const useRoutedUrl = () => {
+	const [urls, setUrls] = useState(() => {
+		const url = documentUrl();
+		return { url, routedUrl: url };
+	});
+	useEffect(() => {
+		const onPopState = (event: PopStateEvent) =>
+			setUrls((current) => {
+				const url = documentUrl();
+				return {
+					url,
+					routedUrl: ignoredEvents.has(event) ? current.routedUrl : url,
+				};
+			});
+		window.addEventListener('popstate', onPopState);
+		return () => window.removeEventListener('popstate', onPopState);
+	}, [setUrls]);
+
+	return urls;
+};
 
 export const useRoutes = <T extends BaseRoute>(routes: T[]) => {
-	const change = useUrlChange();
-	const routedUrl = useRef<string>(change.url);
-	if (change.notify) routedUrl.current = change.url;
-	const url = routedUrl.current ?? change.url;
-	return useMemo(() => match(routes, url), [routes, url]);
+	const { routedUrl } = useRoutedUrl();
+	return useMemo(() => match(routes, routedUrl), [routes, routedUrl]);
 };
 
 export const navigate = (

@@ -11,11 +11,24 @@ import { component } from '@pionjs/pion';
 import { createElement, load } from '../src/load';
 import { hashbang } from '../src/match';
 import { Route } from '../src/use-router';
-import { documentUrl, go, navigate, useUrl } from '../src/use-routes';
+import {
+	documentUrl,
+	go,
+	navigate,
+	useRoutedUrl,
+	useUrl,
+} from '../src/use-routes';
 
 customElements.define(
 	'url-reader',
 	component(() => html`${useUrl()}`),
+);
+customElements.define(
+	'routed-url-reader',
+	component(() => {
+		const { url, routedUrl } = useRoutedUrl();
+		return html`${url}|${routedUrl}`;
+	}),
 );
 
 suite('cosmoz-router', () => {
@@ -154,6 +167,7 @@ suite('use-routes', () => {
 		navigate('/');
 		const router = fixtureSync(html`<cosmoz-router .routes=${routes} />`);
 		const urlReader = fixtureSync(html`<url-reader />`);
+		const routedUrlReader = fixtureSync(html`<routed-url-reader />`);
 		await oneEvent(router, 'route-loaded');
 		await nextFrame();
 
@@ -167,11 +181,13 @@ suite('use-routes', () => {
 		historyMock.restore();
 		assert.shadowDom.equal(router, '<demo-home></demo-home>');
 		assert.shadowDom.equal(urlReader, '/#!/view-1');
+		assert.shadowDom.equal(routedUrlReader, '/#!/view-1|/');
 
 		window.dispatchEvent(new PopStateEvent('popstate'));
 		await oneEvent(router, 'route-loaded');
 		await nextFrame();
 		assert.shadowDom.equal(router, '<view-1></view-1>');
+		assert.shadowDom.equal(routedUrlReader, '/#!/view-1|/#!/view-1');
 	});
 
 	test('traverses and notifies routers by default', async () => {
