@@ -74,7 +74,7 @@ html`<cosmoz-router .routes=${routes} />`;
 ### Traversing without updating routers
 
 Use `go(delta, { notify: false })` when a history traversal should update the
-browser URL without updating mounted routers.
+browser URL and `useUrl()` consumers without updating mounted route matches.
 
 ```js
 go(-1, { notify: false });

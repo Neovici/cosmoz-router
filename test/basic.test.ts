@@ -7,10 +7,16 @@ import {
 } from '@open-wc/testing';
 import { mock } from 'sinon';
 
+import { component } from '@pionjs/pion';
 import { createElement, load } from '../src/load';
 import { hashbang } from '../src/match';
 import { Route } from '../src/use-router';
-import { documentUrl, go, navigate } from '../src/use-routes';
+import { documentUrl, go, navigate, useUrl } from '../src/use-routes';
+
+customElements.define(
+	'url-reader',
+	component(() => html`${useUrl()}`),
+);
 
 suite('cosmoz-router', () => {
 	let routes: Route[];
@@ -147,6 +153,7 @@ suite('use-routes', () => {
 	test('traverses without notifying routers', async () => {
 		navigate('/');
 		const router = fixtureSync(html`<cosmoz-router .routes=${routes} />`);
+		const urlReader = fixtureSync(html`<url-reader />`);
 		await oneEvent(router, 'route-loaded');
 		await nextFrame();
 
@@ -156,9 +163,10 @@ suite('use-routes', () => {
 		go(-1, { notify: false });
 		window.dispatchEvent(new PopStateEvent('popstate'));
 		await nextFrame();
-		assert.shadowDom.equal(router, '<demo-home></demo-home>');
 		historyMock.verify();
 		historyMock.restore();
+		assert.shadowDom.equal(router, '<demo-home></demo-home>');
+		assert.shadowDom.equal(urlReader, '/#!/view-1');
 
 		window.dispatchEvent(new PopStateEvent('popstate'));
 		await oneEvent(router, 'route-loaded');
