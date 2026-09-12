@@ -25,10 +25,7 @@ customElements.define(
 );
 customElements.define(
 	'routed-url-reader',
-	component(() => {
-		const { url, routedUrl } = useRoutedUrl();
-		return html`${url}|${routedUrl}`;
-	}),
+	component(() => html`${useRoutedUrl()}`),
 );
 
 suite('cosmoz-router', () => {
@@ -181,13 +178,13 @@ suite('use-routes', () => {
 		historyMock.restore();
 		assert.shadowDom.equal(router, '<demo-home></demo-home>');
 		assert.shadowDom.equal(urlReader, '/#!/view-1');
-		assert.shadowDom.equal(routedUrlReader, '/#!/view-1|/');
+		assert.shadowDom.equal(routedUrlReader, '/');
 
 		window.dispatchEvent(new PopStateEvent('popstate'));
 		await oneEvent(router, 'route-loaded');
 		await nextFrame();
 		assert.shadowDom.equal(router, '<view-1></view-1>');
-		assert.shadowDom.equal(routedUrlReader, '/#!/view-1|/#!/view-1');
+		assert.shadowDom.equal(routedUrlReader, '/#!/view-1');
 	});
 
 	test('traverses and notifies routers by default', async () => {

@@ -29,28 +29,21 @@ export const useUrl = () => {
 };
 
 export const useRoutedUrl = () => {
-	const [urls, setUrls] = useState(() => {
-		const url = documentUrl();
-		return { url, routedUrl: url };
-	});
+	const [routedUrl, setRoutedUrl] = useState(documentUrl);
 	useEffect(() => {
 		const onPopState = (event: PopStateEvent) =>
-			setUrls((current) => {
-				const url = documentUrl();
-				return {
-					url,
-					routedUrl: ignoredEvents.has(event) ? current.routedUrl : url,
-				};
-			});
+			setRoutedUrl((current) =>
+				ignoredEvents.has(event) ? current : documentUrl(),
+			);
 		window.addEventListener('popstate', onPopState);
 		return () => window.removeEventListener('popstate', onPopState);
-	}, [setUrls]);
+	}, [setRoutedUrl]);
 
-	return urls;
+	return routedUrl;
 };
 
 export const useRoutes = <T extends BaseRoute>(routes: T[]) => {
-	const { routedUrl } = useRoutedUrl();
+	const routedUrl = useRoutedUrl();
 	return useMemo(() => match(routes, routedUrl), [routes, routedUrl]);
 };
 
