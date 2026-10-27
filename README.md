@@ -71,6 +71,25 @@ and passed to cosmoz-router:
 html`<cosmoz-router .routes=${routes} />`;
 ```
 
+The current view stays on screen until the next route has loaded.
+
+### Loading views
+
+`load(pack, tag, options)` imports a view and renders `tag` with `params` (the
+rule's named groups and the search params) and `route`. A new element is created
+every time the URL changes. Pass `{ reuse: true }` to keep the element and update
+its `params` instead, e.g. for a settings page whose sections are sub-paths:
+
+```javascript
+{
+	rule: hashbang(/^\/settings(?:\/(?<section>[a-z-]+))?$/iu),
+	handle: load(() => import('./settings.js'), 'my-settings', { reuse: true }),
+}
+```
+
+The element then has to react to `params` changing, rather than reading them
+only once.
+
 ## Documentation
 
 See http://neovici.github.io/cosmoz-router (outdated)

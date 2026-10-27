@@ -1,10 +1,10 @@
+import { component } from '@pionjs/pion';
 import { nothing } from 'lit-html';
 import { guard } from 'lit-html/directives/guard.js';
 import { until } from 'lit-html/directives/until.js';
-	import { component } from '@pionjs/pion';
 
-import { useRouter, Route } from './use-router';
 import { useRouteEvents } from './use-route-events';
+import { Route, useRouter } from './use-router';
 
 interface Props {
 	routes: Route[];
@@ -17,11 +17,9 @@ const Router = (host: RouterT) => {
 
 	useRouteEvents(host, route, result);
 
+	// Keep the current view on screen until the next one has loaded.
 	return guard([result], () =>
-		until(
-			Promise.resolve(result).catch(() => nothing),
-			nothing,
-		),
+		result ? until(Promise.resolve(result).catch(() => nothing)) : nothing,
 	);
 };
 

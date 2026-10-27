@@ -1,16 +1,24 @@
 import {
 	assert,
-	html,
 	fixtureSync,
-	oneEvent,
+	html,
 	nextFrame,
+	oneEvent,
 } from '@open-wc/testing';
+import { component, html as pionHtml } from '@pionjs/pion';
 import { mock } from 'sinon';
 
-import { navigate, documentUrl } from '../src/use-routes';
 import { createElement, load } from '../src/load';
 import { hashbang } from '../src/match';
 import { Route } from '../src/use-router';
+import { documentUrl, navigate } from '../src/use-routes';
+
+customElements.define(
+	'params-view',
+	component<{ params?: { id?: string } }>(
+		({ params }) => pionHtml`${params?.id}`,
+	),
+);
 
 suite('cosmoz-router', () => {
 	let routes: Route[];
@@ -43,12 +51,24 @@ suite('cosmoz-router', () => {
 					}),
 			},
 			{
+				rule: hashbang(/^\/reuse\/(?<id>\d+)/u),
+				handle: load(() => undefined, 'params-view', { reuse: true }),
+			},
+			{
+				rule: hashbang(/^\/remount\/(?<id>\d+)/u),
+				handle: load(() => undefined, 'params-view'),
+			},
+			{
+				rule: hashbang(/^\/pending/u),
+				handle: () => new Promise<never>(() => undefined),
+			},
+			{
 				rule: hashbang(/^\/error/u),
 				handle: () => Promise.reject(new Error('testing')),
 			},
 		];
 	});
-	
+
 	suiteTeardown(() => navigate(url, null, { notify: false }));
 
 	test('renders home', async () => {
@@ -86,6 +106,43 @@ suite('cosmoz-router', () => {
 		await oneEvent(router, 'route-loaded');
 		await nextFrame();
 		assert.shadowDom.equal(router, '<view-1></view-1>');
+	});
+
+	test('keeps the current view while the next one loads', async () => {
+		navigate('#!/view-1');
+		const router = fixtureSync(html`<cosmoz-router .routes=${routes} />`);
+		await oneEvent(router, 'route-loaded');
+		await nextFrame();
+
+		navigate('#!/pending');
+		await oneEvent(router, 'route-loading');
+		await nextFrame();
+		assert.shadowDom.equal(router, '<view-1></view-1>');
+	});
+
+	const renderTwice = async (path: string) => {
+		navigate(`#!/${path}/1`);
+		const router = fixtureSync(html`<cosmoz-router .routes=${routes} />`);
+		await oneEvent(router, 'route-loaded');
+		await nextFrame();
+		const first = router.shadowRoot!.querySelector('params-view')!;
+
+		navigate(`#!/${path}/2`);
+		await oneEvent(router, 'route-loaded');
+		await nextFrame();
+		const second = router.shadowRoot!.querySelector('params-view')!;
+		assert.shadowDom.equal(second, '2');
+		return { first, second };
+	};
+
+	test('replaces the view when the url changes', async () => {
+		const { first, second } = await renderTwice('remount');
+		assert.notEqual(first, second);
+	});
+
+	test('updates a reused view in place when the url changes', async () => {
+		const { first, second } = await renderTwice('reuse');
+		assert.equal(first, second);
 	});
 
 	test('error', async () => {
