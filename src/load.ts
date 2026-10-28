@@ -1,30 +1,24 @@
-import { html } from '@pionjs/pion';
+import { noChange } from 'lit-html';
+import { Directive, directive, ElementPart } from 'lit-html/directive.js';
+import { keyed } from 'lit-html/directives/keyed.js';
+import { html, unsafeStatic } from 'lit-html/static.js';
 import { BaseRoute, RuleRet } from './match';
 
 export const tagFromPath = ({ pathname }: URL) =>
 	pathname.substring(1).replace(/\//gu, '-');
 
-// lit-html does not have support for dynamic tags, but we can create a TemplateResult
-// by calling the template tag function with the appropriate parameters
-// `html(strings[], ...values)`
-const template = (tag: string, props: string[]) => {
-	const strings = props.map((prop) => ` .${prop}=`);
-	return Object.assign(
-		strings.length > 0
-			? [`<${tag}${strings[0]}`, ...strings.slice(1), '>']
-			: [`<${tag}>`],
-		{ raw: true },
-	) as unknown as TemplateStringsArray;
-};
+class Properties extends Directive {
+	render(props: object) {
+		return props;
+	}
 
-// lit-html identifies a template by its strings array, so reusing the array
-// updates the rendered element instead of replacing it.
-const templates = new Map<string, TemplateStringsArray>();
-const reusedTemplate = (tag: string, props: string[]) => {
-	const key = [tag, ...props].join(' ');
-	if (!templates.has(key)) templates.set(key, template(tag, props));
-	return templates.get(key)!;
-};
+	override update(part: ElementPart, [props]: [object]) {
+		Object.assign(part.element, props);
+		return noChange;
+	}
+}
+
+const properties = directive(Properties);
 
 export const createElement = (
 	tag: string,
@@ -39,11 +33,12 @@ export const createElement = (
 	// expectations that lit-haunted makes: the fresh element is not attached to the DOM,
 	// causing the useContext registration mechanism to fail
 	// using a lit TemplateResult makes sure the element is connected when created
-	const names = Object.keys(props);
-	return html(
-		reuse ? reusedTemplate(tag, names) : template(tag, names),
-		...Object.values(props),
-	);
+	const name = unsafeStatic(tag),
+		element = html`<${name} ${properties(props)}></${name}>`;
+
+	// lit-html reuses the element of a template with the same tag, so a fresh
+	// key is what replaces it.
+	return reuse ? element : keyed({}, element);
 };
 
 export const load =
