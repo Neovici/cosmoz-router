@@ -1,0 +1,1 @@
+import{t as e}from"./rolldown-runtime-Dh6celcD.js";import{u as t}from"./iframe-CMBlF5vJ.js";import{i as n,r}from"./cosmoz-router.stories-B6wn8cku.js";function i(){return(i=e((()=>{r(),customElements.define(`demo-home`,n(()=>t` <h2>Welcome to the home page</h2> `))})))()}i();
